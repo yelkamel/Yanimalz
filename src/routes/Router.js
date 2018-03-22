@@ -1,7 +1,5 @@
-import React from 'react';
-
 import { StackNavigator } from 'react-navigation';
-import { Home, Map, Artist } from './pages';
+import { Home, Artist } from './pages';
 
 const navigationOptions = {
   headerMode: 'none',
@@ -12,9 +10,6 @@ export default StackNavigator(
   {
     Home: {
       screen: Home,
-    },
-    Map: {
-      screen: Map,
     },
     Artist: {
       screen: Artist,

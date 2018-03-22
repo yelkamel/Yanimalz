@@ -1,80 +1,110 @@
 import React from 'react';
 import {
-  PanResponder,
   Dimensions,
   View,
-  Button,
   StyleSheet,
   Animated,
+  PanResponder,
 } from 'react-native';
 import Loading from './loading';
 import TimeLine from './timeline';
-import SubHeader from './subheader';
-import Map from '../map'
+import Banner from './banner';
+import MapStage from '../mapStage';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const TOP_MARGIN = 70;
-const BOTTOM_MARGIN = 100
-const BOTTOM_POSITION = height - TOP_MARGIN - BOTTOM_MARGIN
-const TOP_POSITION = 0
+const BOTTOM_MARGIN = 100;
+const BOTTOM_POSITION = height - TOP_MARGIN - BOTTOM_MARGIN;
+const TOP_POSITION = 0;
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.isTop = false;
     this.state = {
       animeLineUpPosition: new Animated.Value(BOTTOM_POSITION),
-      isLoading: true
+      isLoading: true,
+      isTop: false,
+      isAnimate: false,
     };
   }
 
+  componentWillMount() {
+    this.panResponder = PanResponder.create({
+      onMoveShouldSetResponderCapture: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderMove: (event, gestureState) => {
+        const { dy } = gestureState;
+        if ((dy >= 5 || dy <= -5) && !this.state.isAnimate) {
+          this.setState((state) =>
+            ({ ...state, isAnimate: true }),
+          () => {
+            this.animeLineUp();
+          });
+        }
+        return true;
+      },
+    });
+  }
+
   componentDidMount() {
-    Animated.delay(3000).start(() => {
-      this.setState(state => ({ ...state, isLoading: false }),
-        () => {
-          Animated.timing(this.state.animeLineUpPosition, {
-            toValue: TOP_POSITION,
-            delay: 9000
-          }).start(() => {
-            this.isTop = true
-          })
-        })
-    })
+    Animated.delay(2500).start(() => {
+      this.setState((state) => ({ ...state, isLoading: false }));
+    });
   }
 
   animeLineUp = () => {
-    if (this.isTop) {
+    if (this.state.isTop) {
       Animated.timing(this.state.animeLineUpPosition, {
         toValue: BOTTOM_POSITION,
       }).start(() => {
-        this.isTop = false
-      })
+        this.setState((state) => ({
+          ...state,
+          isTop: false,
+          isAnimate: false,
+        }));
+      });
     } else {
       Animated.timing(this.state.animeLineUpPosition, {
         toValue: TOP_POSITION,
       }).start(() => {
-        this.isTop = true
-      })
+        this.setState((state) => ({
+          ...state,
+          isTop: true,
+          isAnimate: false,
+        }));
+      });
     }
   }
 
   render() {
-    const { navigation } = this.props;
-    const { animeLineUpPosition, isLoading } = this.state;
+    const {
+      animeLineUpPosition,
+      isLoading,
+      isTop,
+      isAnimate,
+    } = this.state;
 
     return (
-      <View style={styles.mainContainer}>
-        <Map isFirstTime={!isLoading}></Map>
+      <View style={styles.mainContainer} >
+        <MapStage onFinishAnimation={this.animeLineUp} isFirstTime={!isLoading} />
         <Animated.View
           style={{
             marginTop: TOP_MARGIN,
             flex: 1,
-            transform: [{ translateY: animeLineUpPosition }]
+            transform: [{ translateY: animeLineUpPosition }],
           }}
         >
-          <SubHeader onPress={this.animeLineUp} />
+          <Animated.View
+            {...this.panResponder.panHandlers}
+          >
+            <Banner
+              isTop={isTop}
+              isAnimate={isAnimate}
+            />
+          </Animated.View>
 
-          <TimeLine navigation={navigation} />
+
+          <TimeLine />
         </Animated.View>
         <Loading isLoading={isLoading} />
 

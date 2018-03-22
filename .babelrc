@@ -1,0 +1,36 @@
+{
+  "presets": [
+    "react-native"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-remove-console"
+      ]
+    }
+  },
+  "plugins": [
+    "transform-inline-environment-variables",
+    "transform-decorators-legacy",
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "extensions": [
+          ".js",
+          ".ios.js",
+          ".android.js"
+        ],
+        "alias": {
+          "assets": "./src/assets",
+          "component": "./src/components",
+          "data": "./src/data",
+          "theme": "./src/theme",
+          "routes": "./src/routes"
+        }
+      }
+    ]
+  ]
+}
