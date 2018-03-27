@@ -19,7 +19,8 @@ export default {
     grey: '#867274',
   },
   time: {
-    moneyTransaction: 2000,
+    splashScreenDelay: 2500,
+    bannerShowIconDelay: 10000,
   },
   textSizes: {
     xxxsmall: 10,

@@ -1,7 +1,9 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, Image, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import MapStyle from '../../mapStyle.json';
 import styles from './styles';
 
@@ -38,6 +40,9 @@ class MapStage extends React.Component {
 
               Animated.delay(1500).start(() => {
                 this.props.onFinishAnimation();
+                Animated.timing(this.pictureOpacity, {
+                  toValue: 1,
+                }).start();
               });
             });
           });
@@ -46,43 +51,53 @@ class MapStage extends React.Component {
     }
   }
 
-
-  map = null
+  map = null;
+  pictureOpacity = new Animated.Value(0);
 
   render() {
-    const { isFirstTime } = this.props;
+    const { isFirstTime, eventInfo: { picture } } = this.props;
 
     return (
-      <MapView
-        ref={(mapView) => this.map = mapView}
-        style={styles.map}
-        provider={PROVIDER_GOOGLE}
-        customMapStyle={MapStyle}
-        showsUserLocation
-        cacheEnabled={!isFirstTime}
-        scrollEnabled={false}
-        rotateEnabled={false}
-        zoomControlEnabled={false}
-        zoomEnabled={false}
-        showsScale={false}
-      />
+      <View style={styles.container}>
+        <MapView
+          ref={(mapView) => this.map = mapView}
+          style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={MapStyle}
+          showsUserLocation
+          cacheEnabled={!isFirstTime}
+          scrollEnabled={false}
+          rotateEnabled={false}
+          zoomControlEnabled={false}
+          zoomEnabled={false}
+          showsScale={false}
+        />
+        <View style={{ position: 'absolute', top: 60, left: 150, height: 100, width: 100 }} >
+          {picture &&
+          <Animated.Image
+            source={picture}
+            style={[
+            styles.djImage, {
+            opacity: this.pictureOpacity,
+            },
+          ]}
+          />}
+        </View>
+      </View>
 
     );
   }
 }
-/*
-        cacheEnabled={true}
-        scrollEnabled={false}
-        rotateEnabled={false}
-        zoomControlEnabled={false}
-        zoomEnabled={false}
-        showsScale={false}
-*/
-
 
 MapStage.propTypes = {
   onFinishAnimation: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool.isRequired,
+  eventInfo: PropTypes.object.isRequired,
 };
 
-export default MapStage;
+const mapStateToProps = (state) => ({
+  eventInfo: state.timeline.currentEvent,
+});
+
+export default connect(mapStateToProps)(MapStage);
+

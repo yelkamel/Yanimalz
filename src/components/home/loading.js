@@ -11,7 +11,9 @@ class Loading extends React.Component {
       Animated.timing(this.animHeight, {
         toValue: 0,
         duration: 1000,
-      }).start();
+      }).start(() => {
+        this.props.onFinish();
+      });
     }
   }
 
@@ -39,6 +41,7 @@ class Loading extends React.Component {
 
 Loading.propTypes = {
   isLoading: PropTypes.bool.isRequired,
+  onFinish: PropTypes.func.isRequired,
 };
 
 

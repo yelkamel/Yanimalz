@@ -7,12 +7,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.21.0",
     "react": "16.2.0",
     "react-native": "0.53.3",
+    "react-native-i18n": "^2.0.12",
     "react-native-maps": "^0.20.1",
     "react-native-timeline-listview": "^0.2.2",
     "react-native-video": "^2.0.0",
-    "react-navigation": "^1.1.1"
+    "react-navigation": "^1.1.1",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.0",

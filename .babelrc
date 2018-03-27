@@ -28,7 +28,11 @@
           "component": "./src/components",
           "data": "./src/data",
           "theme": "./src/theme",
-          "routes": "./src/routes"
+          "routes": "./src/routes",
+          "i18n": "./src/i18n",
+          "utils": "./src/utils",
+          "actions": "./src/redux/actions",
+          "redux": "./node_modules/redux"
         }
       }
     ]

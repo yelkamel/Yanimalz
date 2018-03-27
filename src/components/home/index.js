@@ -2,14 +2,21 @@ import React from 'react';
 import {
   Dimensions,
   View,
-  StyleSheet,
   Animated,
   PanResponder,
+  Easing,
+  AppState,
 } from 'react-native';
+import theme from 'theme';
+import { updateTimeLine } from 'actions/timeline';
+import { connect } from 'react-redux';
+
 import Loading from './loading';
-import TimeLine from './timeline';
+import TimeLine from '../timeline';
 import Banner from './banner';
 import MapStage from '../mapStage';
+import appStyles from '../../appStyles';
+import styles from './styles';
 
 const { height } = Dimensions.get('window');
 const TOP_MARGIN = 70;
@@ -21,9 +28,9 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animeLineUpPosition: new Animated.Value(BOTTOM_POSITION),
+      animeLineUpPosition: new Animated.Value(TOP_POSITION),
       isLoading: true,
-      isTop: false,
+      isTop: true,
       isAnimate: false,
     };
   }
@@ -47,15 +54,28 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    Animated.delay(2500).start(() => {
+    Animated.delay(theme.time.splashScreenDelay).start(() => {
       this.setState((state) => ({ ...state, isLoading: false }));
     });
+    AppState.addEventListener('change', this.handleAppStateChange);
   }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('App has come to the foreground!');
+    }
+  }
+
 
   animeLineUp = () => {
     if (this.state.isTop) {
       Animated.timing(this.state.animeLineUpPosition, {
         toValue: BOTTOM_POSITION,
+        easing: Easing.linear(),
       }).start(() => {
         this.setState((state) => ({
           ...state,
@@ -66,6 +86,7 @@ class Home extends React.Component {
     } else {
       Animated.timing(this.state.animeLineUpPosition, {
         toValue: TOP_POSITION,
+        easing: Easing.elastic(),
       }).start(() => {
         this.setState((state) => ({
           ...state,
@@ -85,8 +106,19 @@ class Home extends React.Component {
     } = this.state;
 
     return (
-      <View style={styles.mainContainer} >
-        <MapStage onFinishAnimation={this.animeLineUp} isFirstTime={!isLoading} />
+      <View style={appStyles.flexOne} >
+        <MapStage onFinishAnimation={() => {}} isFirstTime={!isLoading} />
+        <Animated.View
+          style={[styles.absoluteBlack, {
+            opacity: animeLineUpPosition.interpolate({
+              inputRange: [TOP_POSITION, BOTTOM_POSITION],
+              outputRange: [0.7, 0],
+            }) }]}
+        />
+
+        {!isLoading &&
+        <View style={styles.hideBottom} />}
+
         <Animated.View
           style={{
             marginTop: TOP_MARGIN,
@@ -102,26 +134,21 @@ class Home extends React.Component {
               isAnimate={isAnimate}
             />
           </Animated.View>
-
-
           <TimeLine />
         </Animated.View>
-        <Loading isLoading={isLoading} />
+
+        <Loading onFinish={this.animeLineUp} isLoading={isLoading} />
 
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
-  list: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: 'white',
+const mapDispatchToProps = (dispatch) => ({
+  updateTimeLine: () => {
+    dispatch(updateTimeLine());
   },
 });
 
-export default Home;
+export default connect(null, mapDispatchToProps)(Home);
+

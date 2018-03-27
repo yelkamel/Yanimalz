@@ -13,8 +13,6 @@ class AnimationVideo extends React.Component {
         <Video
           source={intro}
           rate={1.0}
-          volume={1.0}
-          muted
           paused={false}
           resizeMode="cover"
           repeat
