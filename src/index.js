@@ -1,13 +1,14 @@
 import React from 'react';
 import RootStack from 'routes/Router';
 import { Provider } from 'react-redux';
-import OneSignal from 'react-native-onesignal';
+//import OneSignal from 'react-native-onesignal';
 
 import store from './redux';
 
 
 
 class Root extends React.Component {
+  /*
   componentWillMount() {
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
@@ -34,6 +35,7 @@ class Root extends React.Component {
   onIds(device) {
     console.log('Device info: ', device);
   }
+  */
   render() {
     return (
       <Provider store={store}>

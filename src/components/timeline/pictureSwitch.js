@@ -1,18 +1,11 @@
 import React from 'react';
-import { View, Image, Animated, PanResponder, Easing } from 'react-native';
+import { Image, Animated, Easing } from 'react-native';
 import PropTypes from 'prop-types';
-import Swipeout from 'react-native-swipeout';
 
 import theme from 'theme';
 
 import styles from './styles';
 
-const swipeoutBtns = [
-  {
-    text: 'Button',
-    disabled: true,
-  },
-];
 
 class PictureSwitch extends React.Component {
   state={
