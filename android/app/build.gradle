@@ -139,6 +139,9 @@ android {
 dependencies {
     compile project(':react-native-video')
     compile project(':react-native-maps')
+    compile project(':react-native-i18n')
+    compile project(':react-native-video')
+    compile project(':react-native-maps')
     compile project(':react-native-video')
     compile project(':react-native-maps')
     compile project(':react-native-video')

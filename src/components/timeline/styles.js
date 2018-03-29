@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primaryLight,
     marginBottom: 10,
     marginRight: 20,
+    alignSelf: 'center',
   },
   descriptionContainer: {
     flexDirection: 'row',

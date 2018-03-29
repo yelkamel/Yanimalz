@@ -1,24 +1,31 @@
 import moment from 'moment/moment';
+import { AsyncStorage } from 'react-native';
+
 import theme from './theme';
 import { TIME_STATUS } from './data';
 
-const BEFORE_MD_START = moment('12:00:00', 'HH:mm');
-const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
-
-export const parseTimeLine = (timeLine) => timeLine.reduce((results, event) => {
-  const currentTime = moment();
-  const startTime = moment(event.time, 'HH:mm');
-  if (!startTime.isBetween(BEFORE_MD_START, BEFORE_MD_END)) {
-    startTime.add(1, 'day');
+export const setAsyncStorage = async (key, value, callback) => {
+  try {
+    const res = await AsyncStorage.setItem(key, value, callback);
+    console.log('storageSet:', key, value, res);
+  } catch (error) {
+    console.log(error);
   }
-  if (!currentTime.isBetween(BEFORE_MD_START, BEFORE_MD_END)) {
-    startTime.subtract(1, 'day');
+};
+
+export const getAsyncStorage = async (key, callback) => {
+  try {
+    const value = await AsyncStorage.getItem(key, callback);
+    if (value !== null) {
+      console.log(`storageGet ${key}: ${value}`);
+      return value;
+    }
+  } catch (error) {
+    console.log(error);
   }
+  return null;
+};
 
-
-  results.push({ ...event, momentTime: startTime });
-  return results;
-}, []);
 
 export const getTimeStatus = (momentTime) => {
   const currentTime = moment();

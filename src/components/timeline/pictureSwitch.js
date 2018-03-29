@@ -8,45 +8,37 @@ import styles from './styles';
 
 
 class PictureSwitch extends React.Component {
-  state={
-    isOpen: false,
+  state = {
   }
 
 
   componentWillMount() {
   }
 
-
-  animateToMiddle= () => {
-    if (this.props.enabled) {
-      this.props.action();
-      this.setState((state) => ({ ...state, isOpen: !this.state.isOpen }), () => {
-        Animated.timing(this.borderWidthAnimated, {
-          toValue: this.state.isOpen ? 1 : 0,
-          duration: 500,
-          easing: Easing.linear,
-        }).start(() => {
-          this.isAnimated = false;
-        });
-      });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOpen !== this.props.isOpen && nextProps.isOpen) {
+      this.animateToMiddle();
     }
   }
-  isAnimate = false;
-  borderWidthAnimated= new Animated.Value(0);
-  scrollValue= new Animated.Value(0);
-  /*
-  openEvent = () => {
-    console.log('OPEN EVENT');
-    Animated.delay(1000).start(() => {
-      this.setState((state) => ({ ...state, isClose: true }));
+
+  setNotifAndAnimate = () => {
+    if (this.props.enabled) {
+      this.props.action(this.props.value);
+      this.animateToMiddle();
+    }
+  }
+  animateToMiddle = () => {
+    this.setState((state) => ({ ...state, isOpen: !this.state.isOpen }), () => {
+      Animated.timing(this.borderWidthAnimated, {
+        toValue: this.state.isOpen ? 1 : 0,
+        duration: 200,
+        easing: Easing.linear,
+      }).start();
     });
   }
 
-  closeEvent = () => {
-    console.log('CLOSE EVENT');
-    this.props.setNotifForEvent(this.props.rowId);
-  }
-  */
+  borderWidthAnimated = new Animated.Value(0);
+  scrollValue = new Animated.Value(0);
 
   render() {
     const { picture, enabled } = this.props;
@@ -59,30 +51,29 @@ class PictureSwitch extends React.Component {
         style={{ flex: 1, paddingLeft: theme.size.screenWidth * 0.2 }}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { x: this.scrollValue } } }],
-        { useNativeDriver: true },
+          { useNativeDriver: true },
         )}
-        onMomentumScrollEnd={this.animateToMiddle}
+        onMomentumScrollEnd={this.setNotifAndAnimate}
         directionalLockEnabled
         scrollEnabled={enabled}
       >
-        {enabled && <Animated.View
-          style={[styles.borderOpen, {
-            transform: [{ translateX: this.scrollValue }],
-          }]}
-                    >
-          <Animated.View style={[styles.lightShow, {
-            transform: [{ scale: this.borderWidthAnimated }],
-          }]}
-          />
-
-        </Animated.View>
+        {enabled &&
+          <Animated.View
+            style={[styles.borderOpen, {
+              transform: [{ translateX: this.scrollValue }],
+            }]}
+          >
+            <Animated.View style={[styles.lightShow, {
+              transform: [{ scale: this.borderWidthAnimated }],
+            }]}
+            />
+          </Animated.View>
         }
         <Image
           source={picture}
           style={styles.image}
         />
       </Animated.ScrollView>
-
     );
   }
 }
@@ -96,6 +87,7 @@ PictureSwitch.propTypes = {
   action: PropTypes.func.isRequired,
   picture: PropTypes.number,
   enabled: PropTypes.bool.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default PictureSwitch;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
-import AnimationVideo from '../common/Video';
+import styles from './styles';
 
 class Loading extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -21,20 +21,7 @@ class Loading extends React.Component {
 
   render() {
     return (
-      <Animated.View style={{
-        backgroundColor: theme.colors.blackLogo,
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        height: this.animHeight,
-        overflow: 'hidden',
-      }}
-      >
-
-        <AnimationVideo />
-      </Animated.View >
+      <Animated.View style={[styles.loadingView, { height: this.animHeight }]} />
     );
   }
 }

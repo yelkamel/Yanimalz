@@ -12,6 +12,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // LOADING
+  loadingView: {
+    backgroundColor: theme.colors.blackLogo,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: this.animHeight,
+    overflow: 'hidden',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomWidth: 2,
+    borderColor: theme.colors.primaryDark,
+  },
   // BANNER
   borderRadiusView: {
     borderTopLeftRadius: 20,

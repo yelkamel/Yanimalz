@@ -7,9 +7,10 @@ import {
   Easing,
   AppState,
 } from 'react-native';
-import theme from 'theme';
-import { updateTimeLine } from 'actions/timeline';
+import store from 'react-native-simple-store';
+import { loadTimeLine, updateTimeLine } from 'actions/timeline';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Loading from './loading';
 import TimeLine from '../timeline';
@@ -54,10 +55,19 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    Animated.delay(theme.time.splashScreenDelay).start(() => {
-      this.setState((state) => ({ ...state, isLoading: false }));
+    store.get('notifList').then((notifList) => {
+      this.props.loadTimeLine(notifList);
     });
     AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoading !== this.props.isLoading && !nextProps.isLoading) {
+      this.props.updateTimeLine();
+    }
+    if (nextProps.isUpdated !== this.props.isUpdated && nextProps.isUpdated) {
+      this.setState((state) => ({ ...state, isLoading: false }));
+    }
   }
 
   componentWillUnmount() {
@@ -65,11 +75,10 @@ class Home extends React.Component {
   }
 
   handleAppStateChange = (nextAppState) => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!');
-    }
+    // if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+    // console.log('App has come to the foreground!');
+    // }
   }
-
 
   animeLineUp = () => {
     if (this.state.isTop) {
@@ -107,18 +116,17 @@ class Home extends React.Component {
 
     return (
       <View style={appStyles.flexOne} >
-        <MapStage onFinishAnimation={() => {}} isFirstTime={!isLoading} />
+        <MapStage onFinishAnimation={() => { }} isFirstTime={!isLoading} />
         <Animated.View
           style={[styles.absoluteBlack, {
             opacity: animeLineUpPosition.interpolate({
               inputRange: [TOP_POSITION, BOTTOM_POSITION],
               outputRange: [0.7, 0],
-            }) }]}
+            }),
+          }]}
         />
-
         {!isLoading &&
-        <View style={styles.hideBottom} />}
-
+          <View style={styles.hideBottom} />}
         <Animated.View
           style={{
             marginTop: TOP_MARGIN,
@@ -134,21 +142,36 @@ class Home extends React.Component {
               isAnimate={isAnimate}
             />
           </Animated.View>
-          <TimeLine />
+          {!isLoading && <TimeLine />}
         </Animated.View>
-
         <Loading onFinish={this.animeLineUp} isLoading={isLoading} />
-
       </View>
     );
   }
 }
 
+
+Home.propTypes = {
+  loadTimeLine: PropTypes.func.isRequired,
+  updateTimeLine: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isUpdated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isLoading: state.timeline.isLoading,
+  isUpdated: state.timeline.isUpdated,
+});
+
+
 const mapDispatchToProps = (dispatch) => ({
+  loadTimeLine: (notifList) => {
+    dispatch(loadTimeLine(notifList));
+  },
   updateTimeLine: () => {
     dispatch(updateTimeLine());
   },
 });
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

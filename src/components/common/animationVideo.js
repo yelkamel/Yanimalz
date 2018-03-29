@@ -1,15 +1,16 @@
 
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, Animated } from 'react-native';
 import Video from 'react-native-video';
 import intro from 'assets/video/intro.mp4';
 import theme from 'theme';
+import PropTypes from 'prop-types';
 
 class AnimationVideo extends React.Component {
   render() {
     return (
-      <View style={styles.mainContainer}>
+      <Animated.View style={this.props.animatedStyle}>
         <Video
           source={intro}
           rate={1.0}
@@ -17,9 +18,13 @@ class AnimationVideo extends React.Component {
           resizeMode="cover"
           repeat
           playInBackground={false}
-          style={styles.videoStyle}
+          style={[styles.videoStyle, {
+            height: this.props.heightSize,
+            width: this.props.widthSize,
+          }]}
         />
-      </View>);
+      </Animated.View>
+    );
   }
 }
 
@@ -39,14 +44,26 @@ const styles = StyleSheet.create({
 
   },
   videoStyle: {
-    height: 270,
-    width: 270,
+    height: 105,
+    width: 133,
+    borderWidth: 3,
+    borderColor: theme.colors.primary,
 
   },
 });
 
 
+AnimationVideo.defaultProps = {
+  animatedStyle: {},
+  heightSize: 105,
+  widthSize: 133,
+};
+
 AnimationVideo.propTypes = {
+  animatedStyle: PropTypes.any,
+  widthSize: PropTypes.number,
+  heightSize: PropTypes.number,
+
 };
 
 

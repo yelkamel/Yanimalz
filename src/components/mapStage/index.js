@@ -1,9 +1,10 @@
 import React from 'react';
-import { Animated, Image, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import theme from 'theme';
+import AnimationVideo from '../common/animationVideo';
 import MapStyle from '../../mapStyle.json';
 import styles from './styles';
 
@@ -13,6 +14,12 @@ const AREA_LOC_GPS = {
   longitude: 2.3651310669234653,
   latitude: 48.90347782160455,
 };
+
+const VIDEO_TOP_POS = theme.size.screenHeight * 0.1;
+const VIDEO_LEFT_POS = theme.size.screenWidth * 0.34;
+const VIDEO_WIDTH = theme.size.screenWidth * 0.36;
+const VIDEO_HEIGHT = theme.size.screenHeight * 0.16;
+
 
 class MapStage extends React.Component {
   state = {
@@ -54,8 +61,43 @@ class MapStage extends React.Component {
   map = null;
   pictureOpacity = new Animated.Value(0);
 
+
+  renderPicture() {
+    const { eventInfo: { picture } } = this.props;
+
+    if (picture) {
+      return (
+
+        <View style={{ position: 'absolute', top: 60, left: 150, height: 100, width: 100 }} >
+
+          <Animated.Image
+            source={picture}
+            style={[
+              styles.djImage, {
+                opacity: this.pictureOpacity,
+              },
+            ]}
+          />
+        </View>
+
+      );
+    }
+
+    return (
+      <View style={{ position: 'absolute', top: VIDEO_TOP_POS, left: VIDEO_LEFT_POS, height: 210, width: 210 }} >
+        <AnimationVideo
+          heightSize={VIDEO_HEIGHT}
+          widthSize={VIDEO_WIDTH}
+          animatedStyle={{
+            opacity: this.pictureOpacity,
+          }}
+        />
+      </View>
+    );
+  }
+
   render() {
-    const { isFirstTime, eventInfo: { picture } } = this.props;
+    const { isFirstTime } = this.props;
 
     return (
       <View style={styles.container}>
@@ -72,17 +114,7 @@ class MapStage extends React.Component {
           zoomEnabled={false}
           showsScale={false}
         />
-        <View style={{ position: 'absolute', top: 60, left: 150, height: 100, width: 100 }} >
-          {picture &&
-          <Animated.Image
-            source={picture}
-            style={[
-            styles.djImage, {
-            opacity: this.pictureOpacity,
-            },
-          ]}
-          />}
-        </View>
+        {this.renderPicture()}
       </View>
 
     );
