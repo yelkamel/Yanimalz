@@ -6,10 +6,20 @@ I18n.translations = {
   en: {
     banner_title: 'Time Line',
     end: 'END',
+    days: 'day',
+    hours: 'hour',
+    minutes: 'min',
+    before: 'before',
+    notif: 'Notif',
   },
   fr: {
     banner_title: 'Line Up!',
     end: 'FIN',
+    days: 'jour',
+    hours: 'heure',
+    minutes: 'min',
+    before: 'avant',
+    notif: 'Notif',
   },
 };
 

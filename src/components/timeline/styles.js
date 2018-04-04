@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     backgroundColor: theme.colors.primary,
+    paddingTop: 10,
   },
   timeStyle: {
     fontSize: theme.textSizes.xxsmall,
@@ -55,6 +56,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.grey,
+  },
+
+  // COUTDOWN
+  countDownInner: {
+    color: theme.colors.white,
+    marginVertical: 2,
+    fontSize: 23,
+    fontFamily: theme.fontFamily.rubikRegular,
   },
 });
 export default styles;

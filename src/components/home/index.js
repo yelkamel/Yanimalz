@@ -1,64 +1,45 @@
 import React from 'react';
-import {
-  Dimensions,
-  View,
-  Animated,
-  PanResponder,
-  Easing,
-  AppState,
-} from 'react-native';
+import { View, Animated } from 'react-native';
 import store from 'react-native-simple-store';
 import { loadTimeLine, updateTimeLine } from 'actions/timeline';
+import { loadTimeBeforeNotif } from 'actions/app';
 import { connect } from 'react-redux';
+import Modal from 'react-native-modalbox';
 import PropTypes from 'prop-types';
+import theme from 'theme';
+import Share from 'react-native-share';
 
+import Menu from '../menu';
 import Loading from './loading';
 import TimeLine from '../timeline';
 import Banner from './banner';
 import MapStage from '../mapStage';
+import NotifModal from './notifModal';
 import appStyles from '../../appStyles';
 import styles from './styles';
 
-const { height } = Dimensions.get('window');
 const TOP_MARGIN = 70;
-const BOTTOM_MARGIN = 100;
-const BOTTOM_POSITION = height - TOP_MARGIN - BOTTOM_MARGIN;
+const BANNER_HEIGHT = theme.size.bannerHeight;
+const BOTTOM_POSITION = theme.size.screenHeight - BANNER_HEIGHT * 2 - TOP_MARGIN;
 const TOP_POSITION = 0;
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      animeLineUpPosition: new Animated.Value(TOP_POSITION),
-      isLoading: true,
-      isTop: true,
-      isAnimate: false,
-    };
-  }
-
-  componentWillMount() {
-    this.panResponder = PanResponder.create({
-      onMoveShouldSetResponderCapture: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
-      onPanResponderMove: (event, gestureState) => {
-        const { dy } = gestureState;
-        if ((dy >= 5 || dy <= -5) && !this.state.isAnimate) {
-          this.setState((state) =>
-            ({ ...state, isAnimate: true }),
-          () => {
-            this.animeLineUp();
-          });
-        }
-        return true;
-      },
-    });
-  }
+  state = {
+    animeLineUpPosition: new Animated.Value(TOP_POSITION),
+    isLoading: true,
+    isTop: true,
+    isAnimate: false,
+  };
 
   componentDidMount() {
     store.get('notifList').then((notifList) => {
       this.props.loadTimeLine(notifList);
+      store.get('timeBeforeNotif').then((min) => {
+        this.props.loadTimeBeforeNotif(min);
+      });
     });
-    AppState.addEventListener('change', this.handleAppStateChange);
+
+    // AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,62 +52,90 @@ class Home extends React.Component {
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
+    //  AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
+  modal = null;
+
+  /*
   handleAppStateChange = (nextAppState) => {
-    // if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-    // console.log('App has come to the foreground!');
-    // }
-  }
+     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+     console.log('App has come to the foreground!');
+    }
+  };
+  */
+
+  selectedMenuItem = (type = 'notif') => {
+    const shareOptions = {
+      title: 'React Native',
+      message: 'Hola mundo',
+      url: 'http://facebook.github.io/react-native/',
+      subject: 'Share Link', //  for email
+    };
+
+    switch (type) {
+      case 'notif':
+        this.modal.open();
+        break;
+      case 'share':
+        Share.open(shareOptions).catch(() => { });
+        break;
+
+      default:
+        break;
+    }
+  };
 
   animeLineUp = () => {
-    if (this.state.isTop) {
-      Animated.timing(this.state.animeLineUpPosition, {
-        toValue: BOTTOM_POSITION,
-        easing: Easing.linear(),
-      }).start(() => {
-        this.setState((state) => ({
-          ...state,
-          isTop: false,
-          isAnimate: false,
-        }));
-      });
-    } else {
-      Animated.timing(this.state.animeLineUpPosition, {
-        toValue: TOP_POSITION,
-        easing: Easing.elastic(),
-      }).start(() => {
-        this.setState((state) => ({
-          ...state,
-          isTop: true,
-          isAnimate: false,
-        }));
-      });
-    }
-  }
+    this.setState(
+      (state) => ({ ...state, isAnimate: true }),
+      () => {
+        if (this.state.isTop) {
+          Animated.timing(this.state.animeLineUpPosition, {
+            toValue: BOTTOM_POSITION,
+            // easing: Easing.linear(),
+          }).start(() => {
+            this.setState((state) => ({
+              ...state,
+              isTop: false,
+              isAnimate: false,
+            }));
+          });
+        } else {
+          Animated.timing(this.state.animeLineUpPosition, {
+            toValue: TOP_POSITION,
+            // easing: Easing.elastic(),
+          }).start(() => {
+            this.setState((state) => ({
+              ...state,
+              isTop: true,
+              isAnimate: false,
+            }));
+          });
+        }
+      },
+    );
+  };
 
   render() {
-    const {
-      animeLineUpPosition,
-      isLoading,
-      isTop,
-      isAnimate,
-    } = this.state;
+    const { animeLineUpPosition, isLoading, isTop, isAnimate } = this.state;
 
     return (
-      <View style={appStyles.flexOne} >
-        <MapStage onFinishAnimation={() => { }} isFirstTime={!isLoading} />
+      <View style={appStyles.flexOne}>
         <Animated.View
-          style={[styles.absoluteBlack, {
-            opacity: animeLineUpPosition.interpolate({
-              inputRange: [TOP_POSITION, BOTTOM_POSITION],
-              outputRange: [0.7, 0],
-            }),
-          }]}
+          style={[
+            styles.absoluteBlack,
+            {
+              opacity: animeLineUpPosition.interpolate({
+                inputRange: [TOP_POSITION, BOTTOM_POSITION],
+                outputRange: [0.7, 0],
+              }),
+            },
+          ]}
         />
-        {!isLoading &&
-          <View style={styles.hideBottom} />}
+        <MapStage onFinishAnimation={() => { }} isFirstTime={!isLoading} />
+        <Menu onSelectItem={this.selectedMenuItem} />
+
         <Animated.View
           style={{
             marginTop: TOP_MARGIN,
@@ -134,26 +143,33 @@ class Home extends React.Component {
             transform: [{ translateY: animeLineUpPosition }],
           }}
         >
-          <Animated.View
-            {...this.panResponder.panHandlers}
-          >
-            <Banner
-              isTop={isTop}
-              isAnimate={isAnimate}
-            />
-          </Animated.View>
-          {!isLoading && <TimeLine />}
+          <Banner
+            isTop={isTop}
+            isAnimate={isAnimate}
+            animeLineUp={this.animeLineUp}
+            untilEvent={34545}
+          />
+          {!isLoading && <TimeLine isOpen={isTop} />}
         </Animated.View>
         <Loading onFinish={this.animeLineUp} isLoading={isLoading} />
+        <Modal
+          style={styles.topModal}
+          entry="top"
+          backdrop
+          position="top"
+          ref={(m) => (this.modal = m)}
+        >
+          <NotifModal />
+        </Modal>
       </View>
     );
   }
 }
 
-
 Home.propTypes = {
   loadTimeLine: PropTypes.func.isRequired,
   updateTimeLine: PropTypes.func.isRequired,
+  loadTimeBeforeNotif: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isUpdated: PropTypes.bool.isRequired,
 };
@@ -163,7 +179,6 @@ const mapStateToProps = (state) => ({
   isUpdated: state.timeline.isUpdated,
 });
 
-
 const mapDispatchToProps = (dispatch) => ({
   loadTimeLine: (notifList) => {
     dispatch(loadTimeLine(notifList));
@@ -171,7 +186,10 @@ const mapDispatchToProps = (dispatch) => ({
   updateTimeLine: () => {
     dispatch(updateTimeLine());
   },
+  loadTimeBeforeNotif: (min) => {
+    dispatch(loadTimeBeforeNotif(min));
+  },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

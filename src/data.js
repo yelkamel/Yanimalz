@@ -1,5 +1,5 @@
 import theme from 'theme';
-import I18n from 'i18n';
+import moment from 'moment';
 
 import borgore from 'assets/dj/borgore.jpg';
 import camokrooked from 'assets/dj/camo&krooked.jpg';
@@ -15,21 +15,19 @@ import fourhorsement from 'assets/dj/fourhorsement.jpg';
 export const TIME_LINE = [
   {
     time: '21:00',
-    key:'BGR',
+    key: 'BGR',
     title: 'BORGORE',
     description: 'Event 1 Description',
     picture: borgore,
     lineColor: 'white',
-    circleColor: 'white',
   },
   {
     time: '22:00',
-    key: "CAK",
+    key: 'CAK',
     title: 'CAMO & KROOKED',
     description: 'Event 2 Description',
     picture: camokrooked,
     lineColor: theme.colors.accent,
-    circleColor: theme.colors.accent,
   },
   {
     time: '23:00',
@@ -37,9 +35,7 @@ export const TIME_LINE = [
     title: 'DOWNLINK',
     description: 'Event 3 Description',
     picture: downlink,
-
     circleColor: theme.colors.primaryLight,
-
   },
   {
     time: '00:00',
@@ -47,14 +43,12 @@ export const TIME_LINE = [
     title: 'ED RUSH x OPTICAL',
     description: 'Event 4 Description',
     picture: edrushoptical,
-    circleColor: theme.colors.primaryLight,
   },
   {
     time: '01:00',
     key: 'MMT',
     title: 'MEGALODON x M.TYRANNOSAURUS',
     description: 'Event 5 Description',
-    circleColor: theme.colors.primaryLight,
     picture: megamidnight,
   },
   {
@@ -63,7 +57,6 @@ export const TIME_LINE = [
     title: 'A.M.C & TURNO',
     description: 'Event 4 Description',
     picture: AMCTurno,
-    circleColor: theme.colors.primaryLight,
   },
   {
     time: '03:00',
@@ -71,8 +64,6 @@ export const TIME_LINE = [
     title: 'Four Horsemen Tour World',
     description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
     picture: fourhorsement,
-    circleColor: theme.colors.primaryLight,
-
   },
   {
     time: '04:00',
@@ -80,9 +71,6 @@ export const TIME_LINE = [
     title: 'AGRESSOR BUNX x PYTHIUS',
     description: 'Event 4 Description',
     picture: agressorbunxpythius,
-
-    circleColor: theme.colors.primaryLight,
-
   },
   {
     time: '05:00',
@@ -90,9 +78,6 @@ export const TIME_LINE = [
     title: 'SOLTAN',
     description: 'Event 5 Description',
     picture: soltan,
-
-    circleColor: theme.colors.primaryLight,
-
   },
   {
     time: '06:00',
@@ -100,13 +85,15 @@ export const TIME_LINE = [
     title: 'COOKERZ CREW',
     description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',
     picture: cookerzcrew,
-    circleColor: theme.colors.primaryLight,
   },
   {
     time: '07:00',
-    key: 'END'
+    key: 'END',
   },
 ];
-
+export const TIME_UNTIL_PARTY = moment('2018-04-21 21:00:00', 'YYYY-MM-DD').diff(
+  moment(),
+  'seconds',
+);
 export const TIME_STATUS = ['before', 'now', 'after'];
 export const GOOGLE_MAP_API_KEY = 'AIzaSyAR0yOHihuJLQhfAYhH8C4uuoC6VvAiYOU';

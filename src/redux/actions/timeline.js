@@ -1,9 +1,9 @@
 export const updateTimeLine = () => ({
-  type: 'UPDATE',
+  type: 'UPDATE_TIMELINE',
 });
 
 export const loadTimeLine = (notifList) => ({
-  type: 'LOAD',
+  type: 'LOAD_TIMELINE',
   payload: {
     notifList: notifList === null ? [] : notifList,
   },

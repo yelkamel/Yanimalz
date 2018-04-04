@@ -13,6 +13,8 @@ export const setAsyncStorage = async (key, value, callback) => {
   }
 };
 
+export const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+
 export const getAsyncStorage = async (key, callback) => {
   try {
     const value = await AsyncStorage.getItem(key, callback);
@@ -26,10 +28,9 @@ export const getAsyncStorage = async (key, callback) => {
   return null;
 };
 
-
 export const getTimeStatus = (momentTime) => {
   const currentTime = moment();
-  // const currentTime = moment('02:30', 'HH:mm').add(1, 'day');
+  //  const currentTime = moment('23:30', 'HH:mm');
   const endTime = momentTime.clone().add(1, 'hours');
 
   // Because when we 1 hour in this case it's return 03:00  -_-
@@ -64,4 +65,3 @@ export const getColorFromStatus = (status) => {
       return theme.colors.red;
   }
 };
-

@@ -2,63 +2,107 @@ import React from 'react';
 import { View, Text, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import appStyles from 'appStyles';
+import CountdownCircle from 'common/countDownCircle';
 import styles from './styles';
 import PictureSwitch from './pictureSwitch';
 import { TIME_STATUS } from '../../data';
-
+import theme from '../../theme';
 
 class Detail extends React.Component {
   state = {
     isOpen: false,
-  }
+    animate: false,
+  };
 
-  componentDidMount() {
-    Animated.timing(this.animatedValue, {
-      duration: this.props.nextEventIn * 1000,
-      toValue: 250,
-    }).start();
-  }
+  componentDidMount() { }
 
   componentWillReceiveProps(nextProps) {
-    this.setState((state) => ({
-      ...state,
-      isOpen: nextProps.rowData.hasNotif,
-    }));
-  }
-  animatedValue = new Animated.Value(0);
+    if (nextProps.rowData.hasNotif) {
+      this.setState((state) => ({
+        ...state,
+        isOpen: nextProps.rowData.hasNotif,
+      }));
+    }
 
+    if (nextProps.animate !== this.props.animate && nextProps.animate) {
+      Animated.delay(nextProps.rowId * 500).start(() => {
+        this.setState(
+          (state) => ({ ...state, animate: true }),
+          () => {
+            this.setState((state) => ({ ...state, animate: false }));
+          },
+        );
+      });
+    }
+  }
   renderHourGlass() {
-    return (
-      <Animated.View style={{
-        height: 30,
-        width: this.animatedValue,
-        backgroundColor: 'red',
-      }}
-      />
-    );
+    if (this.props.nextEventIn > 0) {
+      return (
+        <Animated.View
+          style={{
+            flex: 1,
+            paddingLeft: theme.size.screenWidth * 0.2,
+          }}
+        >
+          <CountdownCircle
+            seconds={this.props.nextEventIn}
+            radius={35}
+            borderWidth={10}
+            color="#ff003f"
+            bgColor={theme.colors.primaryDark}
+            textStyle={styles.countDownInner}
+            updateText={(elapsedSeconds, totalSeconds) =>
+              Math.floor((totalSeconds - elapsedSeconds) / 60).toString()}
+            onTimeElapsed={() => console.log('Elapsed!')}
+          />
+        </Animated.View>
+      );
+    }
+    return null;
   }
   render() {
     const { rowData, setNotifForEvent } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, animate } = this.state;
+
+    if (rowData.status === TIME_STATUS[1]) {
+      return (
+        <View style={appStyles.flexRow}>
+          <Text
+            style={[
+              styles.title,
+              {
+                color: rowData.lineColor,
+              },
+            ]}
+          >
+            {rowData.title}
+          </Text>
+          {this.renderHourGlass()}
+        </View>
+      );
+    }
     return (
-      <View style={{ flex: 1 }}>
-        <Text style={[styles.title, {
-          color: rowData.lineColor,
-        }]}
+      <View style={appStyles.flexOne}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: rowData.lineColor,
+            },
+          ]}
         >
           {rowData.title}
         </Text>
-        {rowData.status === TIME_STATUS[1] && this.renderHourGlass()}
         <PictureSwitch
           action={setNotifForEvent}
           picture={rowData.picture}
           isOpen={isOpen}
           value={rowData.key}
           enabled={rowData.status === TIME_STATUS[2]}
+          animate={animate}
         />
       </View>
-
     );
   }
 }
@@ -67,11 +111,16 @@ const mapStateToProps = (state) => ({
   nextEventIn: state.timeline.nextEventIn,
 });
 
+Detail.defaultProps = {
+  animate: false,
+};
 
 Detail.propTypes = {
   rowData: PropTypes.shape({
     hasNotif: PropTypes.bool.isRequired,
   }).isRequired,
+  rowId: PropTypes.number.isRequired,
+  animate: PropTypes.bool,
   setNotifForEvent: PropTypes.func.isRequired,
   nextEventIn: PropTypes.number.isRequired,
 };

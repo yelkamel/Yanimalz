@@ -1,14 +1,10 @@
 import { TIME_LINE, TIME_STATUS } from 'data';
-import {
-  getTimeStatus,
-  getColorFromStatus,
-} from 'utils';
+import { getTimeStatus, getColorFromStatus } from 'utils';
 import moment from 'moment/moment';
 import store from 'react-native-simple-store';
 
 const BEFORE_MD_START = moment('12:00:00', 'HH:mm');
 const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
-
 
 function setNotif(state, eventKey) {
   const dataTmp = state.data;
@@ -27,18 +23,19 @@ function setNotif(state, eventKey) {
 
   eventObject.hasNotif = !eventObject.hasNotif;
   store.save('notifList', notifListTmp);
-  return ({
+  return {
     ...state,
     data: dataTmp,
     notifList: notifListTmp,
-  });
+  };
 }
-
 
 function loadTimeLine(state, payload) {
   const { notifList } = payload;
   const dataTmp = state.data.reduce((results, event) => {
-    const currentTime = moment();
+    // const currentTime = moment();
+    const currentTime = moment('23:30', 'HH:mm');
+
     const startTime = moment(event.time, 'HH:mm');
     let hasNotif = false;
 
@@ -60,12 +57,12 @@ function loadTimeLine(state, payload) {
     return results;
   }, []);
 
-  return ({
+  return {
     ...state,
     data: dataTmp,
     isLoading: false,
     notifList,
-  });
+  };
 }
 
 function updateTimeLine(state) {
@@ -85,13 +82,13 @@ function updateTimeLine(state) {
     return results;
   }, []);
 
-  return ({
+  return {
     ...state,
     data,
     currentEvent,
     isUpdated: true,
     isLoading: false,
-  });
+  };
 }
 
 const defaultState = {
@@ -107,9 +104,9 @@ export default function timeline(state = defaultState, action) {
   const { payload, type } = action;
 
   switch (type) {
-    case 'LOAD':
+    case 'LOAD_TIMELINE':
       return loadTimeLine(state, payload);
-    case 'UPDATE':
+    case 'UPDATE_TIMELINE':
       return updateTimeLine(state);
     case 'SET_NOTIF':
       return setNotif(state, payload.eventKey);

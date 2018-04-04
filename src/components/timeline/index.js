@@ -11,11 +11,22 @@ import Detail from './detail';
 
 class TimeLine extends React.Component {
   state = {
-  }
+    animateEvent: false,
+  };
 
   componentDidMount() {
     this.updateAtTheNextHours();
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isOpen !== nextProps.isOpen && nextProps.isOpen) {
+      if (this.numberOfNotif === 0) {
+        this.setState((state) => ({ ...state, animateEvent: true }));
+      }
+    }
+  }
+
+  numberOfNotif = 0;
 
   updateAtTheNextHours() {
     const currentTime = moment();
@@ -34,29 +45,34 @@ class TimeLine extends React.Component {
   }
   renderDetail = (rowData, sectionID, rowID) => {
     const intIndex = parseInt(rowID, 10);
+    const { animateEvent } = this.state;
 
-    if (intIndex + 1 !== this.props.timeLine.length) {
+    if (rowData.hasNotif) {
+      this.numberOfNotif += 1;
+    }
+
+    if (intIndex + 1 !== this.props.timeLineData.length) {
       return (
         <Detail
           rowId={parseInt(rowID, 10)}
           setNotifForEvent={this.props.setNotifForEvent}
           rowData={rowData}
+          animate={animateEvent}
         />
       );
     }
     return null;
-  }
-
+  };
 
   // renderCircle = (rowData, sectionID, rowID) => null
 
   render() {
-    const { timeLine } = this.props;
+    const { timeLineData } = this.props;
 
     return (
       <View style={styles.mainContainer}>
         <Timeline
-          data={timeLine}
+          data={timeLineData}
           style={styles.list}
           timeStyle={styles.timeStyle}
           circleSize={20}
@@ -64,25 +80,25 @@ class TimeLine extends React.Component {
           lineColor={theme.colors.primaryLight}
           innerCircle="dot"
           renderDetail={this.renderDetail}
-          renderCircle={() => (null)}
           lineWidth={4}
           separator={false}
           enableEmptySections
         />
       </View>
     );
-  }
+  } //          renderCircle={() => null}
 }
 
 TimeLine.propTypes = {
-  timeLine: PropTypes.array.isRequired,
+  timeLineData: PropTypes.array.isRequired,
   updateTimeLine: PropTypes.func.isRequired,
   setNotifForEvent: PropTypes.func.isRequired,
   setNextEventTime: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  timeLine: state.timeline.data,
+  timeLineData: state.timeline.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({

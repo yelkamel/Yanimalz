@@ -1,5 +1,5 @@
 /* eslint global-require: 0 */
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -42,6 +42,9 @@ export default {
   },
   size: {
     screenWidth: width,
-    screenHeight: height,
+    screenHeight: Platform.OS === 'ios' ? height : height - 30,
+    bannerHeight: 50,
+    hideElasticSize: 50,
+    slideMaxValue: 25,
   },
 };

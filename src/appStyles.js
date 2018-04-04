@@ -11,4 +11,8 @@ export default StyleSheet.create({
   textItalic: {
     fontStyle: 'italic',
   },
+  flexRow: {
+    flex: 1,
+    flexDirection: 'row',
+  },
 });

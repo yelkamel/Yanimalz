@@ -1,85 +1,134 @@
 import React from 'react';
-import { Image, Animated, Easing } from 'react-native';
+import { Animated, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
-
 import theme from 'theme';
-
 import styles from './styles';
 
+const SLIDE_MAX_VALUE = theme.size.slideMaxValue;
+const SWITCH_TO_VALUE = 50;
 
 class PictureSwitch extends React.Component {
   state = {
-  }
-
-
-  componentWillMount() {
-  }
+    isFirstAnimate: false,
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen !== this.props.isOpen && nextProps.isOpen) {
-      this.animateToMiddle();
+      this.openSwitch();
+    } else if (nextProps.animate !== this.props.animate && nextProps.animate) {
+      this.setState(
+        (state) => ({ ...state, isFirstAnimate: true }),
+        () => {
+          this.openAndCloseSwitch(() => {
+            this.setState(
+              (state) => ({ ...state, isFirstAnimate: false }));
+          });
+        });
     }
   }
 
-  setNotifAndAnimate = () => {
-    if (this.props.enabled) {
+  validationNotif = () => {
+    if (this.props.enabled && !this.state.isFirstAnimate) {
       this.props.action(this.props.value);
-      this.animateToMiddle();
     }
-  }
-  animateToMiddle = () => {
-    this.setState((state) => ({ ...state, isOpen: !this.state.isOpen }), () => {
-      Animated.timing(this.borderWidthAnimated, {
-        toValue: this.state.isOpen ? 1 : 0,
+  };
+
+  openAndCloseSwitch = (call = () => { }) => {
+    Animated.timing(this.scrollValue, {
+      toValue: SWITCH_TO_VALUE,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(this.scrollValue, {
+        toValue: 0,
         duration: 200,
-        easing: Easing.linear,
-      }).start();
+        useNativeDriver: true,
+      }).start(call);
     });
   }
 
-  borderWidthAnimated = new Animated.Value(0);
+  closeSwitch = (call = () => { }) => {
+    Animated.timing(this.scrollValue, {
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: true,
+    }).start(call);
+  }
+
+
+  openSwitch = (call = () => { }) => {
+    Animated.timing(this.scrollValue, {
+      toValue: SWITCH_TO_VALUE,
+      duration: 100,
+      useNativeDriver: true,
+    }).start(call);
+  }
+
   scrollValue = new Animated.Value(0);
+  scroll = null;
+  isAnimate = false;
+  panResponder = PanResponder.create({
+    onMoveShouldSetResponderCapture: (event, { dx }) => (Math.abs(dx) <= SLIDE_MAX_VALUE),
+    onMoveShouldSetPanResponderCapture: (event, { dx }) => (Math.abs(dx) <= SLIDE_MAX_VALUE),
+    onPanResponderMove: (event, { dx }) => {
+      if (dx >= SLIDE_MAX_VALUE && !this.isAnimate) {
+        this.isAnimate = true;
+        this.openSwitch(this.validationNotif);
+        return false;
+      } else if (dx <= -SLIDE_MAX_VALUE && !this.isAnimate) {
+        this.isAnimate = true;
+        this.closeSwitch(this.validationNotif);
+        return false;
+      }
+      return true;
+    },
+    onPanResponderRelease: () => {
+      this.isAnimate = false;
+      return true;
+    },
+  });
 
   render() {
     const { picture, enabled } = this.props;
+    const borderAnimated = this.scrollValue.interpolate({
+      inputRange: [0, SWITCH_TO_VALUE],
+      outputRange: [0.01, 1],
+    });
 
     return (
-      <Animated.ScrollView
-        scrollEventThrottle={5}
-        horizontal
-        bounces
-        style={{ flex: 1, paddingLeft: theme.size.screenWidth * 0.2 }}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: this.scrollValue } } }],
-          { useNativeDriver: true },
-        )}
-        onMomentumScrollEnd={this.setNotifAndAnimate}
-        directionalLockEnabled
-        scrollEnabled={enabled}
-      >
-        {enabled &&
+      <Animated.View {...this.panResponder.panHandlers}>
+        {enabled && (
           <Animated.View
-            style={[styles.borderOpen, {
-              transform: [{ translateX: this.scrollValue }],
-            }]}
+            style={[
+              styles.borderOpen,
+            ]}
           >
-            <Animated.View style={[styles.lightShow, {
-              transform: [{ scale: this.borderWidthAnimated }],
-            }]}
+            <Animated.View
+              style={[
+                styles.lightShow,
+                {
+                  transform: [{ scale: borderAnimated }],
+                },
+              ]}
             />
           </Animated.View>
-        }
-        <Image
+        )}
+        <Animated.Image
           source={picture}
-          style={styles.image}
+          style={[styles.image, {
+            transform: [{ translateX: this.scrollValue }],
+          }]}
         />
-      </Animated.ScrollView>
+      </Animated.View>
+
+
     );
   }
 }
 
 PictureSwitch.defaultProps = {
   picture: null,
+  animate: false,
 };
 
 PictureSwitch.propTypes = {
@@ -88,6 +137,7 @@ PictureSwitch.propTypes = {
   picture: PropTypes.number,
   enabled: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
+  animate: PropTypes.bool,
 };
 
 export default PictureSwitch;

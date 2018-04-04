@@ -32,7 +32,8 @@
           "i18n": "./src/i18n",
           "utils": "./src/utils",
           "actions": "./src/redux/actions",
-          "redux": "./node_modules/redux"
+          "redux": "./node_modules/redux",
+          "common": "./src/components/common"
         }
       }
     ]
