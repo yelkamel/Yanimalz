@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     backgroundColor: theme.colors.primary,
-    paddingTop: 10,
   },
   timeStyle: {
     fontSize: theme.textSizes.xxsmall,
@@ -27,10 +26,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingRight: 50,
   },
+  icon: {
+    borderRadius: 40,
+    opacity: 0.9,
 
+  },
   textDescription: {
     marginLeft: 10,
     color: theme.colors.primaryLight,
+  },
+  // DETAIL
+  eventPast: {
+    height: theme.size.pastEventHeight,
+    flex: 1,
+  },
+  nextEvent: {
+    height: theme.size.nextEventHeight,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 30,
+  },
+  currentEvent: {
+    height: theme.size.currentEventHeight,
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingRight: 30,
   },
   lightShow: {
     width: 90,
@@ -40,6 +62,9 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 15,
     backgroundColor: theme.colors.accent,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: 70,
@@ -57,7 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.grey,
   },
-
   // COUTDOWN
   countDownInner: {
     color: theme.colors.white,

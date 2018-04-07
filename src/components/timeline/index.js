@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated } from 'react-native';
+import { View, Animated, Image } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
 import { updateTimeLine, setNotifForEvent, setNextEventTime } from 'actions/timeline';
+import { TIME_STATUS } from 'data';
 import styles from './styles';
 import theme from '../../theme';
 import Detail from './detail';
@@ -15,7 +16,15 @@ class TimeLine extends React.Component {
   };
 
   componentDidMount() {
+    const nbOfEventPast = this.numberOfPastEvent;
     this.updateAtTheNextHours();
+    Animated.delay(2000).start(() => {
+      this.scrollTimeLine.scrollTo({
+        x: 0,
+        y: nbOfEventPast * (theme.size.pastEventHeight + 20),
+        Animated: true,
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,7 +36,8 @@ class TimeLine extends React.Component {
   }
 
   numberOfNotif = 0;
-
+  numberOfPastEvent = 0;
+  scrollTimeLine = null;
   updateAtTheNextHours() {
     const currentTime = moment();
     const nextHoursTime = currentTime.clone().add(60, 'minutes');
@@ -51,6 +61,10 @@ class TimeLine extends React.Component {
       this.numberOfNotif += 1;
     }
 
+    if (rowData.status === TIME_STATUS[0]) {
+      this.numberOfPastEvent += 1;
+    }
+
     if (intIndex + 1 !== this.props.timeLineData.length) {
       return (
         <Detail
@@ -64,7 +78,7 @@ class TimeLine extends React.Component {
     return null;
   };
 
-  // renderCircle = (rowData, sectionID, rowID) => null
+  renderCircle = () => null
 
   render() {
     const { timeLineData } = this.props;
@@ -78,11 +92,15 @@ class TimeLine extends React.Component {
           circleSize={20}
           circleColor={theme.colors.primaryLight}
           lineColor={theme.colors.primaryLight}
-          innerCircle="dot"
           renderDetail={this.renderDetail}
           lineWidth={4}
           separator={false}
+          renderCircle={this.renderCircle}
           enableEmptySections
+          options={{
+            ref: (scroll) => this.scrollTimeLine = scroll,
+            contentContainerStyle: { paddingTop: 20 },
+          }}
         />
       </View>
     );

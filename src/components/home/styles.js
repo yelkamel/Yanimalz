@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   sliderNotif: {
     backgroundColor: theme.colors.primary,
-    width: theme.size.screenWidth / 6,
+    width: theme.size.screenWidth / 4,
     marginTop: 50 + theme.size.hideElasticSize,
     marginBottom: 30,
   },

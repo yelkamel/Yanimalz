@@ -6,6 +6,11 @@ import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import cl.json.RNSharePackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
+import com.brentvatne.react.ReactVideoPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -34,7 +39,12 @@ public class MainApplication extends Application implements ShareApplication , R
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactVideoPackage()
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new ReactVideoPackage(),
+            new VectorIconsPackage(),
+            new RNSharePackage(),
+            new MapsPackage(),
+            new RNI18nPackage(), new ReactVideoPackage()
           , new MapsPackage(), new RNSharePackage(), new RNI18nPackage(), new VectorIconsPackage());
     }
 

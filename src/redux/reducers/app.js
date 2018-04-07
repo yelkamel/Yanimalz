@@ -1,5 +1,5 @@
 import store from 'react-native-simple-store';
-
+import { TIME_UNTIL_PARTY } from 'data';
 
 function setTimeBefore(state, payload) {
   const { min } = payload;
@@ -13,6 +13,7 @@ function setTimeBefore(state, payload) {
 
 const defaultState = {
   timeBeforeNotif: 10,
+  untilEvent: TIME_UNTIL_PARTY,
 };
 
 export default function app(state = defaultState, action) {

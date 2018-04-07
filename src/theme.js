@@ -43,8 +43,12 @@ export default {
   size: {
     screenWidth: width,
     screenHeight: Platform.OS === 'ios' ? height : height - 30,
-    bannerHeight: 50,
     hideElasticSize: 50,
     slideMaxValue: 25,
+    bannerHeight: 100,
+    bannerHeightLight: 70,
+    pastEventHeight: 40,
+    currentEventHeight: 60,
+    nextEventHeight: 120,
   },
 };

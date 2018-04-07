@@ -1,6 +1,8 @@
 import theme from 'theme';
 import moment from 'moment';
 
+import drum from 'assets/image/dnb.png';
+import dubstep from 'assets/image/dubstep.png';
 import borgore from 'assets/dj/borgore.jpg';
 import camokrooked from 'assets/dj/camo&krooked.jpg';
 import downlink from 'assets/dj/downlink.jpg';
@@ -20,6 +22,8 @@ export const TIME_LINE = [
     description: 'Event 1 Description',
     picture: borgore,
     lineColor: 'white',
+    icon: dubstep,
+
   },
   {
     time: '22:00',
@@ -28,6 +32,8 @@ export const TIME_LINE = [
     description: 'Event 2 Description',
     picture: camokrooked,
     lineColor: theme.colors.accent,
+    icon: drum,
+
   },
   {
     time: '23:00',
@@ -36,6 +42,8 @@ export const TIME_LINE = [
     description: 'Event 3 Description',
     picture: downlink,
     circleColor: theme.colors.primaryLight,
+    icon: dubstep,
+
   },
   {
     time: '00:00',
@@ -43,6 +51,8 @@ export const TIME_LINE = [
     title: 'ED RUSH x OPTICAL',
     description: 'Event 4 Description',
     picture: edrushoptical,
+    icon: drum,
+
   },
   {
     time: '01:00',
@@ -50,6 +60,8 @@ export const TIME_LINE = [
     title: 'MEGALODON x M.TYRANNOSAURUS',
     description: 'Event 5 Description',
     picture: megamidnight,
+    icon: dubstep,
+
   },
   {
     time: '02:00',
@@ -57,6 +69,8 @@ export const TIME_LINE = [
     title: 'A.M.C & TURNO',
     description: 'Event 4 Description',
     picture: AMCTurno,
+    icon: drum,
+
   },
   {
     time: '03:00',
@@ -64,6 +78,8 @@ export const TIME_LINE = [
     title: 'Four Horsemen Tour World',
     description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
     picture: fourhorsement,
+    icon: dubstep,
+
   },
   {
     time: '04:00',
@@ -71,6 +87,8 @@ export const TIME_LINE = [
     title: 'AGRESSOR BUNX x PYTHIUS',
     description: 'Event 4 Description',
     picture: agressorbunxpythius,
+    icon: drum,
+
   },
   {
     time: '05:00',
@@ -78,6 +96,8 @@ export const TIME_LINE = [
     title: 'SOLTAN',
     description: 'Event 5 Description',
     picture: soltan,
+    icon: dubstep,
+
   },
   {
     time: '06:00',
@@ -85,6 +105,8 @@ export const TIME_LINE = [
     title: 'COOKERZ CREW',
     description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',
     picture: cookerzcrew,
+    icon: dubstep,
+
   },
   {
     time: '07:00',

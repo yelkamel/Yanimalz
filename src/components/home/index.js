@@ -19,9 +19,9 @@ import appStyles from '../../appStyles';
 import styles from './styles';
 
 const TOP_MARGIN = 70;
-const BANNER_HEIGHT = theme.size.bannerHeight;
-const BOTTOM_POSITION = theme.size.screenHeight - BANNER_HEIGHT * 2 - TOP_MARGIN;
+
 const TOP_POSITION = 0;
+
 
 class Home extends React.Component {
   state = {
@@ -38,6 +38,8 @@ class Home extends React.Component {
         this.props.loadTimeBeforeNotif(min);
       });
     });
+    this.bannerHeight = this.props.untilEvent > 0 ? theme.size.bannerHeight
+      : theme.size.bannerHeightLight;
 
     // AppState.addEventListener('change', this.handleAppStateChange);
   }
@@ -56,7 +58,7 @@ class Home extends React.Component {
   }
 
   modal = null;
-
+  bannerHeight = theme.size.bannerHeight;
   /*
   handleAppStateChange = (nextAppState) => {
      if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -64,6 +66,15 @@ class Home extends React.Component {
     }
   };
   */
+
+  bottomPosition = () => {
+    const res = theme.size.screenHeight - this.bannerHeight - TOP_MARGIN;
+    if (this.props.untilEvent > 0) {
+      return res;
+    }
+    return res - 70;
+  }
+
 
   selectedMenuItem = (type = 'notif') => {
     const shareOptions = {
@@ -92,7 +103,7 @@ class Home extends React.Component {
       () => {
         if (this.state.isTop) {
           Animated.timing(this.state.animeLineUpPosition, {
-            toValue: BOTTOM_POSITION,
+            toValue: this.bottomPosition(),
             // easing: Easing.linear(),
           }).start(() => {
             this.setState((state) => ({
@@ -119,7 +130,7 @@ class Home extends React.Component {
 
   render() {
     const { animeLineUpPosition, isLoading, isTop, isAnimate } = this.state;
-
+    const { untilEvent } = this.props;
     return (
       <View style={appStyles.flexOne}>
         <Animated.View
@@ -127,7 +138,7 @@ class Home extends React.Component {
             styles.absoluteBlack,
             {
               opacity: animeLineUpPosition.interpolate({
-                inputRange: [TOP_POSITION, BOTTOM_POSITION],
+                inputRange: [TOP_POSITION, this.bottomPosition()],
                 outputRange: [0.7, 0],
               }),
             },
@@ -147,7 +158,7 @@ class Home extends React.Component {
             isTop={isTop}
             isAnimate={isAnimate}
             animeLineUp={this.animeLineUp}
-            untilEvent={34545}
+            untilEvent={untilEvent}
           />
           {!isLoading && <TimeLine isOpen={isTop} />}
         </Animated.View>
@@ -172,11 +183,17 @@ Home.propTypes = {
   loadTimeBeforeNotif: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isUpdated: PropTypes.bool.isRequired,
+  nextEventIn: PropTypes.number.isRequired,
+  untilEvent: PropTypes.number.isRequired,
+
 };
 
 const mapStateToProps = (state) => ({
   isLoading: state.timeline.isLoading,
   isUpdated: state.timeline.isUpdated,
+  nextEventIn: state.timeline.nextEventIn,
+  untilEvent: state.app.untilEvent,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

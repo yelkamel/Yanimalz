@@ -1,7 +1,9 @@
 import React from 'react';
-import { Animated, PanResponder } from 'react-native';
+import { Animated, PanResponder, View } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
+import ResponsiveImage from 'react-native-responsive-image';
+
 import styles from './styles';
 
 const SLIDE_MAX_VALUE = theme.size.slideMaxValue;
@@ -89,7 +91,7 @@ class PictureSwitch extends React.Component {
   });
 
   render() {
-    const { picture, enabled } = this.props;
+    const { picture, enabled, icon } = this.props;
     const borderAnimated = this.scrollValue.interpolate({
       inputRange: [0, SWITCH_TO_VALUE],
       outputRange: [0.01, 1],
@@ -103,6 +105,7 @@ class PictureSwitch extends React.Component {
               styles.borderOpen,
             ]}
           >
+
             <Animated.View
               style={[
                 styles.lightShow,
@@ -110,7 +113,15 @@ class PictureSwitch extends React.Component {
                   transform: [{ scale: borderAnimated }],
                 },
               ]}
-            />
+            >
+              <ResponsiveImage
+                initWidth="60"
+                initHeight="60"
+                source={icon}
+                style={styles.icon}
+              />
+            </Animated.View>
+
           </Animated.View>
         )}
         <Animated.Image
@@ -128,6 +139,7 @@ class PictureSwitch extends React.Component {
 
 PictureSwitch.defaultProps = {
   picture: null,
+  icon: null,
   animate: false,
 };
 
@@ -138,6 +150,7 @@ PictureSwitch.propTypes = {
   enabled: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
   animate: PropTypes.bool,
+  icon: PropTypes.number,
 };
 
 export default PictureSwitch;

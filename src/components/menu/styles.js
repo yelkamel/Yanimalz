@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   // MENU
   menuContainer: {
     position: 'absolute',
-    bottom: -20,
+    bottom: theme.size.screenHeight * 0.04,
     right: 0,
     height: theme.size.screenHeight * 0.6,
     width: theme.size.screenWidth * 0.6,

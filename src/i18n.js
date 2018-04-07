@@ -10,6 +10,7 @@ I18n.translations = {
     hours: 'hour',
     minutes: 'min',
     before: 'before',
+    seconds: 'sec',
     notif: 'Notif',
   },
   fr: {
@@ -18,6 +19,7 @@ I18n.translations = {
     days: 'jour',
     hours: 'heure',
     minutes: 'min',
+    seconds: 'sec',
     before: 'avant',
     notif: 'Notif',
   },

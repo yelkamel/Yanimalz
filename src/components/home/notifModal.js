@@ -41,8 +41,8 @@ class NotifModal extends React.Component {
         style={styles.sliderNotif}
         renderLabel={this.renderText}
         trackStyle={{ backgroundColor: theme.colors.primaryLight }}
-        minimumValue={0}
-        maximumValue={20}
+        minimumValue={1}
+        maximumValue={30}
         inSidelabel={I18n.t('notif')}
         onSlidingComplete={this.onSlidingComplete}
       />

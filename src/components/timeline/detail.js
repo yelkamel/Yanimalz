@@ -3,11 +3,13 @@ import { View, Text, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import appStyles from 'appStyles';
+import CountDown from 'common/countDown';
+import I18n from 'i18n';
+import theme from 'theme';
 import CountdownCircle from 'common/countDownCircle';
 import styles from './styles';
 import PictureSwitch from './pictureSwitch';
 import { TIME_STATUS } from '../../data';
-import theme from '../../theme';
 
 class Detail extends React.Component {
   state = {
@@ -38,16 +40,21 @@ class Detail extends React.Component {
   }
   renderHourGlass() {
     if (this.props.nextEventIn > 0) {
-      return (
-        <Animated.View
-          style={{
-            flex: 1,
-            paddingLeft: theme.size.screenWidth * 0.2,
-          }}
-        >
+      return (<CountDown
+        digitTxtColor={theme.colors.primaryDark}
+        digitBgColor={theme.colors.primaryLight}
+        daysLabel={I18n.t('days')}
+        hoursLabel={I18n.t('hours')}
+        minLabel={I18n.t('minutes')}
+        secLabel={I18n.t('seconds')}
+        until={this.props.nextEventIn}
+        timeToShow={['M', 'S']}
+              />);
+
+      /*  return (
           <CountdownCircle
             seconds={this.props.nextEventIn}
-            radius={35}
+            radius={30}
             borderWidth={10}
             color="#ff003f"
             bgColor={theme.colors.primaryDark}
@@ -56,8 +63,7 @@ class Detail extends React.Component {
               Math.floor((totalSeconds - elapsedSeconds) / 60).toString()}
             onTimeElapsed={() => console.log('Elapsed!')}
           />
-        </Animated.View>
-      );
+        ); */
     }
     return null;
   }
@@ -67,7 +73,7 @@ class Detail extends React.Component {
 
     if (rowData.status === TIME_STATUS[1]) {
       return (
-        <View style={appStyles.flexRow}>
+        <View style={styles.currentEvent}>
           <Text
             style={[
               styles.title,
@@ -82,8 +88,25 @@ class Detail extends React.Component {
         </View>
       );
     }
+
+    if (rowData.status === TIME_STATUS[0]) {
+      return (
+        <View style={styles.eventPast}>
+          <Text
+            style={[
+              styles.title,
+              {
+                color: rowData.lineColor,
+              },
+            ]}
+          >
+            {rowData.title}
+          </Text>
+        </View>
+      );
+    }
     return (
-      <View style={appStyles.flexOne}>
+      <View style={styles.nextEvent}>
         <Text
           style={[
             styles.title,
@@ -97,6 +120,7 @@ class Detail extends React.Component {
         <PictureSwitch
           action={setNotifForEvent}
           picture={rowData.picture}
+          icon={rowData.icon}
           isOpen={isOpen}
           value={rowData.key}
           enabled={rowData.status === TIME_STATUS[2]}

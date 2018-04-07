@@ -33,8 +33,8 @@ function setNotif(state, eventKey) {
 function loadTimeLine(state, payload) {
   const { notifList } = payload;
   const dataTmp = state.data.reduce((results, event) => {
-    // const currentTime = moment();
-    const currentTime = moment('23:30', 'HH:mm');
+    const currentTime = moment();
+    // const currentTime = moment('23:30', 'HH:mm');
 
     const startTime = moment(event.time, 'HH:mm');
     let hasNotif = false;

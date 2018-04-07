@@ -58,7 +58,7 @@ class Banner extends React.Component {
           style={[
             styles.borderRadiusView,
             {
-              height: untilEvent > 0 ? 100 : 50,
+              height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
             },
           ]}
         >
@@ -76,8 +76,9 @@ class Banner extends React.Component {
                 ]}
               />
             </View>
+            {untilEvent > 0 && <SubBanner />}
+
           </ImageBackground>
-          {untilEvent > 0 && <SubBanner />}
         </View>
       </Animated.View>
     );
