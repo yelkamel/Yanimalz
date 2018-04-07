@@ -53,9 +53,21 @@ const styles = StyleSheet.create({
   subContainerView: {
     height: 50,
     alignItems: 'center',
-    marginHorizontal: theme.size.screenWidth * 0.15,
+    marginHorizontal: theme.size.screenWidth * 0.10,
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  // MODAL
+  notifModalContainer: {
+    height: 100,
+    width: theme.size.screenWidth * 0.8,
+  },
+  notifModalText: {
+    fontSize: theme.textSizes.small,
+    color: theme.colors.primaryLight,
+    textAlign: 'center',
+    marginBottom: 10,
+    fontFamily: theme.fontFamily.rubikRegular,
   },
   // SUB BANNER
   globalCountDownContainer: {
@@ -83,10 +95,10 @@ const styles = StyleSheet.create({
   },
   // Modal
   topModal: {
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     width: theme.size.screenWidth,
-    height: theme.size.screenHeight / 2 + theme.size.hideElasticSize,
+    height: theme.size.screenHeight / 4 + theme.size.hideElasticSize,
     backgroundColor: theme.colors.primaryDark,
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,

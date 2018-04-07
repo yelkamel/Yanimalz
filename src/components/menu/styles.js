@@ -9,8 +9,12 @@ const styles = StyleSheet.create({
     left: 0,
     height: theme.size.screenHeight * 0.3,
     width: theme.size.screenWidth,
-
   },
+  actionItem: {
+    height: 40,
+    width: 40,
+  },
+  /*
   shareView: {
     height: 60,
     width: 60,
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     transform: [{ rotate: '65deg' }],
-  },
+  }, */
 });
 
 export default styles;
