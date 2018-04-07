@@ -5,13 +5,11 @@ const styles = StyleSheet.create({
   // MENU
   menuContainer: {
     position: 'absolute',
-    bottom: theme.size.screenHeight * 0.04,
-    right: 0,
-    height: theme.size.screenHeight * 0.6,
-    width: theme.size.screenWidth * 0.6,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    paddingRight: 25,
+    bottom: theme.size.bannerHeight + 10,
+    left: 0,
+    height: theme.size.screenHeight * 0.3,
+    width: theme.size.screenWidth,
+
   },
   shareView: {
     height: 60,

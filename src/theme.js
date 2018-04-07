@@ -45,7 +45,7 @@ export default {
     screenHeight: Platform.OS === 'ios' ? height : height - 30,
     hideElasticSize: 50,
     slideMaxValue: 25,
-    bannerHeight: 100,
+    bannerHeight: 50,
     bannerHeightLight: 70,
     pastEventHeight: 40,
     currentEventHeight: 60,

@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
   },
   // SUB BANNER
   globalCountDownContainer: {
-    paddingTop: 5,
   },
   // MAP HOME
   absoluteBlack: {
