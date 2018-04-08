@@ -72,6 +72,15 @@ const styles = StyleSheet.create({
   // SUB BANNER
   globalCountDownContainer: {
   },
+  androidIonicStyle: {
+    borderRadius: 15,
+    backgroundColor: theme.colors.primaryLight,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    height: 37,
+    width: 37,
+
+  },
   // MAP HOME
   absoluteBlack: {
     position: 'absolute',

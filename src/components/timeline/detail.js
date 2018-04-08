@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import appStyles from 'appStyles';
+// import appStyles from 'appStyles';
 import CountDown from 'common/countDown';
 import I18n from 'i18n';
 import theme from 'theme';
-import CountdownCircle from 'common/countDownCircle';
+// import CountdownCircle from 'common/countDownCircle';
 import styles from './styles';
 import PictureSwitch from './pictureSwitch';
 import { TIME_STATUS } from '../../data';
@@ -15,15 +15,24 @@ class Detail extends React.Component {
   state = {
     isOpen: false,
     animate: false,
+    nextEventIn: this.props.nextEventIn,
   };
 
-  componentDidMount() { }
+  componentDidMount() {
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.rowData.hasNotif) {
       this.setState((state) => ({
         ...state,
         isOpen: nextProps.rowData.hasNotif,
+      }));
+    }
+
+    if (nextProps.nextEventIn !== this.props.nextEventIn) {
+      this.setState((state) => ({
+        ...state,
+        nextEventIn: nextProps.nextEventIn,
       }));
     }
 
@@ -38,8 +47,10 @@ class Detail extends React.Component {
       });
     }
   }
+
   renderHourGlass() {
-    if (this.props.nextEventIn > 0) {
+    const { currentEvent: { key }, rowData } = this.props;
+    if (this.state.nextEventIn > 0 && rowData.key === key) {
       return (<CountDown
         digitTxtColor={theme.colors.primaryDark}
         digitBgColor={theme.colors.primaryLight}
@@ -47,23 +58,9 @@ class Detail extends React.Component {
         hoursLabel={I18n.t('hours')}
         minLabel={I18n.t('minutes')}
         secLabel={I18n.t('seconds')}
-        until={this.props.nextEventIn}
+        until={this.state.nextEventIn}
         timeToShow={['M', 'S']}
               />);
-
-      /*  return (
-          <CountdownCircle
-            seconds={this.props.nextEventIn}
-            radius={30}
-            borderWidth={10}
-            color="#ff003f"
-            bgColor={theme.colors.primaryDark}
-            textStyle={styles.countDownInner}
-            updateText={(elapsedSeconds, totalSeconds) =>
-              Math.floor((totalSeconds - elapsedSeconds) / 60).toString()}
-            onTimeElapsed={() => console.log('Elapsed!')}
-          />
-        ); */
     }
     return null;
   }
@@ -133,6 +130,7 @@ class Detail extends React.Component {
 
 const mapStateToProps = (state) => ({
   nextEventIn: state.timeline.nextEventIn,
+  currentEvent: state.timeline.currentEvent,
 });
 
 Detail.defaultProps = {
@@ -147,5 +145,6 @@ Detail.propTypes = {
   animate: PropTypes.bool,
   setNotifForEvent: PropTypes.func.isRequired,
   nextEventIn: PropTypes.number.isRequired,
+  currentEvent: PropTypes.any.isRequired,
 };
 export default connect(mapStateToProps)(Detail);

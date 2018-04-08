@@ -1,18 +1,19 @@
 import React from 'react';
-import { Animated, View } from 'react-native';
+import { Animated, View, Text, Image, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import PulseAnimation from 'common/pulseAnimation';
+// import PulseAnimation from 'common/pulseAnimation';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import theme from 'theme';
+import OpacityGradientView from 'react-native-opacity-gradient';
 
 import logo from 'assets/image/logo.png';
+import buffle from 'assets/image/buffle.png';
 import monkey from 'assets/image/monkey.png';
 import bear from 'assets/image/bear.png';
 import hibou from 'assets/image/hibou.png';
 import cat from 'assets/image/cat.png';
 import elephant from 'assets/image/elephant.png';
-import sanglier from 'assets/image/sanglier.png';
+import phaco from 'assets/image/phaco.png';
 import wolf from 'assets/image/wolf.png';
 
 
@@ -22,13 +23,60 @@ import { styles } from './styles';
 const AREA_LOC_GPS = {
   longitudeDelta: 0.0026429008518391583 * 0.5,
   latitudeDelta: 0.0012644995249289082 * 0.5,
-  longitude: 2.3651310669234653,
-  latitude: 48.90347782160455,
+  longitude: 2.3650113,
+  latitude: 48.9034989,
 };
+
+
+const INIT_POS = {
+  longitude: 2.364360,
+  latitude: 48.903588,
+};
+
+
+const ANIMALZ_POSITION = {
+  longitude: 2.36534,
+  latitude: 48.90328,
+};
+const ANIMALZ_LIST = [
+  {
+    id: 'monkey',
+    image: monkey,
+  },
+  {
+    id: 'bear',
+    image: bear,
+  },
+  {
+    id: 'hibou',
+    image: hibou,
+  },
+  {
+    id: 'wolf',
+    image: wolf,
+  },
+  {
+    id: 'phaco',
+    image: phaco,
+  },
+  {
+    id: 'elephant',
+    image: elephant,
+  },
+  {
+    id: 'cat',
+    image: cat,
+  },
+  {
+    id: 'buffle',
+    image: buffle,
+  },
+];
+
 
 class MapStage extends React.Component {
   state = {
-    animatedPulse: false,
+    isLoading: true,
   };
 
   componentDidMount() { }
@@ -57,7 +105,7 @@ class MapStage extends React.Component {
                 }).start(() => {
                   if (true) {
                     // TODO  this.props.eventInfo.picture
-                    this.animatePulse(30);
+                    this.setState((state) => ({ ...state, isLoading: false }));
                   }
                 });
               });
@@ -72,143 +120,81 @@ class MapStage extends React.Component {
   map = null;
   itemOpacity = new Animated.Value(0);
 
-  animatePulse = (durationInSeconds) => {
-    this.setState(
-      (state) => ({ ...state, animatedPulse: true }),
-      () => {
-        Animated.delay(1000 * durationInSeconds).start(() => {
-          this.setState((state) => ({ ...state, animatedPulse: false }));
-        });
-      },
-    );
-  };
-
-  renderPicture() {
-    const { eventInfo: { picture } } = this.props;
-
-    if (picture) {
+  renderAnimalz(value, index) {
+    if (Platform.OS === 'ios') {
       return (
-        <Animated.Image
-          source={picture}
+        <OpacityGradientView
+          style={styles.gradient}
+          colors={['transparent', 'white', 'white', 'transparent']}
+          locations={[0, 0.1, 0.90, 1.0]}
+          start={{ x: 0.0, y: 0.0 }}
+          end={{ x: 0.0, y: 1.0 }}
+        >
+          <Image
+            source={value.image}
+            style={[
+              styles.animalzStyle,
+            ]}
+          />
+          <Image
+            source={ANIMALZ_LIST[index + 1].image}
+            style={[
+              styles.animalzStyle,
+            ]}
+          />
+
+        </OpacityGradientView>);
+    }
+    return (
+      <View
+        style={[styles.gradient, { opacity: 0.8 }]}
+      >
+        <Image
+          source={value.image}
           style={[
-            styles.djImage,
+            styles.animalzStyle,
           ]}
         />
+        <Image
+          source={ANIMALZ_LIST[index + 1].image}
+          style={[
+            styles.animalzStyle,
+          ]}
+        />
+
+      </View>
+    );
+  }
+  renderMarker() {
+    if (!this.state.isLoading) {
+      return (
+
+        <Marker anchor={{ x: 0.1, y: 0.8 }} coordinate={ANIMALZ_POSITION}>
+
+          {ANIMALZ_LIST.map((value, index) => {
+            if (index % 2 === 0 && index !== ANIMALZ_LIST.length - 1) {
+              return (
+                <Animated.View key={value.id} style={{ opacity: 0.5, zIndex: 10 }} >
+                  {this.renderAnimalz(value, index)}
+                </Animated.View>);
+            }
+            return null;
+          },
+          )}
+        </Marker>
       );
     }
 
-    return (
-      <Animated.Image
-        source={logo}
-        style={[
-          styles.logoStyle,
-        ]}
-      />
-    );
+    return null;
   }
+
 
   //            opacity: this.itemOpacity,
 
 
   render() {
     const { isFirstTime } = this.props;
-    // const { animatedPulse } = this.state;
-
-    const initialCordianate = {
-      longitude: 2.364360,
-      latitude: 48.903588,
-    };
-
-    const rowPosition = [
-      {
-        longitude: 2.3641557,
-        latitude: 48.9032470,
-      },
-      {
-        longitude: 2.3643706,
-        latitude: 48.9032248,
-      },
-      {
-        longitude: 2.3645587,
-        latitude: 48.9032040,
-      },
-      {
-        longitude: 2.3647438,
-        latitude: 48.9031818,
-      },
-      {
-        longitude: 2.3649550,
-        latitude: 48.9031584,
-      },
-      {
-        longitude: 2.3651387,
-        latitude: 48.9031366,
-      },
-      {
-        longitude: 2.3653352,
-        latitude: 48.9031040,
-      },
-      {
-        longitude: 2.3655575,
-        latitude: 48.9031053,
-      },
-
-    ];
-
-    const columnPosition = [
-
-      {
-        longitude: 2.3639968,
-        latitude: 48.9034432,
-      },
-      {
-        longitude: 2.3640501,
-        latitude: 48.9035692,
-      },
-      {
-        longitude: 2.3640652,
-        latitude: 48.9036827,
-      },
-    ];
-
-    const animalzPosition = [
-      {
-        longitude: 2.3644286,
-        latitude: 48.903904,
-        image: monkey,
-      },
-      {
-        longitude: 2.3644283,
-        latitude: 48.9032001,
-        image: bear,
-      },
-      {
-        longitude: 2.3648108,
-        latitude: 48.9038564,
-        image: hibou,
-      },
-      {
-        longitude: 2.3648346,
-        latitude: 48.9031582,
-        image: wolf,
-      },
-      {
-        longitude: 2.3652051,
-        latitude: 48.9038154,
-        image: sanglier,
-      },
-      {
-        longitude: 2.3652034,
-        latitude: 48.9031143,
-        image: elephant,
-      },
-      {
-        longitude: 2.3654810,
-        latitude: 48.9030927,
-        image: cat,
-      },
-
-    ];
+    const { isLoading } = this.state;
 
 
     return (
@@ -218,7 +204,6 @@ class MapStage extends React.Component {
           style={styles.map}
           provider={PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
-          showsUserLocation
           cacheEnabled={!isFirstTime}
           scrollEnabled={false}
           rotateEnabled={false}
@@ -230,83 +215,70 @@ class MapStage extends React.Component {
           showsPointsOfInterest={false}
           showsTraffic={false}
         >
-
-
-          {rowPosition.map((value) => (
-            <Marker key={value.longitude} anchor={{ x: 0, y: 0 }} coordinate={value}>
-              <Animated.View style={{
-                width:
-                  theme.size.screenWidth,
-                height: 2,
-                backgroundColor: theme.colors.primaryLight,
-                opacity: 0.6,
+          {this.renderMarker()}
+          <Marker
+            anchor={{ x: 0.5, y: 0.5 }}
+            coordinate={{
+              latitude: 48.90356,
+              longitude: 2.36463,
+            }}
+            style={{ zIndex: 1 }}
+          >
+            <View style={{
+              width: 40,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            >
+              <View style={{
+                position: 'absolute',
+                backgroundColor: theme.colors.accent,
+                width: 30,
+                height: 30,
+                opacity: 0.2,
+                borderRadius: 30,
               }}
               />
-            </Marker>
-          ))}
-          {columnPosition.map((value) => (
-            <Marker key={value.longitude} anchor={{ x: 0, y: 0 }} coordinate={value}>
-              <Animated.View style={{
-                height:
-                  theme.size.screenHeight,
-                width: 2,
-                backgroundColor: theme.colors.primaryLight,
-                opacity: 0.6,
+              <View style={{
+                position: 'absolute',
+                backgroundColor: theme.colors.accent,
+                width: 25,
+                height: 25,
+                opacity: 0.4,
+                borderRadius: 30,
               }}
               />
-            </Marker>
-          ))}
-          {animalzPosition.map((value) => (
-            <Marker key={value.longitude} anchor={{ x: 0.5, y: 0.5 }} coordinate={value}>
-              <Animated.Image
-                source={value.image}
-                style={[
-                  styles.logoStyle,
-                ]}
-              />
-            </Marker>
-          ))}
+              <View style={{ backgroundColor: theme.colors.accent, width: 13, height: 13, borderRadius: 10 }} />
 
-          <Marker coordinate={initialCordianate}>
-            {this.renderPicture()}
+            </View>
           </Marker>
+
+          <Marker
+            anchor={{ x: 0.5, y: 2 }}
+            coordinate={INIT_POS}
+            style={{ zIndex: 1 }}
+          >
+            <Animated.Image
+              source={logo}
+              style={[
+                styles.logoStyle]}
+            />
+          </Marker>
+
         </MapView>
-      </View>
+
+      </View >
     );
   }
 }
-
-/*
-
-          <Marker coordinate={initialCordianate} anchor={{ x: 0.5, y: 0.42 }}>
-            {animatedPulse &&
-              <View style={{
-                height: 400,
-                width: 400,
-              }}
-              >
-                <PulseAnimation
-                  color={theme.colors.primary}
-                  numPulses={2}
-                  diameter={250}
-                  speed={30}
-                  duration={2000}
-                />
-              </View>
-            }
-          </Marker>
-*/
 
 MapStage.defaultProps = {};
 
 MapStage.propTypes = {
   onFinishAnimation: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool.isRequired,
-  eventInfo: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  eventInfo: state.timeline.currentEvent,
-});
 
-export default connect(mapStateToProps)(MapStage);
+export default MapStage;

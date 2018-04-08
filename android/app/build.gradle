@@ -149,14 +149,13 @@ android {
 }
 
 dependencies {
+    compile ('com.google.android.gms:play-services-gcm:10.0.1') { force = true; }
+    compile project(':react-native-push-notification')
+    compile project(':react-native-iconic')
+    compile project(':react-native-opacity-gradient')
     compile project(':react-native-video')
-    compile project(':react-native-vector-icons')
     compile project(':react-native-share')
-    compile project(':react-native-maps')
-    compile project(':react-native-i18n')
-    compile project(':react-native-video')
     compile project(':react-native-vector-icons')
-    compile project(':react-native-share')
     compile project(':react-native-maps')
     compile project(':react-native-i18n')
     compile fileTree(dir: "libs", include: ["*.jar"])

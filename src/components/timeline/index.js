@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, Image } from 'react-native';
+import { View, Animated, AppState } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
@@ -13,6 +13,8 @@ import Detail from './detail';
 class TimeLine extends React.Component {
   state = {
     animateEvent: false,
+    appState: AppState.currentState,
+
   };
 
   componentDidMount() {
@@ -25,6 +27,7 @@ class TimeLine extends React.Component {
         Animated: true,
       });
     });
+    AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +37,19 @@ class TimeLine extends React.Component {
       }
     }
   }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange);
+  }
+
+
+  handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.updateAtTheNextHours();
+    }
+    this.setState({ appState: nextAppState });
+  };
+
 
   numberOfNotif = 0;
   numberOfPastEvent = 0;

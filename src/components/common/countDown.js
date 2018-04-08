@@ -10,10 +10,11 @@ const DEFAULT_TIME_TXT_COLOR = '#000';
 const DEFAULT_DIGIT_TXT_COLOR = '#000';
 const DEFAULT_TIME_TO_SHOW = ['D', 'H', 'M', 'S'];
 
-export default class CountDown extends React.Component {
+export default class CountDown extends React.PureComponent {
   state = {
     until: this.props.until,
   };
+
 
   componentDidMount() {
     if (this.props.onFinish) {
@@ -22,9 +23,17 @@ export default class CountDown extends React.Component {
     this.timer = setInterval(this.updateTimer, 1000);
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.until !== this.props.until) {
+      this.setState((state) => ({ ...state, until: nextProps.until }));
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
+
 
   getTimeLeft = () => {
     const { until } = this.state;
@@ -137,7 +146,7 @@ CountDown.defaultProps = {
   secLabel: 'secondes',
   until: 0,
   size: 15,
-  onFinish: () => {},
-  onPress: () => {},
+  onFinish: () => { },
+  onPress: () => { },
   style: {},
 };

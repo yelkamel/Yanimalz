@@ -2,6 +2,7 @@ import { TIME_LINE, TIME_STATUS } from 'data';
 import { getTimeStatus, getColorFromStatus } from 'utils';
 import moment from 'moment/moment';
 import store from 'react-native-simple-store';
+import PushNotification from 'react-native-push-notification';
 
 const BEFORE_MD_START = moment('12:00:00', 'HH:mm');
 const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
@@ -10,6 +11,8 @@ function setNotif(state, eventKey) {
   const dataTmp = state.data;
   const eventObject = dataTmp.find((item) => item.key === eventKey);
   let notifListTmp = [];
+
+  const eventDateEpoch = eventObject.momentTime.valueOf();
 
   if (state.notifList.includes(eventKey)) {
     const index = state.notifList.indexOf(eventKey);
@@ -23,6 +26,14 @@ function setNotif(state, eventKey) {
 
   eventObject.hasNotif = !eventObject.hasNotif;
   store.save('notifList', notifListTmp);
+  if (eventObject.hasNotif) {
+    PushNotification.localNotificationSchedule({
+      title: eventObject.title,
+      message: eventObject.description,
+      date: new Date(eventDateEpoch),
+    });
+  }
+
   return {
     ...state,
     data: dataTmp,

@@ -3,14 +3,12 @@ package com.animalz;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import ui.iconic.RNIconicPackage;
+import com.reactlibrary.RNOpacityGradientPackage;
+import cl.json.RNSharePackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.RNSharePackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
-import com.brentvatne.react.ReactVideoPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -22,14 +20,12 @@ import com.facebook.soloader.SoLoader;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ShareApplication , ReactApplication{
+public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
   @Override
   public String getFileProviderAuthority() {
     return "com.animalz.provider";
   }
-
-
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -40,12 +36,9 @@ public class MainApplication extends Application implements ShareApplication , R
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new ReactVideoPackage(),
-            new VectorIconsPackage(),
-            new RNSharePackage(),
-            new MapsPackage(),
-            new RNI18nPackage(), new ReactVideoPackage()
-          , new MapsPackage(), new RNSharePackage(), new RNI18nPackage(), new VectorIconsPackage());
+            new ReactNativePushNotificationPackage(), new RNIconicPackage(), new RNOpacityGradientPackage(),
+          new ReactVideoPackage(), new MapsPackage(), new RNSharePackage(), new RNI18nPackage(),
+          new VectorIconsPackage());
     }
 
     @Override

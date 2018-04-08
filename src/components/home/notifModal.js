@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setNotifBefore } from 'actions/app';
 import theme from 'theme';
-import LargeSlider from 'common/largeSlider';
 import I18n from 'i18n';
 import SwitchSelector from 'react-native-switch-selector';
 
@@ -41,7 +40,6 @@ class NotifModal extends React.Component {
   };
 
   render() {
-    const { minBefore } = this.state;
     return (
       <View style={styles.notifModalContainer}>
         <Text style={styles.notifModalText}>

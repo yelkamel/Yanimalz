@@ -29,6 +29,7 @@ class Home extends React.Component {
     isLoading: true,
     isTop: true,
     isAnimate: false,
+
   };
 
   componentDidMount() {
@@ -40,8 +41,6 @@ class Home extends React.Component {
     });
     this.bannerHeight = this.props.untilEvent > 0 ? theme.size.bannerHeight
       : theme.size.bannerHeightLight;
-
-    // AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,19 +52,10 @@ class Home extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    //  AppState.removeEventListener('change', this.handleAppStateChange);
-  }
 
   modal = null;
   bannerHeight = theme.size.bannerHeight;
-  /*
-  handleAppStateChange = (nextAppState) => {
-     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-     console.log('App has come to the foreground!');
-    }
-  };
-  */
+
 
   bottomPosition = () => {
     const res = theme.size.screenHeight - this.bannerHeight - TOP_MARGIN;

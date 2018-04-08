@@ -1,10 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import theme from 'theme';
+
+const { height } = Dimensions.get('window');
 
 export const VIDEO_TOP_POS = theme.size.screenHeight * 0.1;
 export const VIDEO_LEFT_POS = theme.size.screenWidth * 0.34;
-export const ANIMALZ_WIDTH = theme.size.screenWidth * 0.17;
-export const ANIMALZ_HEIGHT = theme.size.screenHeight * 0.08;
+export const ANIMALZ_HEIGHT = height * 0.16;
+export const ANIMALZ_WIDTH = theme.size.screenWidth * 0.24;
+
+export const LOGO_HEIGHT = height * 0.07;
+export const LOGO_WIDTH = theme.size.screenWidth * 0.50;
 
 export const styles = StyleSheet.create({
   // MAP
@@ -32,8 +37,36 @@ export const styles = StyleSheet.create({
     bottom: 0,
   },
   logoStyle: {
+    height: LOGO_HEIGHT,
+    width: LOGO_WIDTH,
+    borderRadius: 5,
+  },
+  animalzStyle: {
     height: ANIMALZ_HEIGHT,
     width: ANIMALZ_WIDTH,
     borderRadius: 5,
+  },
+  // Animalz
+  gradient: {
+    flexDirection: 'row',
+    flex: 1,
+    margin: 1,
+    width: theme.size.screenWidth * 0.5,
+  },
+  currentEventMapContainer: {
+    height: 50,
+    width: theme.size.screenWidth * 0.6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.primaryLight,
+    borderWidth: 2,
+    borderColor: theme.colors.primaryDark,
+  },
+  currentEventTextMap: {
+    fontSize: theme.textSizes.small,
+    color: theme.colors.primaryDark,
+    marginHorizontal: 10,
+    textAlign: 'center',
+    fontFamily: theme.fontFamily.rubikRegular,
   },
 });

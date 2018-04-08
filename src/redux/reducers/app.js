@@ -6,7 +6,7 @@ function setTimeBefore(state, payload) {
   store.save('timeBeforeNotif', min);
   return {
     ...state,
-    timeBeforeNotif: min,
+    timeBeforeNotif: min !== null ? min : 10,
   };
 }
 

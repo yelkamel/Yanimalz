@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Text, ImageBackground, Animated, TouchableHighlight } from 'react-native';
+import { View, Text, ImageBackground, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import banner from 'assets/image/banner.png';
-// import slideDownGif from 'assets/image/slideDown.gif';
+import RNIconic from 'react-native-iconic';
 import I18n from 'i18n';
 
 import SubBanner from './subBanner';
 import styles from './styles';
 
 class Banner extends React.Component {
-  state = {};
+  state = {
+  };
   componentWillMount() {
 
   }
@@ -18,31 +19,98 @@ class Banner extends React.Component {
 
   }
 
+
+  onPressTab = () => {
+    this.props.animeLineUp();
+  }
+
   isHide = false;
 
-  render() {
-    const { isTop, animeLineUp, untilEvent } = this.props;
+  renderShapes() {
+    const { isTop } = this.props;
+
+    let shapes = [];
+
+    if (Platform.OS === 'ios') {
+      shapes = [
+        RNIconic.Shapes.Share,
+        RNIconic.Shapes.Download,
+
+        RNIconic.Shapes.UpTriangle,
+        RNIconic.Shapes.LeftTriangle,
+
+        RNIconic.Shapes.UpBasic,
+        RNIconic.Shapes.DownBasic,
+
+        RNIconic.Shapes.Default,
+        RNIconic.Shapes.Add,
+        RNIconic.Shapes.Minus,
+        RNIconic.Shapes.Close,
+        RNIconic.Shapes.Back,
+        RNIconic.Shapes.Forward,
+        RNIconic.Shapes.Menu,
+        RNIconic.Shapes.Paused,
+        RNIconic.Shapes.DownArrow,
+        RNIconic.Shapes.RightTriangle,
+        RNIconic.Shapes.DownTriangle,
+        RNIconic.Shapes.Ok,
+        RNIconic.Shapes.Rewind,
+        RNIconic.Shapes.FastForward,
+        RNIconic.Shapes.Square,
+      ];
+      return (
+        <RNIconic
+          shape={shapes}
+          roundBackgroundColor={theme.colors.primaryLight}
+          tintColor={theme.colors.primaryDark}
+          size={20}
+          selection={isTop ? 1 : 0}
+          disable={false}
+          lineThickness={3}
+          onChange={this.onPressTab}
+        />);
+    } //        roundBackgroundColor={theme.colors.primaryDark}
+
+    shapes = [
+      RNIconic.Shapes.BURGER,
+      RNIconic.Shapes.CHECK,
+    ];
+
     return (
-      <TouchableHighlight onPress={() => animeLineUp()} >
+      <View style={styles.androidIonicStyle}>
+        <RNIconic
+          shape={shapes}
+          tintColor={theme.colors.primaryDark}
+          size={40}
+          onChange={this.onPressTab}
+        />
+      </View>);
+  }
 
-        <View
-          style={[
-            styles.borderRadiusView,
-            {
-              height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
-            },
-          ]}
-        >
-          <ImageBackground style={styles.bannerStyle} source={banner}>
-            <View style={styles.subContainerView}>
-              <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
 
-              {untilEvent > 0 && <SubBanner />}
+  render() {
+    const { untilEvent } = this.props;
+    return (
 
-            </View>
-          </ImageBackground>
-        </View>
-      </TouchableHighlight>
+      <View
+        style={[
+          styles.borderRadiusView,
+          {
+            height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
+          },
+        ]}
+      >
+        <ImageBackground style={styles.bannerStyle} source={banner}>
+          <View style={styles.subContainerView}>
+            {this.renderShapes()}
+
+            <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
+
+            {untilEvent > 0 && <SubBanner />}
+
+          </View>
+        </ImageBackground>
+      </View>
 
     );
   }
@@ -50,7 +118,6 @@ class Banner extends React.Component {
 
 Banner.propTypes = {
   isTop: PropTypes.bool.isRequired,
-  isAnimate: PropTypes.bool.isRequired,
   animeLineUp: PropTypes.func.isRequired,
   untilEvent: PropTypes.number.isRequired,
 };
