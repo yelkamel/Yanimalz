@@ -109,9 +109,8 @@ class TimeLine extends React.Component {
           circleColor={theme.colors.primaryLight}
           lineColor={theme.colors.primaryLight}
           renderDetail={this.renderDetail}
-          lineWidth={4}
-          separator={false}
           renderCircle={this.renderCircle}
+          lineWidth={4}
           enableEmptySections
           options={{
             ref: (scroll) => this.scrollTimeLine = scroll,

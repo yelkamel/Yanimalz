@@ -77,9 +77,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primaryLight,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    height: 37,
-    width: 37,
-
+    height: 35,
+    width: 35,
   },
   // MAP HOME
   absoluteBlack: {

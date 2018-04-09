@@ -2,34 +2,55 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setNotifBefore } from 'actions/app';
+import { setNotifBefore } from 'actions/timeline';
 import theme from 'theme';
 import I18n from 'i18n';
 import SwitchSelector from 'react-native-switch-selector';
+import PushNotification from 'react-native-push-notification';
 
 import styles from './styles';
 
 const options = [
-  { label: '5min', value: '5' },
-  { label: '10min', value: '10' },
-  { label: '15min', value: '15' },
-  { label: '20min', value: '20' },
-
+  { label: '5min', value: 5 },
+  { label: '10min', value: 10 },
+  { label: '15min', value: 15 },
+  { label: '20min', value: 20 },
 ];
 
+
 class NotifModal extends React.Component {
-  state = {
-    minBefore: this.props.minBefore,
-  };
-  componentDidMount() { }
+  constructor(props) {
+    super(props);
+    this.state = {
+      minBefore: props.minBefore,
+    };
+  }
+
+  componentDidMount() {
+    PushNotification.configure({
+      onRegister(token) {
+        console.log('TOKEN:', token);
+      },
+      onNotification(notification) {
+        console.log('NOTIFICATION:', notification);
+      },
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+  }
   componentWillUnmount() { }
 
 
   onValueChange = (val) => {
     this.setState((state) => ({ ...state, minBefore: val }));
   }
-  onSlidingComplete = () => {
-    this.props.setNotifBefore(Math.floor(this.state.minBefore));
+  onSelectNotifParams = (value) => {
+    this.props.setNotifBefore(value);
   }
 
   renderText = () => {
@@ -40,6 +61,9 @@ class NotifModal extends React.Component {
   };
 
   render() {
+    const { minBefore } = this.state;
+    const initalIndex = minBefore ?
+      options.findIndex((item) => (item.value === minBefore)) : 1;
     return (
       <View style={styles.notifModalContainer}>
         <Text style={styles.notifModalText}>
@@ -47,11 +71,11 @@ class NotifModal extends React.Component {
         </Text>
         <SwitchSelector
           options={options}
-          initial={0}
+          initial={initalIndex}
           selectedColor={theme.colors.primaryLight}
           buttonColor={theme.colors.primary}
           backgroundColor={theme.colors.primaryLight}
-          onPress={(value) => console.log(`Call onPress with value: ${value}`)}
+          onPress={this.onSelectNotifParams}
         />
       </View>
 
@@ -59,13 +83,18 @@ class NotifModal extends React.Component {
   }
 }
 
+
+NotifModal.defaultProps = {
+  minBefore: 10,
+};
+
 NotifModal.propTypes = {
-  minBefore: PropTypes.number.isRequired,
+  minBefore: PropTypes.number,
   setNotifBefore: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  minBefore: state.app.timeBeforeNotif,
+  minBefore: state.timeline.timeBeforeNotif,
 });
 
 const mapDispatchToProps = (dispatch) => ({

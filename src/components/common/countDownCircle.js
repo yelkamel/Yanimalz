@@ -1,10 +1,45 @@
 import React from 'react';
-import { Easing, Animated, Text, View, ViewPropTypes } from 'react-native';
+import { Easing, Animated, Text, View, ViewPropTypes, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import theme from 'theme';
 
-import styles from './styles';
 // compatability for react-native versions < 0.44
 const ViewPropTypesStyle = ViewPropTypes ? ViewPropTypes.style : View.propTypes.style;
+
+
+const styles = StyleSheet.create({
+  timeCont: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  timeTxt: {
+    color: 'white',
+    marginVertical: 2,
+    fontFamily: theme.fontFamily.rubikRegular,
+    backgroundColor: 'transparent',
+  },
+  timeInnerCont: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  digitCont: {
+
+    borderRadius: 5,
+    marginHorizontal: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  doubleDigitCont: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  digitTxt: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
 
 function calcInterpolationValuesForHalfCircle1(animatedValue, { shadowColor }) {
   const rotate = animatedValue.interpolate({

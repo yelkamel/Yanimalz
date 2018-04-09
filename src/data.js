@@ -1,5 +1,6 @@
 import theme from 'theme';
 import moment from 'moment';
+import I18n from 'i18n';
 
 import drum from 'assets/image/dnb.png';
 import dubstep from 'assets/image/dubstep.png';
@@ -113,6 +114,13 @@ export const TIME_LINE = [
     key: 'END',
   },
 ];
+
+export const SHARE_OPTION = {
+  title: 'Animalz',
+  message: 'Rejoins la plus grosse soirée bass musique de France.',
+  url: 'https://www.facebook.com/animalzfrance/?ref=br_rs',
+}; // I18n.t('seconds')
+
 export const TIME_UNTIL_PARTY = moment('2018-04-21 21:00:00', 'YYYY-MM-DD').diff(
   moment(),
   'seconds',

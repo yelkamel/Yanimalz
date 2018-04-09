@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, Platform } from 'react-native';
+import { View, Text, ImageBackground, Platform, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import banner from 'assets/image/banner.png';
@@ -69,7 +69,7 @@ class Banner extends React.Component {
           lineThickness={3}
           onChange={this.onPressTab}
         />);
-    } //        roundBackgroundColor={theme.colors.primaryDark}
+    }
 
     shapes = [
       RNIconic.Shapes.BURGER,
@@ -77,40 +77,40 @@ class Banner extends React.Component {
     ];
 
     return (
-      <View style={styles.androidIonicStyle}>
-        <RNIconic
-          shape={shapes}
-          tintColor={theme.colors.primaryDark}
-          size={40}
-          onChange={this.onPressTab}
-        />
-      </View>);
+      <RNIconic
+        shape={shapes}
+        tintColor={theme.colors.primaryLight}
+        size={40}
+        onChange={this.onPressTab}
+      />
+    );
   }
 
 
   render() {
     const { untilEvent } = this.props;
     return (
+      <TouchableWithoutFeedback onPress={this.onPressTab}>
+        <View
+          style={[
+            styles.borderRadiusView,
+            {
+              height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
+            },
+          ]}
+        >
+          <ImageBackground style={styles.bannerStyle} source={banner}>
+            <View style={styles.subContainerView}>
+              {this.renderShapes()}
 
-      <View
-        style={[
-          styles.borderRadiusView,
-          {
-            height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
-          },
-        ]}
-      >
-        <ImageBackground style={styles.bannerStyle} source={banner}>
-          <View style={styles.subContainerView}>
-            {this.renderShapes()}
+              <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
 
-            <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
+              {untilEvent > 0 && <SubBanner />}
 
-            {untilEvent > 0 && <SubBanner />}
-
-          </View>
-        </ImageBackground>
-      </View>
+            </View>
+          </ImageBackground>
+        </View>
+      </TouchableWithoutFeedback>
 
     );
   }

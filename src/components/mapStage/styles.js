@@ -1,12 +1,12 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import theme from 'theme';
 
 const { height } = Dimensions.get('window');
+const IMAGE_COEF_WIDTH = Platform.OS === 'ios' ? 0.215 : 0.2;
+const IMAGE_COEF_HEIGHT = Platform.OS === 'ios' ? 0.13 : 0.13;
 
-export const VIDEO_TOP_POS = theme.size.screenHeight * 0.1;
-export const VIDEO_LEFT_POS = theme.size.screenWidth * 0.34;
-export const ANIMALZ_HEIGHT = height * 0.16;
-export const ANIMALZ_WIDTH = theme.size.screenWidth * 0.24;
+export const ANIMALZ_HEIGHT = height * IMAGE_COEF_HEIGHT;
+export const ANIMALZ_WIDTH = theme.size.screenWidth * IMAGE_COEF_WIDTH;
 
 export const LOGO_HEIGHT = height * 0.07;
 export const LOGO_WIDTH = theme.size.screenWidth * 0.50;

@@ -1,18 +1,32 @@
-import { TIME_LINE, TIME_STATUS } from 'data';
+import { TIME_LINE, TIME_STATUS, TIME_UNTIL_PARTY } from 'data';
 import { getTimeStatus, getColorFromStatus } from 'utils';
 import moment from 'moment/moment';
-import store from 'react-native-simple-store';
 import PushNotification from 'react-native-push-notification';
+import store from 'react-native-simple-store';
 
 const BEFORE_MD_START = moment('12:00:00', 'HH:mm');
 const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
+
+function clearAndSetNotif(timeLine, timeBeforeNotif) {
+  PushNotification.cancelAllLocalNotifications();
+
+  timeLine.forEach((item) => {
+    const eventDateEpoch = item.momentTime.valueOf();
+    if (item.hasNotif) {
+      PushNotification.localNotificationSchedule({
+        title: item.title,
+        message: item.description,
+        date: new Date(eventDateEpoch - (timeBeforeNotif * 60)),
+      });
+    }
+  });
+}
+
 
 function setNotif(state, eventKey) {
   const dataTmp = state.data;
   const eventObject = dataTmp.find((item) => item.key === eventKey);
   let notifListTmp = [];
-
-  const eventDateEpoch = eventObject.momentTime.valueOf();
 
   if (state.notifList.includes(eventKey)) {
     const index = state.notifList.indexOf(eventKey);
@@ -25,14 +39,12 @@ function setNotif(state, eventKey) {
   }
 
   eventObject.hasNotif = !eventObject.hasNotif;
+
+  // Save data
   store.save('notifList', notifListTmp);
-  if (eventObject.hasNotif) {
-    PushNotification.localNotificationSchedule({
-      title: eventObject.title,
-      message: eventObject.description,
-      date: new Date(eventDateEpoch),
-    });
-  }
+
+  // set Notif Push
+  clearAndSetNotif(dataTmp, state.timeBeforeNotif);
 
   return {
     ...state,
@@ -76,6 +88,16 @@ function loadTimeLine(state, payload) {
   };
 }
 
+function setTimeBefore(state, payload) {
+  const { min } = payload;
+  store.save('timeBeforeNotif', min);
+  return {
+    ...state,
+    timeBeforeNotif: min !== null ? min : 10,
+  };
+}
+
+
 function updateTimeLine(state) {
   let currentEvent = TIME_LINE[TIME_LINE.length - 1];
 
@@ -109,6 +131,8 @@ const defaultState = {
   isLoading: true,
   nextEventIn: 0,
   notifList: [],
+  timeBeforeNotif: 10,
+  untilEvent: TIME_UNTIL_PARTY,
 };
 
 export default function timeline(state = defaultState, action) {
@@ -126,6 +150,13 @@ export default function timeline(state = defaultState, action) {
         ...state,
         nextEventIn: payload.inSecond,
       };
+    case 'LOAD_NOTIF_BEFORE':
+      return {
+        ...state,
+        timeBeforeNotif: payload.min,
+      };
+    case 'NOTIF_BEFORE':
+      return setTimeBefore(state, payload);
     default:
       return state;
   }

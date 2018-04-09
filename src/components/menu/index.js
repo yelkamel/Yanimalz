@@ -29,10 +29,10 @@ export default class Menu extends Component {
           buttonColor={theme.colors.primaryLight}
           title="New Task"
           onPress={() => {
-            onSelectItem('batery');
+            onSelectItem('hide');
           }}
         >
-          <Icon name="info-circle" size={22} color={theme.colors.primary} />
+          <Icon name="eye-slash" size={22} color={theme.colors.primary} />
         </ActionButton.Item>
         <ActionButton.Item
           buttonColor={theme.colors.primaryLight}

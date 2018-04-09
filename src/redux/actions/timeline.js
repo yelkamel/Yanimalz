@@ -23,3 +23,18 @@ export const setNextEventTime = (inSecond) => ({
   },
 });
 
+
+export const setNotifBefore = (min) => ({
+  type: 'NOTIF_BEFORE',
+  payload: {
+    min,
+  },
+});
+
+export const loadTimeBeforeNotif = (min) => ({
+  type: 'LOAD_NOTIF_BEFORE',
+  payload: {
+    min,
+  },
+});
+

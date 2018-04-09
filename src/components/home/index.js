@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Animated } from 'react-native';
 import store from 'react-native-simple-store';
-import { loadTimeLine, updateTimeLine } from 'actions/timeline';
-import { loadTimeBeforeNotif } from 'actions/app';
+import { loadTimeLine, updateTimeLine, loadTimeBeforeNotif } from 'actions/timeline';
 import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import Share from 'react-native-share';
+import { SHARE_OPTION } from 'data';
 
 import Menu from '../menu';
 import Loading from './loading';
@@ -29,6 +29,7 @@ class Home extends React.Component {
     isLoading: true,
     isTop: true,
     isAnimate: false,
+    hideAnimalz: false,
 
   };
 
@@ -67,22 +68,17 @@ class Home extends React.Component {
 
 
   selectedMenuItem = (type = 'notif') => {
-    const shareOptions = {
-      title: 'React Native',
-      message: 'Hola mundo',
-      url: 'http://facebook.github.io/react-native/',
-      subject: 'Share Link', //  for email
-    };
-
     switch (type) {
       case 'notif':
         this.modal.open();
         break;
       case 'share':
-        Share.open(shareOptions).catch(() => { });
+        Share.open(SHARE_OPTION).catch(() => { });
         break;
 
       default:
+        this.setState((state) => ({ ...state, hideAnimalz: !state.hideAnimalz }));
+
         break;
     }
   };
@@ -119,7 +115,12 @@ class Home extends React.Component {
   };
 
   render() {
-    const { animeLineUpPosition, isLoading, isTop, isAnimate } = this.state;
+    const { animeLineUpPosition,
+      isLoading,
+      isTop,
+      hideAnimalz,
+      isAnimate,
+    } = this.state;
     const { untilEvent } = this.props;
     return (
       <View style={appStyles.flexOne}>
@@ -134,7 +135,11 @@ class Home extends React.Component {
             },
           ]}
         />
-        <MapStage onFinishAnimation={() => { }} isFirstTime={!isLoading} />
+        <MapStage
+          onFinishAnimation={() => { }}
+          isFirstTime={!isLoading}
+          hideAnimalz={hideAnimalz}
+        />
         <Menu onSelectItem={this.selectedMenuItem} />
 
         <Animated.View
@@ -173,7 +178,6 @@ Home.propTypes = {
   loadTimeBeforeNotif: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isUpdated: PropTypes.bool.isRequired,
-  nextEventIn: PropTypes.number.isRequired,
   untilEvent: PropTypes.number.isRequired,
 
 };
@@ -182,7 +186,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.timeline.isLoading,
   isUpdated: state.timeline.isUpdated,
   nextEventIn: state.timeline.nextEventIn,
-  untilEvent: state.app.untilEvent,
+  untilEvent: state.timeline.untilEvent,
 
 });
 

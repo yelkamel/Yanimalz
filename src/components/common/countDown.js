@@ -1,14 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import _ from 'lodash';
 import { sprintf } from 'sprintf-js';
-import styles from './styles';
+import theme from 'theme';
 
 const DEFAULT_BG_COLOR = '#FAB913';
 const DEFAULT_TIME_TXT_COLOR = '#000';
 const DEFAULT_DIGIT_TXT_COLOR = '#000';
 const DEFAULT_TIME_TO_SHOW = ['D', 'H', 'M', 'S'];
+
+const styles = StyleSheet.create({
+  timeCont: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  timeTxt: {
+    color: 'white',
+    marginVertical: 2,
+    fontFamily: theme.fontFamily.rubikRegular,
+    backgroundColor: 'transparent',
+  },
+  timeInnerCont: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  digitCont: {
+
+    borderRadius: 5,
+    marginHorizontal: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  doubleDigitCont: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  digitTxt: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
 
 export default class CountDown extends React.PureComponent {
   state = {

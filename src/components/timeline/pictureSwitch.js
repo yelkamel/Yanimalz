@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, PanResponder, View } from 'react-native';
+import { Animated, Easing, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import ResponsiveImage from 'react-native-responsive-image';
@@ -12,12 +12,15 @@ const SWITCH_TO_VALUE = 50;
 class PictureSwitch extends React.Component {
   state = {
     isFirstAnimate: false,
+    isOpen: false,
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen !== this.props.isOpen && nextProps.isOpen) {
       this.openSwitch();
-    } else if (nextProps.animate !== this.props.animate && nextProps.animate) {
+    }
+
+    /* else if (nextProps.animate !== this.props.animate && nextProps.animate) {
       this.setState(
         (state) => ({ ...state, isFirstAnimate: true }),
         () => {
@@ -26,7 +29,62 @@ class PictureSwitch extends React.Component {
               (state) => ({ ...state, isFirstAnimate: false }));
           });
         });
+    } */
+  }
+
+
+  /*
+    openAndCloseSwitch = () => {
+      Animated.timing(this.scrollValue, {
+        toValue: SWITCH_TO_VALUE,
+        duration: 300,
+        useNativeDriver: true,
+      }).start(() => {
+        Animated.timing(this.scrollValue, {
+          toValue: 0,
+          duration: 200,
+          useNativeDriver: true,
+        }).start(call);
+      });
+    } */
+
+  onPressPicture = () => {
+    console.log('=this.state.isOpen==');
+    console.log(this.state.isOpen);
+    if (this.state.isOpen) {
+      this.closeSwitch();
+    } else {
+      this.openSwitch();
     }
+  }
+
+  closeSwitch = () => {
+    Animated.timing(this.scrollValue, {
+      toValue: 0,
+      duration: 300,
+      easing: Easing.linear,
+
+      useNativeDriver: true,
+    }).start(() => {
+      this.validationNotif();
+      this.setState(
+        (state) => ({ ...state, isOpen: false }));
+    });
+  }
+
+
+  openSwitch = () => {
+    Animated.timing(this.scrollValue, {
+      toValue: SWITCH_TO_VALUE,
+      duration: 300,
+      easing: Easing.linear,
+
+      useNativeDriver: true,
+    }).start(() => {
+      this.validationNotif();
+      this.setState(
+        (state) => ({ ...state, isOpen: true }));
+    });
   }
 
   validationNotif = () => {
@@ -35,40 +93,10 @@ class PictureSwitch extends React.Component {
     }
   };
 
-  openAndCloseSwitch = (call = () => { }) => {
-    Animated.timing(this.scrollValue, {
-      toValue: SWITCH_TO_VALUE,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(this.scrollValue, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start(call);
-    });
-  }
-
-  closeSwitch = (call = () => { }) => {
-    Animated.timing(this.scrollValue, {
-      toValue: 0,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(call);
-  }
-
-
-  openSwitch = (call = () => { }) => {
-    Animated.timing(this.scrollValue, {
-      toValue: SWITCH_TO_VALUE,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(call);
-  }
-
   scrollValue = new Animated.Value(0);
   scroll = null;
   isAnimate = false;
+  /*
   panResponder = PanResponder.create({
     onMoveShouldSetResponderCapture: (event, { dx }) => (Math.abs(dx) <= SLIDE_MAX_VALUE),
     onMoveShouldSetPanResponderCapture: (event, { dx }) => (Math.abs(dx) <= SLIDE_MAX_VALUE),
@@ -88,7 +116,8 @@ class PictureSwitch extends React.Component {
       this.isAnimate = false;
       return true;
     },
-  });
+  }); */
+
 
   render() {
     const { picture, enabled, icon } = this.props;
@@ -98,41 +127,42 @@ class PictureSwitch extends React.Component {
     });
 
     return (
-      <Animated.View {...this.panResponder.panHandlers}>
-        {enabled && (
-          <Animated.View
-            style={[
-              styles.borderOpen,
-            ]}
-          >
-
+      <TouchableOpacity onPress={this.onPressPicture}>
+        <View>
+          {enabled && (
             <Animated.View
               style={[
-                styles.lightShow,
-                {
-                  transform: [{ scale: borderAnimated }],
-                },
+                styles.borderOpen,
               ]}
             >
-              <ResponsiveImage
-                initWidth="60"
-                initHeight="60"
-                source={icon}
-                style={styles.icon}
-              />
+
+              <Animated.View
+                style={[
+                  styles.lightShow,
+                  {
+                    transform: [{ scale: borderAnimated }],
+                  },
+                ]}
+              >
+                <ResponsiveImage
+                  initWidth="60"
+                  initHeight="60"
+                  source={icon}
+                  style={styles.icon}
+                />
+              </Animated.View>
+
             </Animated.View>
+          )}
+          <Animated.Image
+            source={picture}
+            style={[styles.image, {
+              transform: [{ translateX: this.scrollValue }],
+            }]}
+          />
+        </View>
 
-          </Animated.View>
-        )}
-        <Animated.Image
-          source={picture}
-          style={[styles.image, {
-            transform: [{ translateX: this.scrollValue }],
-          }]}
-        />
-      </Animated.View>
-
-
+      </TouchableOpacity>
     );
   }
 }
