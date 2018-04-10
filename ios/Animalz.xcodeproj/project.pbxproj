@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -430,6 +431,12 @@
 		DE809CD77A694B85BE2DF7DE /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		E0C45CC28FA945B9A16BF0F7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		E1F239D05BCF582848050A92 /* Pods-AnimalzTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimalzTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AnimalzTests/Pods-AnimalzTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E2F099DDA4D84234A5B3EA63 /* libRNShineButton.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNShineButton.a; sourceTree = "<group>"; };
+		F014A395207D1B0D00F16150 /* WCLShineButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WCLShineButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F014A397207D1B7500F16150 /* WCLShineButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WCLShineButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F014A3B6207D1D4B00F16150 /* WCLShineButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WCLShineButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F014A3B8207D1E1800F16150 /* WCLShineButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WCLShineButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F014A3FD207D3ACA00F16150 /* WCLShineButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WCLShineButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F026D218206A989300F4F513 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		F08010512073D2FB0052D29D /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		F08010522073D2FB0052D29D /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -651,6 +658,11 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F014A3FD207D3ACA00F16150 /* WCLShineButton.framework */,
+				F014A3B8207D1E1800F16150 /* WCLShineButton.framework */,
+				F014A3B6207D1D4B00F16150 /* WCLShineButton.framework */,
+				F014A397207D1B7500F16150 /* WCLShineButton.framework */,
+				F014A395207D1B0D00F16150 /* WCLShineButton.framework */,
 				F08010CB2073F5DB0052D29D /* MessageUI.framework */,
 				F08010C92073F5CF0052D29D /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -810,6 +822,7 @@
 			children = (
 				F9A6B6AD0FE443B0AD34BB28 /* libRNOpacityGradient.a */,
 				0B352F81E6D747F38419ECA5 /* libRNIconic.a */,
+				E2F099DDA4D84234A5B3EA63 /* libRNShineButton.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1579,12 +1592,15 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-opacity-gradient/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-iconic/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
 				);
 				INFOPLIST_FILE = AnimalzTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1608,12 +1624,15 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-opacity-gradient/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-iconic/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
 				);
 				INFOPLIST_FILE = AnimalzTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1645,6 +1664,8 @@
 					"\"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps\"/**",
 					"$(SRCROOT)/../node_modules/react-native-opacity-gradient/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-iconic/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
 				);
 				INFOPLIST_FILE = Animalz/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1653,6 +1674,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = layouceferie.animalz;
 				PRODUCT_NAME = Animalz;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1669,6 +1691,8 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-opacity-gradient/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-iconic/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
+					"$(SRCROOT)/../node_modules/react-native-shine-button/ios",
 				);
 				INFOPLIST_FILE = Animalz/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1677,6 +1701,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = layouceferie.animalz;
 				PRODUCT_NAME = Animalz;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

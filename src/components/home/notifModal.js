@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { setNotifBefore } from 'actions/timeline';
 import theme from 'theme';
 import I18n from 'i18n';
-import SwitchSelector from 'react-native-switch-selector';
-import PushNotification from 'react-native-push-notification';
+import SwitchSelector from 'common/switchSelector';
 
 import styles from './styles';
 
@@ -27,21 +26,7 @@ class NotifModal extends React.Component {
   }
 
   componentDidMount() {
-    PushNotification.configure({
-      onRegister(token) {
-        console.log('TOKEN:', token);
-      },
-      onNotification(notification) {
-        console.log('NOTIFICATION:', notification);
-      },
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-      popInitialNotification: true,
-      requestPermissions: true,
-    });
+
   }
   componentWillUnmount() { }
 
@@ -76,6 +61,7 @@ class NotifModal extends React.Component {
           buttonColor={theme.colors.primary}
           backgroundColor={theme.colors.primaryLight}
           onPress={this.onSelectNotifParams}
+          height={theme.size.screenHeight * 0.08}
         />
       </View>
 

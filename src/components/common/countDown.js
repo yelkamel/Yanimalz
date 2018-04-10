@@ -49,6 +49,8 @@ export default class CountDown extends React.PureComponent {
     until: this.props.until,
   };
 
+  isFinish = false;
+
 
   componentDidMount() {
     if (this.props.onFinish) {
@@ -59,7 +61,7 @@ export default class CountDown extends React.PureComponent {
 
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.until !== this.props.until) {
+    if (nextProps.until !== this.props.until && nextProps.until > 1) {
       this.setState((state) => ({ ...state, until: nextProps.until }));
     }
   }
@@ -84,36 +86,38 @@ export default class CountDown extends React.PureComponent {
 
     if (until <= 1) {
       clearInterval(this.timer);
+      this.isFinish = true;
       if (this.onFinish) {
         this.onFinish();
       }
     }
-
-    this.setState({ until: until - 1 });
+    if (!this.isFinish) { this.setState({ until: until - 1 }); }
   };
 
   renderDigit = (label, d) => {
-    const { digitBgColor, digitTxtColor, timeTxtColor, size } = this.props;
+    const { digitBgColor, digitTxtColor, timeTxtColor, size, hasLabel } = this.props;
+    const digitToRender = hasLabel ? d : parseInt(d, 10);
     return (
       <View
         style={[
           styles.digitCont,
           { backgroundColor: digitBgColor },
-          { width: size * 2.3, height: size * 2.6 },
+          hasLabel === true ? { width: size * 2.3, height: size * 2.6 } : {},
         ]}
       >
-        <Text style={[styles.digitTxt, { fontSize: size }, { color: digitTxtColor }]}>{d}</Text>
-        <Text
-          style={[
-            styles.timeTxt,
-            {
-              fontSize: size / 1.8,
-              color: timeTxtColor,
-            },
-          ]}
-        >
-          {label}
-        </Text>
+        <Text style={[styles.digitTxt, { fontSize: size }, { color: digitTxtColor }]}>{digitToRender}</Text>
+        {hasLabel &&
+          <Text
+            style={[
+              styles.timeTxt,
+              {
+                fontSize: size / 1.8,
+                color: timeTxtColor,
+              },
+            ]}
+          >
+            {label}
+          </Text>}
       </View>
     );
   };
@@ -167,6 +171,7 @@ CountDown.propTypes = {
   hoursLabel: PropTypes.string,
   minLabel: PropTypes.string,
   secLabel: PropTypes.string,
+  hasLabel: PropTypes.bool,
 };
 
 CountDown.defaultProps = {
@@ -183,4 +188,5 @@ CountDown.defaultProps = {
   onFinish: () => { },
   onPress: () => { },
   style: {},
+  hasLabel: true,
 };

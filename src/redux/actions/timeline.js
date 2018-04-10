@@ -9,10 +9,11 @@ export const loadTimeLine = (notifList) => ({
   },
 });
 
-export const setNotifForEvent = (eventKey) => ({
+export const setNotifForEvent = (eventKey, addNotif) => ({
   type: 'SET_NOTIF',
   payload: {
     eventKey,
+    addNotif,
   },
 });
 

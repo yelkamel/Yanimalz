@@ -149,6 +149,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-shine-button')
+    compile project(':react-native-shine-button')
+    compile project(':react-native-shine-button')
     compile ('com.google.android.gms:play-services-gcm:10.0.1') { force = true; }
     compile project(':react-native-push-notification')
     compile project(':react-native-iconic')

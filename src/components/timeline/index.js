@@ -138,8 +138,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateTimeLine: () => {
     dispatch(updateTimeLine());
   },
-  setNotifForEvent: (eventId) => {
-    dispatch(setNotifForEvent(eventId));
+  setNotifForEvent: (eventId, addNotif) => {
+    dispatch(setNotifForEvent(eventId, addNotif));
   },
   setNextEventTime: (seconds) => {
     dispatch(setNextEventTime(seconds));

@@ -57,18 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  // MODAL
-  notifModalContainer: {
-    height: 100,
-    width: theme.size.screenWidth * 0.8,
-  },
-  notifModalText: {
-    fontSize: theme.textSizes.small,
-    color: theme.colors.primaryLight,
-    textAlign: 'center',
-    marginBottom: 10,
-    fontFamily: theme.fontFamily.rubikRegular,
-  },
   // SUB BANNER
   globalCountDownContainer: {
   },
@@ -102,6 +90,31 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
   },
   // Modal
+  notifModalContainer: {
+    height: 100,
+    width: theme.size.screenWidth * 0.9,
+  },
+  notifModalText: {
+    fontSize: theme.textSizes.small,
+    color: theme.colors.primaryLight,
+    textAlign: 'center',
+    marginBottom: 10,
+    fontFamily: theme.fontFamily.rubikRegular,
+  },
+  sharedModalContainer: {
+    height: theme.size.screenHeight / 2,
+    width: theme.size.screenWidth * 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  shareModalText: {
+    fontSize: theme.textSizes.xsmall,
+    color: theme.colors.primaryLight,
+    textAlign: 'center',
+    marginBottom: 10,
+    fontFamily: theme.fontFamily.rubikRegular,
+  },
   topModal: {
     justifyContent: 'flex-end',
     alignItems: 'center',
@@ -112,16 +125,41 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 25,
     top: -theme.size.hideElasticSize,
   },
+  shareModal: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: theme.size.screenWidth,
+    height: theme.size.screenHeight / 2 + theme.size.hideElasticSize,
+    backgroundColor: theme.colors.primaryDark,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    top: -theme.size.hideElasticSize,
+  },
   sliderNotif: {
     backgroundColor: theme.colors.primary,
-    width: theme.size.screenWidth / 4,
-    marginTop: 50 + theme.size.hideElasticSize,
+    width: theme.size.screenWidth / 5,
     marginBottom: 30,
   },
   sliderText: {
     textAlign: 'center',
     padding: 10,
     fontFamily: theme.fontFamily.rubikRegular,
+  },
+  sliderColorContainer: {
+    height: 50,
+    width: theme.size.screenWidth * 0.4,
+    backgroundColor: theme.colors.primaryLight,
+    borderColor: theme.colors.primary,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  sliderColorRow: {
+    height: 30,
+    alignSelf: 'stretch',
+    marginHorizontal: 5,
+
   },
 });
 

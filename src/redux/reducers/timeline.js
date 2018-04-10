@@ -10,35 +10,46 @@ const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
 function clearAndSetNotif(timeLine, timeBeforeNotif) {
   PushNotification.cancelAllLocalNotifications();
 
-  timeLine.forEach((item) => {
-    const eventDateEpoch = item.momentTime.valueOf();
-    if (item.hasNotif) {
+  timeLine.forEach((item, index) => {
+    if (item.hasNotif && item.status === TIME_STATUS[2]) {
+      const eventDateEpoch = item.momentTime.unix() * 1000;
+      const triggerAt = new Date(eventDateEpoch - (timeBeforeNotif * 60 * 1000));
+
+      console.log('===triggerAt=====');
+      console.log(triggerAt);
+      console.log(eventDateEpoch);
+      console.log('====================================');
       PushNotification.localNotificationSchedule({
         title: item.title,
         message: item.description,
-        date: new Date(eventDateEpoch - (timeBeforeNotif * 60)),
+        date: triggerAt,
       });
     }
   });
 }
+// new Date(eventDateEpoch - (timeBeforeNotif * 60)),
+// Date.now() + index * 1000,
 
-
-function setNotif(state, eventKey) {
+function setNotif(state, payload) {
+  const { eventKey, addNotif } = payload;
   const dataTmp = state.data;
   const eventObject = dataTmp.find((item) => item.key === eventKey);
   let notifListTmp = [];
 
   if (state.notifList.includes(eventKey)) {
     const index = state.notifList.indexOf(eventKey);
-    if (index > -1) {
+    if (index > -1 && !addNotif) {
       state.notifList.splice(index, 1);
       notifListTmp = state.notifList;
     }
-  } else {
+  } else if (addNotif) {
     notifListTmp = state.notifList.concat(eventObject.key);
   }
 
-  eventObject.hasNotif = !eventObject.hasNotif;
+  console.log('==SAVE===NOTIFLIST====');
+  console.log(notifListTmp);
+  console.log('====================================');
+  eventObject.hasNotif = addNotif;
 
   // Save data
   store.save('notifList', notifListTmp);
@@ -55,6 +66,10 @@ function setNotif(state, eventKey) {
 
 function loadTimeLine(state, payload) {
   const { notifList } = payload;
+  console.log('==GET===NOTIFLIST====');
+  console.log(notifList);
+  console.log('====================================');
+
   const dataTmp = state.data.reduce((results, event) => {
     const currentTime = moment();
     // const currentTime = moment('23:30', 'HH:mm');
@@ -84,13 +99,15 @@ function loadTimeLine(state, payload) {
     ...state,
     data: dataTmp,
     isLoading: false,
-    notifList,
+    notifList: notifList === null ? [] : notifList,
   };
 }
 
 function setTimeBefore(state, payload) {
   const { min } = payload;
   store.save('timeBeforeNotif', min);
+  clearAndSetNotif(state.data, min);
+
   return {
     ...state,
     timeBeforeNotif: min !== null ? min : 10,
@@ -144,7 +161,7 @@ export default function timeline(state = defaultState, action) {
     case 'UPDATE_TIMELINE':
       return updateTimeLine(state);
     case 'SET_NOTIF':
-      return setNotif(state, payload.eventKey);
+      return setNotif(state, payload);
     case 'SET_NEXT_HOUR_TIME':
       return {
         ...state,
@@ -153,7 +170,7 @@ export default function timeline(state = defaultState, action) {
     case 'LOAD_NOTIF_BEFORE':
       return {
         ...state,
-        timeBeforeNotif: payload.min,
+        timeBeforeNotif: payload.min === null ? 10 : payload.min,
       };
     case 'NOTIF_BEFORE':
       return setTimeBefore(state, payload);

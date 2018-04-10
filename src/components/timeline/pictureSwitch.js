@@ -1,26 +1,32 @@
 import React from 'react';
-import { Animated, Easing, View, TouchableOpacity } from 'react-native';
+import { Animated, Easing, View } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import ResponsiveImage from 'react-native-responsive-image';
+import TouchableRipple from 'common/touchableRipple';
+import PushNotification from 'react-native-push-notification';
 
 import styles from './styles';
 
-const SLIDE_MAX_VALUE = theme.size.slideMaxValue;
+
+// const SLIDE_MAX_VALUE = theme.size.slideMaxValue;
 const SWITCH_TO_VALUE = 50;
 
 class PictureSwitch extends React.Component {
   state = {
-    isFirstAnimate: false,
+    // isFirstAnimate: false,
     isOpen: false,
   };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpen !== this.props.isOpen && nextProps.isOpen) {
-      this.openSwitch();
-    }
-
-    /* else if (nextProps.animate !== this.props.animate && nextProps.animate) {
+      Animated.timing(this.scrollValue, {
+        toValue: SWITCH_TO_VALUE,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
+    } /* else if (nextProps.animate !== this.props.animate && nextProps.animate) {
       this.setState(
         (state) => ({ ...state, isFirstAnimate: true }),
         () => {
@@ -33,24 +39,10 @@ class PictureSwitch extends React.Component {
   }
 
 
-  /*
-    openAndCloseSwitch = () => {
-      Animated.timing(this.scrollValue, {
-        toValue: SWITCH_TO_VALUE,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        Animated.timing(this.scrollValue, {
-          toValue: 0,
-          duration: 200,
-          useNativeDriver: true,
-        }).start(call);
-      });
-    } */
-
   onPressPicture = () => {
     console.log('=this.state.isOpen==');
     console.log(this.state.isOpen);
+
     if (this.state.isOpen) {
       this.closeSwitch();
     } else {
@@ -58,38 +50,70 @@ class PictureSwitch extends React.Component {
     }
   }
 
+  openAndCloseSwitch = (call) => {
+    Animated.timing(this.scrollValue, {
+      toValue: SWITCH_TO_VALUE,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(this.scrollValue, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start(call);
+    });
+  }
+
   closeSwitch = () => {
+    this.validationNotif(false);
     Animated.timing(this.scrollValue, {
       toValue: 0,
       duration: 300,
       easing: Easing.linear,
-
       useNativeDriver: true,
     }).start(() => {
-      this.validationNotif();
       this.setState(
-        (state) => ({ ...state, isOpen: false }));
+        (state) => ({
+          ...state,
+          isOpen: false,
+        }));
     });
   }
 
 
   openSwitch = () => {
+    if (!this.state.isLoading) {
+      this.validationNotif(true);
+    }
     Animated.timing(this.scrollValue, {
       toValue: SWITCH_TO_VALUE,
       duration: 300,
       easing: Easing.linear,
-
       useNativeDriver: true,
     }).start(() => {
-      this.validationNotif();
       this.setState(
         (state) => ({ ...state, isOpen: true }));
     });
   }
 
-  validationNotif = () => {
-    if (this.props.enabled && !this.state.isFirstAnimate) {
-      this.props.action(this.props.value);
+  validationNotif = (addNotif) => {
+    if (!this.state.isFirstAnimate) {
+      PushNotification.configure({
+        onRegister(token) {
+          console.log('TOKEN:', token);
+        },
+        onNotification(notification) {
+          console.log('NOTIFICATION:', notification);
+        },
+        permissions: {
+          alert: true,
+          badge: true,
+          sound: true,
+        },
+        popInitialNotification: true,
+        requestPermissions: true,
+      });
+      this.props.action(this.props.value, addNotif);
     }
   };
 
@@ -127,8 +151,8 @@ class PictureSwitch extends React.Component {
     });
 
     return (
-      <TouchableOpacity onPress={this.onPressPicture}>
-        <View>
+      <TouchableRipple onPress={this.onPressPicture}>
+        <View style={{ height: 70, width: 120, borderRadius: 30 }}>
           {enabled && (
             <Animated.View
               style={[
@@ -162,7 +186,7 @@ class PictureSwitch extends React.Component {
           />
         </View>
 
-      </TouchableOpacity>
+      </TouchableRipple>
     );
   }
 }

@@ -8,6 +8,7 @@ import I18n from 'i18n';
 
 import SubBanner from './subBanner';
 import styles from './styles';
+import TouchableRipple from '../common/touchableRipple';
 
 class Banner extends React.Component {
   state = {
@@ -90,7 +91,7 @@ class Banner extends React.Component {
   render() {
     const { untilEvent } = this.props;
     return (
-      <TouchableWithoutFeedback onPress={this.onPressTab}>
+      <TouchableRipple onPress={this.onPressTab}>
         <View
           style={[
             styles.borderRadiusView,
@@ -110,7 +111,7 @@ class Banner extends React.Component {
             </View>
           </ImageBackground>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableRipple >
 
     );
   }

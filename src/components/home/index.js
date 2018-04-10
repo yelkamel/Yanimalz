@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import theme from 'theme';
 import Share from 'react-native-share';
 import { SHARE_OPTION } from 'data';
+import {
+  SCLAlert,
+  SCLAlertButton,
+} from 'react-native-scl-alert';
 
 import Menu from '../menu';
 import Loading from './loading';
@@ -15,10 +19,11 @@ import TimeLine from '../timeline';
 import Banner from './banner';
 import MapStage from '../mapStage';
 import NotifModal from './notifModal';
+import ShareModal from './shareModal';
 import appStyles from '../../appStyles';
 import styles from './styles';
 
-const TOP_MARGIN = 70;
+const TOP_MARGIN = theme.size.screenHeight * 0.16;
 
 const TOP_POSITION = 0;
 
@@ -30,6 +35,7 @@ class Home extends React.Component {
     isTop: true,
     isAnimate: false,
     hideAnimalz: false,
+    alertMsg: null,
 
   };
 
@@ -56,7 +62,7 @@ class Home extends React.Component {
 
   modal = null;
   bannerHeight = theme.size.bannerHeight;
-
+  shareModal = null
 
   bottomPosition = () => {
     const res = theme.size.screenHeight - this.bannerHeight - TOP_MARGIN;
@@ -66,6 +72,24 @@ class Home extends React.Component {
     return res - 70;
   }
 
+  shareLocalisation = (minToWait) => {
+    const url = `Animalz://${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
+
+    console.log('===SHARED URL====');
+    console.log(url);
+    console.log('====================================');
+
+    if (this.mapStage && !this.mapStage.state.userPosition.isLoading) {
+      Share.open({
+        title: SHARE_OPTION.title,
+        message: `${SHARE_OPTION.message}\n${url}`,
+      }).catch(() => { });
+    } else {
+      /* alert.open({
+         ...SHARE_OPTION,
+       }).catch(() => { }); */
+    }
+  }
 
   selectedMenuItem = (type = 'notif') => {
     switch (type) {
@@ -73,11 +97,16 @@ class Home extends React.Component {
         this.modal.open();
         break;
       case 'share':
-        Share.open(SHARE_OPTION).catch(() => { });
+        this.shareModal.open();
+        // this.shareLocalisation();
         break;
 
       default:
-        this.setState((state) => ({ ...state, hideAnimalz: !state.hideAnimalz }));
+        this.setState((state) => ({
+          ...state,
+          hideAnimalz: !state.hideAnimalz,
+          alertMsg: 'TEST',
+        }));
 
         break;
     }
@@ -115,7 +144,8 @@ class Home extends React.Component {
   };
 
   render() {
-    const { animeLineUpPosition,
+    const {
+      animeLineUpPosition,
       isLoading,
       isTop,
       hideAnimalz,
@@ -124,21 +154,24 @@ class Home extends React.Component {
     const { untilEvent } = this.props;
     return (
       <View style={appStyles.flexOne}>
+
+        <MapStage
+          ref={(map) => this.mapStage = map}
+          onFinishAnimation={() => { }}
+          isFirstTime={!isLoading}
+          hideAnimalz={hideAnimalz}
+        />
+
         <Animated.View
           style={[
             styles.absoluteBlack,
             {
               opacity: animeLineUpPosition.interpolate({
                 inputRange: [TOP_POSITION, this.bottomPosition()],
-                outputRange: [0.7, 0],
+                outputRange: [0.5, 0],
               }),
             },
           ]}
-        />
-        <MapStage
-          onFinishAnimation={() => { }}
-          isFirstTime={!isLoading}
-          hideAnimalz={hideAnimalz}
         />
         <Menu onSelectItem={this.selectedMenuItem} />
 
@@ -167,6 +200,24 @@ class Home extends React.Component {
         >
           <NotifModal />
         </Modal>
+        <Modal
+          style={styles.shareModal}
+          entry="top"
+          backdrop
+          position="top"
+          ref={(m) => (this.shareModal = m)}
+        >
+          <ShareModal action={this.shareLocalisation} />
+        </Modal>
+        <SCLAlert
+          onRequestClose={() => this.setState({ alertMsg: null })}
+          theme="info"
+          show={this.state.alertMsg !== null}
+          title={this.state.alertMsg ? this.state.alertMsg : ''}
+          subtitle="Lorem ipsum dolor"
+        >
+          <SCLAlertButton theme="info" onPress={() => this.setState({ alertMsg: 'TETETER' })}>Done</SCLAlertButton>
+        </SCLAlert>
       </View>
     );
   }

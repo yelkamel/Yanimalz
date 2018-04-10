@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Animated } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import appStyles from 'appStyles';
@@ -14,7 +14,7 @@ import { TIME_STATUS } from '../../data';
 class Detail extends React.Component {
   state = {
     isOpen: false,
-    animate: false,
+    //  animate: false,
     nextEventIn: this.props.nextEventIn,
   };
 
@@ -36,37 +36,40 @@ class Detail extends React.Component {
       }));
     }
 
+    /*
     if (nextProps.animate !== this.props.animate && nextProps.animate) {
-      Animated.delay(nextProps.rowId * 500).start(() => {
-        this.setState(
-          (state) => ({ ...state, animate: true }),
-          () => {
-            this.setState((state) => ({ ...state, animate: false }));
-          },
-        );
-      });
-    }
+       Animated.delay(nextProps.rowId * 500).start(() => {
+         this.setState(
+           (state) => ({ ...state, animate: true }),
+           () => {
+             this.setState((state) => ({ ...state, animate: false }));
+           },
+         );
+       });
+     }
+     */
   }
 
   renderHourGlass() {
     const { currentEvent: { key }, rowData } = this.props;
     if (this.state.nextEventIn > 0 && rowData.key === key) {
-      return (<CountDown
-        digitTxtColor={theme.colors.primaryDark}
-        digitBgColor={theme.colors.primaryLight}
-        daysLabel={I18n.t('days')}
-        hoursLabel={I18n.t('hours')}
-        minLabel={I18n.t('minutes')}
-        secLabel={I18n.t('seconds')}
-        until={this.state.nextEventIn}
-        timeToShow={['M', 'S']}
-              />);
+      return (
+        <CountDown
+          digitTxtColor={theme.colors.primaryDark}
+          digitBgColor={theme.colors.primaryLight}
+          daysLabel={I18n.t('days')}
+          hoursLabel={I18n.t('hours')}
+          minLabel={I18n.t('minutes')}
+          secLabel={I18n.t('seconds')}
+          until={this.state.nextEventIn}
+          timeToShow={['M', 'S']}
+        />);
     }
     return null;
   }
   render() {
     const { rowData, setNotifForEvent } = this.props;
-    const { isOpen, animate } = this.state;
+    const { isOpen } = this.state;
 
     if (rowData.status === TIME_STATUS[1]) {
       return (
@@ -121,7 +124,6 @@ class Detail extends React.Component {
           isOpen={isOpen}
           value={rowData.key}
           enabled={rowData.status === TIME_STATUS[2]}
-          animate={animate}
         />
       </View>
     );
@@ -134,15 +136,15 @@ const mapStateToProps = (state) => ({
 });
 
 Detail.defaultProps = {
-  animate: false,
+  // animate: false,
 };
 
 Detail.propTypes = {
   rowData: PropTypes.shape({
     hasNotif: PropTypes.bool.isRequired,
   }).isRequired,
-  rowId: PropTypes.number.isRequired,
-  animate: PropTypes.bool,
+  // rowId: PropTypes.number.isRequired,
+  //  animate: PropTypes.bool,
   setNotifForEvent: PropTypes.func.isRequired,
   nextEventIn: PropTypes.number.isRequired,
   currentEvent: PropTypes.any.isRequired,

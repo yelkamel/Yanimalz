@@ -3,6 +3,9 @@ package com.animalz;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import ui.shine.RNShineButtonPackage;
+import ui.shine.RNShineButtonPackage;
+import ui.shine.RNShineButtonPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import ui.iconic.RNIconicPackage;
 import com.reactlibrary.RNOpacityGradientPackage;
@@ -36,6 +39,9 @@ public class MainApplication extends Application implements ShareApplication, Re
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new RNShineButtonPackage(),
+            new RNShineButtonPackage(),
+            new RNShineButtonPackage(),
             new ReactNativePushNotificationPackage(), new RNIconicPackage(), new RNOpacityGradientPackage(),
           new ReactVideoPackage(), new MapsPackage(), new RNSharePackage(), new RNI18nPackage(),
           new VectorIconsPackage());
