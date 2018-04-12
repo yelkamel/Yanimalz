@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ImageBackground, Platform, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, ImageBackground, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import banner from 'assets/image/banner.png';
@@ -92,25 +92,17 @@ class Banner extends React.Component {
     const { untilEvent } = this.props;
     return (
       <TouchableRipple onPress={this.onPressTab}>
-        <View
-          style={[
-            styles.borderRadiusView,
-            {
-              height: untilEvent > 0 ? theme.size.bannerHeight : theme.size.bannerHeightLight,
-            },
-          ]}
-        >
-          <ImageBackground style={styles.bannerStyle} source={banner}>
-            <View style={styles.subContainerView}>
-              {this.renderShapes()}
 
-              <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
+        <ImageBackground style={styles.bannerStyle} source={banner}>
+          <View style={styles.subContainerView}>
+            {this.renderShapes()}
 
-              {untilEvent > 0 && <SubBanner />}
+            <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
 
-            </View>
-          </ImageBackground>
-        </View>
+            {untilEvent > 0 && <SubBanner />}
+
+          </View>
+        </ImageBackground>
       </TouchableRipple >
 
     );

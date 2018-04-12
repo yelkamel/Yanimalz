@@ -131,8 +131,8 @@ class Detail extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  nextEventIn: state.timeline.nextEventIn,
-  currentEvent: state.timeline.currentEvent,
+  nextEventIn: state.app.nextEventIn,
+  currentEvent: state.app.currentEvent,
 });
 
 Detail.defaultProps = {

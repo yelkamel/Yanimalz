@@ -11,11 +11,19 @@ class UserMarker extends React.Component {
     this.state = {
       longitude: props.longitude,
       latitude: props.latitude,
+      tracksViewChanges: props.tracksViewChanges,
     };
   }
 
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.tracksViewChanges !== this.props.tracksViewChanges) {
+      this.setState((state) => ({
+        ...state,
+        tracksViewChanges: nextProps.tracksViewChanges,
+      }));
+    }
+
     if (nextProps.longitude !== this.props.longitude) {
       this.setState((state) => ({
         ...state,
@@ -26,12 +34,12 @@ class UserMarker extends React.Component {
   }
 
   render() {
-    const { longitude, latitude } = this.state;
-
+    const { longitude, latitude, tracksViewChanges } = this.state;
     return (
       <Marker
         title="Position Actuelle"
         key={longitude}
+        tracksViewChanges={tracksViewChanges}
         anchor={{ x: 0.5, y: 0.5 }}
         coordinate={{
           longitude,
@@ -86,6 +94,7 @@ UserMarker.defaultProps = {
 UserMarker.propTypes = {
   longitude: PropTypes.number,
   latitude: PropTypes.number,
+  tracksViewChanges: PropTypes.bool.isRequired,
 };
 
 export default UserMarker;

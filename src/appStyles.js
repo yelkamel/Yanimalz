@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-// import theme from './theme';
+import theme from './theme';
 
 export default StyleSheet.create({
   flexOne: {
@@ -19,5 +19,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  absoluteBlack: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: theme.colors.black,
   },
 });

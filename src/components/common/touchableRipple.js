@@ -15,8 +15,8 @@ const TouchableRipple = ({ onPress, style, children }) => (
     <Ripple
       onPress={onPress}
       rippleColor={theme.colors.accent}
-      rippleOpacity={0.7}
-      rippleDuration={600}
+      rippleOpacity={0.8}
+      rippleDuration={1000}
     >
       <View style={style}>
         {children}

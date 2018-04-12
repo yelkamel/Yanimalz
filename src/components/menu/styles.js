@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
   // MENU
   menuContainer: {
     position: 'absolute',
-    bottom: theme.size.bannerHeight + 10,
+    bottom: theme.size.bannerHeight,
     left: 0,
-    height: theme.size.screenHeight * 0.3,
+    height: theme.size.screenHeight,
     width: theme.size.screenWidth,
   },
   actionItem: {

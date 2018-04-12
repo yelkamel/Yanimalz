@@ -1,7 +1,9 @@
 import React from 'react';
-import { Animated, View, Linking, Platform } from 'react-native';
+import { Animated, View, Linking } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
+import { AREA_LOC_GPS, COEF_ZOOM } from 'data';
+import theme from 'theme';
 
 import logo from 'assets/image/logo.png';
 import buffle from 'assets/image/buffle.png';
@@ -22,14 +24,6 @@ import UserMarker from './userMarker';
 import MapStyle from '../../mapStyle.json';
 import { styles } from './styles';
 
-const COEF_ZOOM = Platform.OS === 'ios' ? 0.5 : 0.55;
-
-const AREA_LOC_GPS = {
-  longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
-  latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
-  longitude: 2.3650113,
-  latitude: 48.9034989,
-};
 
 const INIT_POS = {
   longitude: 2.364360,
@@ -68,14 +62,6 @@ const ANIMALZ_LIST = [
     image: bear,
   },
   {
-    id: 'lion',
-    image: lion,
-  },
-  {
-    id: 'cosmo',
-    image: cosmo,
-  },
-  {
     id: 'wolf',
     image: wolf,
   },
@@ -83,6 +69,15 @@ const ANIMALZ_LIST = [
     id: 'monkey',
     image: monkey,
   },
+  {
+    id: 'lion',
+    image: lion,
+  },
+  {
+    id: 'cosmo',
+    image: cosmo,
+  },
+
 ];
 
 class MapStage extends React.Component {
@@ -98,10 +93,11 @@ class MapStage extends React.Component {
     sharedPosition: [{
       longitude: 2.36534,
       latitude: 48.90328,
-      color: 'blue',
-      until: 7,
+      color: theme.colors.primary,
+      until: 5,
     }],
   };
+
 
   componentDidMount() {
     this.intervalId = setInterval(() => {
@@ -112,6 +108,8 @@ class MapStage extends React.Component {
             userPosition: {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
+              longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
+              latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
               error: null,
               isLoading: false,
             },
@@ -127,18 +125,8 @@ class MapStage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.hideAnimalz !== this.props.hideAnimalz) {
-      this.setState((state) => ({
-        ...state,
-        markerDone: false,
-      }), () => {
-        Animated.delay(5000).start(() => {
-          this.setState((state) => ({
-            ...state,
-            markerDone: true,
-          }));
-        });
-      });
+    if (nextProps.isAnimalzHide !== this.props.isAnimalzHide) {
+      this.markerChange();
     }
 
     if (nextProps.isFirstTime !== this.props.isFirstTime) {
@@ -149,7 +137,7 @@ class MapStage extends React.Component {
           this.map.animateToViewingAngle(45, 800);
 
           Animated.delay(1000).start(() => {
-            this.map.animateToViewingAngle(0, 800);
+            //  this.map.animateToViewingAngle(0, 800);
             this.map.animateToBearing(280.5, 1000);
 
             Animated.delay(1500).start(() => {
@@ -186,7 +174,25 @@ class MapStage extends React.Component {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
 
+
+  markerChange = (callback = () => { }) => {
+    this.setState((state) => ({
+      ...state,
+      markerDone: false,
+    }), () => {
+      callback();
+      Animated.delay(5000).start(() => {
+        this.setState((state) => ({
+          ...state,
+          markerDone: true,
+        }));
+      });
+    });
+  }
+
   handleOpenURL = (event) => {
+    this.markerChange();
+
     const urlSlipted = event.url.split('/');
     const sharePosition =
       {
@@ -196,6 +202,8 @@ class MapStage extends React.Component {
         color: 'red',
       };
 
+    this.animateToMarker(sharePosition);
+
     this.hasRenderSharedPosition = false;
     this.setState((state) => ({
       ...state,
@@ -203,18 +211,49 @@ class MapStage extends React.Component {
     }));
   }
 
+  animateToArea = () => {
+    this.map.animateToCoordinate(AREA_LOC_GPS, 1000);
+  }
+
+  animateToUser = () => {
+    this.map.animateToCoordinate(this.state.userPosition, 1000);
+  }
+
+
+  animateToMarker = (coord) => {
+    const { hideAnimalz, isAnimalzHide } = this.props;
+
+    if (!isAnimalzHide) {
+      hideAnimalz();
+    }
+
+    this.map.animateToBearing(0, 500);
+    Animated.delay(800).start(() => {
+      this.map.animateToRegion(coord, 2000);
+      Animated.delay(3000).start(() => {
+        this.map.animateToRegion(AREA_LOC_GPS, 2000);
+        Animated.delay(500).start(() => {
+          this.map.animateToBearing(280.5, 1000);
+          Animated.delay(2000).start(() => {
+            if (!isAnimalzHide) {
+              hideAnimalz();
+            }
+          });
+        });
+      });
+    });
+  }
+
   removeFromSharePosition = (index) => {
+    this.markerChange();
+
     if (index > -1) {
       this.state.sharedPosition.splice(index, 1);
       const tmpData = this.state.sharedPosition;
       this.setState((state) => ({
         ...state,
         sharedPosition: tmpData,
-      }), () => {
-        console.log('====Marker Removed====');
-        console.log(this.state.sharedPosition);
-        console.log('====================================');
-      });
+      }));
     }
   }
 
@@ -235,6 +274,8 @@ class MapStage extends React.Component {
           until={share.until * 60}
           index={index}
           onFinish={this.removeFromSharePosition}
+          animateToMarker={this.animateToMarker}
+          tracksViewChanges={!this.state.markerDone}
         />
       ));
     }
@@ -247,11 +288,12 @@ class MapStage extends React.Component {
         <UserMarker
           longitude={this.state.userPosition.longitude}
           latitude={this.state.userPosition.latitude}
+          tracksViewChanges={!this.state.markerDone}
         />);
     }
     return null;
   }
-  renderMarker() {
+  renderAnimalzMarker() {
     if (!this.state.isLoading) {
       return (
 
@@ -269,7 +311,7 @@ class MapStage extends React.Component {
                   animalzList={ANIMALZ_LIST}
                   item={value}
                   index={index}
-                  hideAnimalz={this.props.hideAnimalz}
+                  isHide={this.props.isAnimalzHide}
                 />);
             }
             return null;
@@ -307,11 +349,15 @@ class MapStage extends React.Component {
           showsCompass={false}
           showsPointsOfInterest={false}
           showsTraffic={false}
+
         >
-          {this.renderMarker()}
-          {this.renderUserPosition()}
+          {this.renderAnimalzMarker()}
+
           {this.renderSharedPosition()}
+          {this.renderUserPosition()}
+
           <Marker
+            tracksViewChanges={!this.state.markerDone}
             anchor={{ x: 0.5, y: 2.2 }}
             coordinate={INIT_POS}
             style={{ zIndex: 1 }}
@@ -335,7 +381,8 @@ MapStage.defaultProps = {};
 MapStage.propTypes = {
   onFinishAnimation: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool.isRequired,
-  hideAnimalz: PropTypes.bool.isRequired,
+  isAnimalzHide: PropTypes.bool.isRequired,
+  hideAnimalz: PropTypes.func.isRequired,
 };
 
 

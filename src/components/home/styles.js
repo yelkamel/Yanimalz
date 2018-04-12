@@ -69,14 +69,6 @@ const styles = StyleSheet.create({
     width: 35,
   },
   // MAP HOME
-  absoluteBlack: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: theme.colors.black,
-  },
   subBannerContainer: {
     position: 'absolute',
     bottom: 0,
@@ -93,12 +85,13 @@ const styles = StyleSheet.create({
   notifModalContainer: {
     height: 100,
     width: theme.size.screenWidth * 0.9,
+    marginBottom: 20,
   },
   notifModalText: {
     fontSize: theme.textSizes.small,
     color: theme.colors.primaryLight,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
     fontFamily: theme.fontFamily.rubikRegular,
   },
   sharedModalContainer: {
@@ -112,7 +105,8 @@ const styles = StyleSheet.create({
     fontSize: theme.textSizes.xsmall,
     color: theme.colors.primaryLight,
     textAlign: 'center',
-    marginBottom: 10,
+    margin: 10,
+
     fontFamily: theme.fontFamily.rubikRegular,
   },
   topModal: {
@@ -138,7 +132,7 @@ const styles = StyleSheet.create({
   sliderNotif: {
     backgroundColor: theme.colors.primary,
     width: theme.size.screenWidth / 5,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   sliderText: {
     textAlign: 'center',

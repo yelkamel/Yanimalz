@@ -12,6 +12,11 @@ I18n.translations = {
     before: 'before',
     seconds: 'sec',
     notif: 'Notif',
+    howLong: 'How long will you waiting for ?',
+    beforeTime: 'Alert how many minutes before the event ?',
+    share: 'Share',
+    msgNotif: 'I\'m Here !',
+    titleNotif: 'the mobile app',
   },
   fr: {
     banner_title: 'Line Up!',
@@ -22,6 +27,11 @@ I18n.translations = {
     seconds: 'sec',
     before: 'avant',
     notif: 'Notif',
+    howLong: 'Combien de temps veux-tu attendre ici ?',
+    beforeTime: 'Alerter combien de minute avant l\'event ?',
+    share: 'Partager',
+    msgNotif: 'Je suis la !',
+    titleNotif: 'l\'appli mobile',
   },
 };
 

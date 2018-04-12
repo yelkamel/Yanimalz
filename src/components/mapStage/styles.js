@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    marginBottom: theme.size.bannerHeight,
   },
   djImage: {
     width: 90,

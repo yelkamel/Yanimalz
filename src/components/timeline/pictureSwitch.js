@@ -1,6 +1,8 @@
 import React from 'react';
 import { Animated, Easing, View } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setAlert } from 'actions/app';
 import theme from 'theme';
 import ResponsiveImage from 'react-native-responsive-image';
 import TouchableRipple from 'common/touchableRipple';
@@ -26,6 +28,8 @@ class PictureSwitch extends React.Component {
         easing: Easing.linear,
         useNativeDriver: true,
       }).start();
+      this.setState(
+        (state) => ({ ...state, isOpen: true }));
     } /* else if (nextProps.animate !== this.props.animate && nextProps.animate) {
       this.setState(
         (state) => ({ ...state, isFirstAnimate: true }),
@@ -97,23 +101,32 @@ class PictureSwitch extends React.Component {
   }
 
   validationNotif = (addNotif) => {
-    if (!this.state.isFirstAnimate) {
-      PushNotification.configure({
-        onRegister(token) {
-          console.log('TOKEN:', token);
-        },
-        onNotification(notification) {
-          console.log('NOTIFICATION:', notification);
-        },
-        permissions: {
-          alert: true,
-          badge: true,
-          sound: true,
-        },
-        popInitialNotification: true,
-        requestPermissions: true,
-      });
-      this.props.action(this.props.value, addNotif);
+    PushNotification.configure({
+      onRegister(token) {
+        console.log('TOKEN:', token);
+      },
+      onNotification(notification) {
+        console.log('NOTIFICATION:', notification);
+      },
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+      popInitialNotification: true,
+      requestPermissions: true,
+    });
+    this.props.action(this.props.value, addNotif);
+    if (addNotif) {
+      /*   Animated.delay(1000).start(() => {
+           this.props.setAlert({
+             title: 'test',
+             subtitle: 'ALLLER',
+             show: true,
+             theme: 'inverse',
+           });
+         });
+         */
     }
   };
 
@@ -194,7 +207,6 @@ class PictureSwitch extends React.Component {
 PictureSwitch.defaultProps = {
   picture: null,
   icon: null,
-  animate: false,
 };
 
 PictureSwitch.propTypes = {
@@ -203,8 +215,14 @@ PictureSwitch.propTypes = {
   picture: PropTypes.number,
   enabled: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
-  animate: PropTypes.bool,
+  setAlert: PropTypes.func.isRequired,
   icon: PropTypes.number,
 };
 
-export default PictureSwitch;
+const mapDispatchToProps = (dispatch) => ({
+  setAlert: (alert) => {
+    dispatch(setAlert(alert));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(PictureSwitch);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setNotifBefore } from 'actions/timeline';
+import { setNotifBefore } from 'actions/app';
 import theme from 'theme';
 import I18n from 'i18n';
 import SwitchSelector from 'common/switchSelector';
@@ -52,7 +52,7 @@ class NotifModal extends React.Component {
     return (
       <View style={styles.notifModalContainer}>
         <Text style={styles.notifModalText}>
-          Notifer avant:
+          {I18n.t('beforeTime')}
         </Text>
         <SwitchSelector
           options={options}
@@ -80,7 +80,7 @@ NotifModal.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  minBefore: state.timeline.timeBeforeNotif,
+  minBefore: state.app.timeBeforeNotif,
 });
 
 const mapDispatchToProps = (dispatch) => ({

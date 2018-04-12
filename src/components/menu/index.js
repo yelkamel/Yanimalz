@@ -7,6 +7,7 @@ import theme from 'theme';
 import ActionButton from 'react-native-circular-action-menu';
 
 import styles from './styles';
+import appStyles from '../../appStyles';
 
 export default class Menu extends Component {
   state = {};
@@ -24,25 +25,17 @@ export default class Menu extends Component {
 
     return (<View style={styles.menuContainer}>
 
-      <ActionButton position="right" buttonColor={theme.colors.primaryLight} btnOutRange={theme.colors.primary}>
-        <ActionButton.Item
-          buttonColor={theme.colors.primaryLight}
-          title="New Task"
-          onPress={() => {
-            onSelectItem('hide');
-          }}
-        >
-          <Icon name="eye-slash" size={22} color={theme.colors.primary} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={theme.colors.primaryLight}
-          title="Notifications"
-          onPress={() => {
-            onSelectItem('share');
-          }}
-        >
-          <Icon name="share-alt" size={22} color={theme.colors.primary} />
-        </ActionButton.Item>
+      <ActionButton
+        position="center"
+        buttonColor={theme.colors.primaryLight}
+        btnOutRange={theme.colors.primary}
+        backdrop={<View
+          style={[
+            appStyles.absoluteBlack,
+            { opacity: 0.6 },
+          ]}
+                  />}
+      >
         <ActionButton.Item
           buttonColor={theme.colors.primaryLight}
           title="All Tasks"
@@ -51,6 +44,46 @@ export default class Menu extends Component {
           }}
         >
           <Icon name="bell" size={22} color={theme.colors.primary} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={theme.colors.primaryLight}
+          title="New Task"
+          onPress={() => {
+            onSelectItem('map');
+          }}
+        >
+          <Icon name="map-signs" size={22} color={theme.colors.primary} />
+        </ActionButton.Item>
+
+        <ActionButton.Item
+          buttonColor={theme.colors.primaryLight}
+          title="All Tasks"
+          onPress={() => {
+            onSelectItem('userPosition');
+          }}
+        >
+          <Icon name="street-view" size={22} color={theme.colors.primary} />
+        </ActionButton.Item>
+
+        <ActionButton.Item
+          buttonColor={theme.colors.primaryLight}
+          title="All Tasks"
+          onPress={() => {
+            onSelectItem('mapPosition');
+          }}
+        >
+          <Icon name="map" size={22} color={theme.colors.primary} />
+        </ActionButton.Item>
+
+
+        <ActionButton.Item
+          buttonColor={theme.colors.primaryLight}
+          title="Notifications"
+          onPress={() => {
+            onSelectItem('share');
+          }}
+        >
+          <Icon name="share-alt" size={22} color={theme.colors.primary} />
         </ActionButton.Item>
       </ActionButton>
             </View>);

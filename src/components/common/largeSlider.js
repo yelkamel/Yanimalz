@@ -63,14 +63,17 @@ export default class LargeSlider extends Component {
   render() {
     const { value } = this.state;
     const unitValue = (value - this.props.minimumValue) / this.range;
-    const { renderLabel, style, trackStyle, label, inSidelabel } = this.props;
-
+    const { renderLabel, style, trackStyle, label, inSidelabel, maximumValue } = this.props;
+    const onTop = value < (maximumValue / 2);
     return (
       <View
         onLayout={this.onLayout}
         style={[styles.container, style]}
         {...this.panResponder.panHandlers}
       >
+        {
+          onTop && renderLabel(onTop)
+        }
         <View style={[styles.pendingTrack, { flex: 1 - unitValue, justifyContent: 'center', alignItems: 'center' }]} >
           <Text style={styles.trackLabelText}>
             {inSidelabel}
@@ -78,13 +81,7 @@ export default class LargeSlider extends Component {
         </View>
         <View style={[styles.track, { flex: unitValue }, trackStyle]}>
           <View style={styles.thumb} />
-          {renderLabel
-            ? renderLabel()
-            : <View style={styles.trackLabel}>
-              <Text style={styles.trackLabelText}>
-                {label || `${formatNumber(this.props.value)}%`}
-              </Text>
-              </View>
+          {!onTop && renderLabel(onTop)
           }
         </View>
       </View>

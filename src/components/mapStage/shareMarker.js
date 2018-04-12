@@ -16,6 +16,7 @@ class ShareMarker extends React.Component {
       appState: AppState.currentState,
       until: props.until,
       done: false,
+      tracksViewChanges: props.tracksViewChanges,
     };
 
     this.untilDate = moment().add(props.until, 'second');
@@ -27,6 +28,12 @@ class ShareMarker extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.tracksViewChanges !== this.props.tracksViewChanges) {
+      this.setState((state) => ({
+        ...state,
+        tracksViewChanges: nextProps.tracksViewChanges,
+      }));
+    }
     if (nextProps.longitude !== this.props.longitude) {
       this.setState((state) => ({
         ...state,
@@ -72,7 +79,7 @@ class ShareMarker extends React.Component {
 
 
   render() {
-    const { longitude, latitude, until, done } = this.state;
+    const { longitude, latitude, until, done, tracksViewChanges } = this.state;
     const { color } = this.props;
 
     if (done) {
@@ -82,6 +89,7 @@ class ShareMarker extends React.Component {
       <Marker
         title="Shared Position"
         key={longitude}
+        tracksViewChanges={tracksViewChanges}
         anchor={{ x: 0.5, y: 0.5 }}
         coordinate={{
           longitude,
@@ -121,12 +129,12 @@ class ShareMarker extends React.Component {
           >
             {until &&
               <CountDown
-                digitTxtColor={theme.colors.accent}
+                digitTxtColor={theme.colors.white}
                 digitBgColor="transparent"
                 until={until}
                 hasLabel={false}
                 timeToShow={['M']}
-                size={12}
+                size={14}
                 onFinish={this.onFinish}
               />
             }
@@ -152,6 +160,7 @@ ShareMarker.propTypes = {
   until: PropTypes.number,
   index: PropTypes.number.isRequired,
   onFinish: PropTypes.func.isRequired,
+  tracksViewChanges: PropTypes.bool.isRequired,
 };
 
 export default ShareMarker;

@@ -5,7 +5,6 @@ import theme from 'theme';
 import I18n from 'i18n';
 import LargeSlider from 'common/largeSlider';
 import TouchableRipple from 'common/touchableRipple';
-import appStyles from 'appStyles';
 import styles from './styles';
 
 
@@ -27,9 +26,17 @@ class ShareModal extends React.Component {
     this.setState((state) => ({ ...state, minToWait: val }));
   }
 
-  renderText = () => {
+  renderText = (onTop) => {
     const { minToWait } = this.state;
     const min = I18n.t('minutes');
+
+    if (onTop) {
+      return (
+        <Text style={[styles.sliderText, { color: theme.colors.primaryLight, marginTop: 20 }]}>
+          {`${Math.floor(minToWait)} \n${min}`}
+        </Text>
+      );
+    }
     return <Text style={styles.sliderText}>{`${Math.floor(minToWait)} \n${min}`}</Text>;
   };
 
@@ -38,7 +45,7 @@ class ShareModal extends React.Component {
     return (
       <View style={styles.sharedModalContainer}>
         <Text style={styles.shareModalText}>
-          Combien de temps ?
+          {I18n.t('howLong')}
         </Text>
         <LargeSlider
           horizontal
@@ -47,9 +54,8 @@ class ShareModal extends React.Component {
           style={styles.sliderNotif}
           renderLabel={this.renderText}
           trackStyle={{ backgroundColor: theme.colors.primaryLight }}
-          minimumValue={5}
+          minimumValue={3}
           maximumValue={30}
-          inSidelabel={'J\'attend'}
         />
         <View style={{
           width: 120,
@@ -82,7 +88,7 @@ class ShareModal extends React.Component {
                 color: theme.colors.primaryDark,
               }}
               >
-                Partager
+                {I18n.t('share')}
               </Text>
             </View>
 

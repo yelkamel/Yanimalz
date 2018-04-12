@@ -1,5 +1,6 @@
 import theme from 'theme';
 import moment from 'moment';
+import { Platform } from 'react-native';
 import I18n from 'i18n';
 
 import drum from 'assets/image/dnb.png';
@@ -15,7 +16,7 @@ import soltan from 'assets/dj/soltan.jpg';
 import cookerzcrew from 'assets/dj/cookerzcrew.jpg';
 import fourhorsement from 'assets/dj/fourhorsement.jpg';
 
-export const TIME_LINE = [
+export const INIT_TIME_LINE = [
   {
     time: '21:00',
     key: 'BGR',
@@ -42,7 +43,6 @@ export const TIME_LINE = [
     picture: downlink,
     circleColor: theme.colors.primaryLight,
     icon: dubstep,
-
   },
   {
     time: '00:00',
@@ -110,9 +110,28 @@ export const TIME_LINE = [
   },
 ];
 
+export const COEF_ZOOM = Platform.OS === 'ios' ? 0.5 : 0.55;
+
+export const AREA_LOC_GPS = {
+  longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
+  latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
+  longitude: 2.3650113,
+  latitude: 48.9034989,
+};
+
+export const INIT_ALERT = {
+  title: '',
+  subtitle: '',
+  theme: 'default',
+  show: false,
+  type: 'info',
+};
+
 export const SHARE_OPTION = {
   title: 'Animalz',
-  message: 'Je suis la.',
+  subtitle: I18n.t('titleNotif'),
+  message: I18n.t('msgNotif'),
+
 }; // I18n.t('seconds')
 
 export const TIME_UNTIL_PARTY = moment('2018-04-21 21:00:00', 'YYYY-MM-DD').diff(

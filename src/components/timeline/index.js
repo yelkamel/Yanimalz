@@ -4,7 +4,7 @@ import { View, Animated, AppState } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
-import { updateTimeLine, setNotifForEvent, setNextEventTime } from 'actions/timeline';
+import { updateTimeLine, setNotifForEvent, setNextEventTime } from 'actions/app';
 import { TIME_STATUS } from 'data';
 import styles from './styles';
 import theme from '../../theme';
@@ -131,7 +131,7 @@ TimeLine.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  timeLineData: state.timeline.data,
+  timeLineData: state.app.timeline,
 });
 
 const mapDispatchToProps = (dispatch) => ({

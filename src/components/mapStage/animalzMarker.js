@@ -8,10 +8,14 @@ import { styles } from './styles';
 class AnimalzMarker extends React.Component {
   state = {};
 
-  render() {
-    const { animalzList, item, index, hideAnimalz } = this.props;
+  shouldComponentUpdate(nextProps) {
+    return nextProps.isHide !== this.props.isHide;
+  }
 
-    if (hideAnimalz) {
+  render() {
+    const { animalzList, item, index, isHide } = this.props;
+
+    if (isHide) {
       return null;
     }
     if (Platform.OS === 'ios') {
@@ -91,7 +95,7 @@ AnimalzMarker.propTypes = {
   animalzList: PropTypes.array.isRequired,
   item: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
-  hideAnimalz: PropTypes.bool.isRequired,
+  isHide: PropTypes.bool.isRequired,
 };
 
 export default AnimalzMarker;
