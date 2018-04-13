@@ -10,7 +10,6 @@ export default {
     black: '#000',
     red: '#FF676C',
     blackLogo: '#11020D',
-
     // couleur du theme
     primaryLight: '#C58BAC',
     primary: '#4C2F41',

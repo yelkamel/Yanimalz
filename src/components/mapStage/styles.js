@@ -42,6 +42,23 @@ export const styles = StyleSheet.create({
     width: LOGO_WIDTH,
     borderRadius: 5,
   },
+  markerView: {
+    height: ANIMALZ_HEIGHT,
+    width: ANIMALZ_WIDTH,
+    backgroundColor: theme.colors.primaryLight,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  makerText: {
+    fontSize: theme.textSizes.xnormal,
+    color: theme.colors.primaryDark,
+    textAlign: 'center',
+    fontFamily: theme.fontFamily.rubikRegular,
+    fontWeight: 'bold',
+
+  },
   animalzStyle: {
     height: ANIMALZ_HEIGHT,
     width: ANIMALZ_WIDTH,
@@ -52,7 +69,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     margin: 1,
-    width: theme.size.screenWidth * 0.5,
+    //  borderRadius: 30,
+    width: theme.size.screenWidth * 0.65,
+    //  backgroundColor: theme.colors.primary,
   },
   currentEventMapContainer: {
     height: 50,

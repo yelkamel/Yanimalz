@@ -165,7 +165,7 @@ class PictureSwitch extends React.Component {
 
     return (
       <TouchableRipple onPress={this.onPressPicture}>
-        <View style={{ height: 70, width: 120, borderRadius: 30 }}>
+        <View style={{ height: 70, width: 130 }}>
           {enabled && (
             <Animated.View
               style={[

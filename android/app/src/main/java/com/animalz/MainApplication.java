@@ -3,22 +3,20 @@ package com.animalz;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import ui.shine.RNShineButtonPackage;
-import ui.shine.RNShineButtonPackage;
-import ui.shine.RNShineButtonPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import ui.iconic.RNIconicPackage;
-import com.reactlibrary.RNOpacityGradientPackage;
-import cl.json.RNSharePackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.ShareApplication;
+import cl.json.RNSharePackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.reactlibrary.RNOpacityGradientPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import ui.iconic.RNIconicPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import cl.json.ShareApplication;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,13 +36,9 @@ public class MainApplication extends Application implements ShareApplication, Re
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new RNShineButtonPackage(),
-            new RNShineButtonPackage(),
-            new RNShineButtonPackage(),
-            new ReactNativePushNotificationPackage(), new RNIconicPackage(), new RNOpacityGradientPackage(),
-          new ReactVideoPackage(), new MapsPackage(), new RNSharePackage(), new RNI18nPackage(),
-          new VectorIconsPackage());
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactVideoPackage(), new VectorIconsPackage(),
+          new RNSharePackage(), new ReactNativePushNotificationPackage(), new RNOpacityGradientPackage(),
+          new MapsPackage(), new LinearGradientPackage(), new RNIconicPackage(), new RNI18nPackage());
     }
 
     @Override

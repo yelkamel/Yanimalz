@@ -143,6 +143,7 @@ Detail.propTypes = {
   rowData: PropTypes.shape({
     hasNotif: PropTypes.bool.isRequired,
   }).isRequired,
+
   // rowId: PropTypes.number.isRequired,
   //  animate: PropTypes.bool,
   setNotifForEvent: PropTypes.func.isRequired,

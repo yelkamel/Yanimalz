@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, AppState } from 'react-native';
+import { View, Animated, AppState, Text } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
@@ -45,9 +45,14 @@ class TimeLine extends React.Component {
 
   handleAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('==IS FROM BACKGROUND==');
       this.updateAtTheNextHours();
     }
-    this.setState({ appState: nextAppState });
+    Animated.delay(500).start(() => {
+      this.setState({
+        appState: nextAppState,
+      });
+    });
   };
 
 
@@ -96,6 +101,26 @@ class TimeLine extends React.Component {
 
   renderCircle = () => null
 
+  renderTime = (rowData, sectionID, rowID) => (
+    <View style={{
+      alignItems: 'flex-end',
+    }}
+    >
+      <View style={{
+        minWidth: 45,
+      }}
+      >
+        <Text style={{
+          textAlign: 'right',
+          color: theme.colors.primaryLight,
+        }}
+        >
+          {this.props.untilEvent > 1 ? rowData.fakeTime : rowData.time}
+        </Text>
+      </View>
+    </View>
+  )
+
   render() {
     const { timeLineData } = this.props;
 
@@ -104,6 +129,7 @@ class TimeLine extends React.Component {
         <Timeline
           data={timeLineData}
           style={styles.list}
+          renderTime={this.renderTime}
           timeStyle={styles.timeStyle}
           circleSize={20}
           circleColor={theme.colors.primaryLight}
@@ -128,10 +154,12 @@ TimeLine.propTypes = {
   setNotifForEvent: PropTypes.func.isRequired,
   setNextEventTime: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  untilEvent: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   timeLineData: state.app.timeline,
+  untilEvent: state.app.untilEvent,
 });
 
 const mapDispatchToProps = (dispatch) => ({

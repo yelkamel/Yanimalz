@@ -99,7 +99,7 @@ class Banner extends React.Component {
 
             <Text style={styles.titleStyle}>{I18n.t('banner_title')}</Text>
 
-            {untilEvent > 0 && <SubBanner />}
+            {untilEvent > 1 && <SubBanner />}
 
           </View>
         </ImageBackground>

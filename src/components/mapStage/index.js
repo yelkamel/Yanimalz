@@ -4,20 +4,8 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { AREA_LOC_GPS, COEF_ZOOM } from 'data';
 import theme from 'theme';
-
 import logo from 'assets/image/logo.png';
-import buffle from 'assets/image/buffle.png';
-import monkey from 'assets/image/monkey.png';
-import bear from 'assets/image/bear.png';
-import hibou from 'assets/image/hibou.png';
-import cat from 'assets/image/cat.png';
-import elephant from 'assets/image/elephant.png';
-import phaco from 'assets/image/phaco.png';
-import wolf from 'assets/image/wolf.png';
-import cosmo from 'assets/image/cosmo.png';
-import lion from 'assets/image/lion.png';
-
-import AnimalzMarker from './animalzMarker';
+import GridMarker from './gridMarker';
 import ShareMarker from './shareMarker';
 import UserMarker from './userMarker';
 
@@ -28,57 +16,8 @@ import { styles } from './styles';
 const INIT_POS = {
   longitude: 2.364360,
   latitude: 48.903588,
-
 };
 
-const ANIMALZ_POSITION = {
-  longitude: 2.36534,
-  latitude: 48.90328,
-};
-
-const ANIMALZ_LIST = [
-  {
-    id: 'buffle',
-    image: buffle,
-  },
-  {
-    id: 'elephant',
-    image: elephant,
-  },
-  {
-    id: 'hibou',
-    image: hibou,
-  },
-  {
-    id: 'cat',
-    image: cat,
-  },
-  {
-    id: 'phaco',
-    image: phaco,
-  },
-  {
-    id: 'bear',
-    image: bear,
-  },
-  {
-    id: 'wolf',
-    image: wolf,
-  },
-  {
-    id: 'monkey',
-    image: monkey,
-  },
-  {
-    id: 'lion',
-    image: lion,
-  },
-  {
-    id: 'cosmo',
-    image: cosmo,
-  },
-
-];
 
 class MapStage extends React.Component {
   state = {
@@ -90,12 +29,14 @@ class MapStage extends React.Component {
       error: null,
       isLoading: true,
     },
-    sharedPosition: [{
+    sharedPosition: [
+      /* {
       longitude: 2.36534,
       latitude: 48.90328,
       color: theme.colors.primary,
       until: 5,
-    }],
+    } */
+    ],
   };
 
 
@@ -125,7 +66,7 @@ class MapStage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isAnimalzHide !== this.props.isAnimalzHide) {
+    if (nextProps.isGridHide !== this.props.isGridHide) {
       this.markerChange();
     }
 
@@ -145,8 +86,6 @@ class MapStage extends React.Component {
 
               Animated.delay(1200).start(() => {
                 this.map.animateToViewingAngle(0, 800);
-
-                this.props.onFinishAnimation();
                 Animated.timing(this.itemOpacity, {
                   toValue: 0.6,
                 }).start(() => {
@@ -181,7 +120,7 @@ class MapStage extends React.Component {
       markerDone: false,
     }), () => {
       callback();
-      Animated.delay(5000).start(() => {
+      Animated.delay(3000).start(() => {
         this.setState((state) => ({
           ...state,
           markerDone: true,
@@ -191,6 +130,7 @@ class MapStage extends React.Component {
   }
 
   handleOpenURL = (event) => {
+    this.props.showMap();
     this.markerChange();
 
     const urlSlipted = event.url.split('/');
@@ -216,14 +156,16 @@ class MapStage extends React.Component {
   }
 
   animateToUser = () => {
-    this.map.animateToCoordinate(this.state.userPosition, 1000);
+    if (this.state.userPosition.longitude) {
+      this.map.animateToCoordinate(this.state.userPosition, 2000);
+    }
   }
 
 
   animateToMarker = (coord) => {
-    const { hideAnimalz, isAnimalzHide } = this.props;
+    const { hideAnimalz, isGridHide } = this.props;
 
-    if (!isAnimalzHide) {
+    if (!isGridHide) {
       hideAnimalz();
     }
 
@@ -235,7 +177,7 @@ class MapStage extends React.Component {
         Animated.delay(500).start(() => {
           this.map.animateToBearing(280.5, 1000);
           Animated.delay(2000).start(() => {
-            if (!isAnimalzHide) {
+            if (!isGridHide) {
               hideAnimalz();
             }
           });
@@ -293,40 +235,16 @@ class MapStage extends React.Component {
     }
     return null;
   }
-  renderAnimalzMarker() {
+  renderGridMarker() {
     if (!this.state.isLoading) {
       return (
-
-        <Marker
+        <GridMarker
           tracksViewChanges={!this.state.markerDone}
-          anchor={{ x: 0.01, y: 0.8 }}
-          coordinate={ANIMALZ_POSITION}
-        >
-
-          {ANIMALZ_LIST.map((value, index) => {
-            if (index % 2 === 0 && index !== ANIMALZ_LIST.length - 1) {
-              return (
-                <AnimalzMarker
-                  key={value.id}
-                  animalzList={ANIMALZ_LIST}
-                  item={value}
-                  index={index}
-                  isHide={this.props.isAnimalzHide}
-                />);
-            }
-            return null;
-          },
-          )}
-        </Marker>
-      );
+          isHide={this.props.isGridHide}
+        />);
     }
-
     return null;
   }
-
-
-  //            opacity: this.itemOpacity,
-
 
   render() {
     const { isFirstTime } = this.props;
@@ -339,7 +257,7 @@ class MapStage extends React.Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
           cacheEnabled={!isFirstTime}
-          showsUserLocation
+          showsUserLocation={false}
           showsMyLocationButton={false}
           scrollEnabled={false}
           rotateEnabled={false}
@@ -351,7 +269,7 @@ class MapStage extends React.Component {
           showsTraffic={false}
 
         >
-          {this.renderAnimalzMarker()}
+          {this.renderGridMarker()}
 
           {this.renderSharedPosition()}
           {this.renderUserPosition()}
@@ -379,9 +297,9 @@ class MapStage extends React.Component {
 MapStage.defaultProps = {};
 
 MapStage.propTypes = {
-  onFinishAnimation: PropTypes.func.isRequired,
+  showMap: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool.isRequired,
-  isAnimalzHide: PropTypes.bool.isRequired,
+  isGridHide: PropTypes.bool.isRequired,
   hideAnimalz: PropTypes.func.isRequired,
 };
 

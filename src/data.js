@@ -19,6 +19,7 @@ import fourhorsement from 'assets/dj/fourhorsement.jpg';
 export const INIT_TIME_LINE = [
   {
     time: '21:00',
+    fakeTime: 'X1:$0',
     key: 'BGR',
     title: 'BORGORE',
     description: 'BORGORE',
@@ -28,6 +29,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '22:00',
+    fakeTime: '0§:0?',
     key: 'CAK',
     title: 'CAMO & KROOKED',
     description: 'CAMO & KROOKED',
@@ -37,6 +39,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '23:00',
+    fakeTime: '3!:#0',
     key: 'DLK',
     title: 'DOWNLINK',
     description: 'DOWNLINK',
@@ -46,6 +49,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '00:00',
+    fakeTime: '0X:9X',
     key: 'EDO',
     title: 'ED RUSH x OPTICAL',
     description: 'ED RUSH x OPTICAL',
@@ -54,6 +58,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '01:00',
+    fakeTime: '99:99',
     key: 'MMT',
     title: 'MEGALODON x M.TYRANNOSAURUS',
     description: 'MEGALODON x MIDNIGHT TYRANNOSAURUS',
@@ -62,6 +67,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '02:00',
+    fakeTime: '3*:??',
     key: 'AAT',
     title: 'A.M.C & TURNO',
     description: 'A.M.C & TURNO',
@@ -70,6 +76,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '03:00',
+    fakeTime: '2$:€0',
     key: 'FHT',
     title: 'Four Horsemen Tour World',
     description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
@@ -79,6 +86,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '04:00',
+    fakeTime: '0%:18',
     key: 'ABP',
     title: 'AGRESSOR BUNX x PYTHIUS',
     description: 'AGRESSOR BUNX x PYTHIUS',
@@ -88,6 +96,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '05:00',
+    fakeTime: 'XX:XX',
     key: 'SLN',
     title: 'SOLTAN',
     description: 'SOLTAN',
@@ -97,6 +106,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '06:00',
+    fakeTime: '??:??',
     key: 'CCW',
     title: 'COOKERZ CREW',
     description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',

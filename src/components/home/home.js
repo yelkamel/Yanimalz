@@ -35,7 +35,7 @@ class Home extends React.Component {
     isLoading: true,
     isTop: true,
     isAnimate: false,
-    isAnimalzHide: false,
+    isGridHide: false,
   };
 
   componentDidMount() {
@@ -54,7 +54,10 @@ class Home extends React.Component {
       this.props.updateTimeLine();
     }
     if (nextProps.isUpdated !== this.props.isUpdated && nextProps.isUpdated) {
-      this.setState((state) => ({ ...state, isLoading: false }));
+      this.setState((state) => ({
+        ...state,
+        isLoading: false,
+      }));
     }
   }
 
@@ -72,7 +75,7 @@ class Home extends React.Component {
   }
 
   shareLocalisation = (minToWait) => {
-    const url = `Animalz://${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
+    const url = `Animalz://coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
 
     if (this.mapStage && !this.mapStage.state.userPosition.isLoading) {
       Share.open({
@@ -115,7 +118,7 @@ class Home extends React.Component {
   hideAnimalz = () => {
     this.setState((state) => ({
       ...state,
-      isAnimalzHide: !state.isAnimalzHide,
+      isGridHide: !state.isGridHide,
     }));
   }
 
@@ -150,12 +153,23 @@ class Home extends React.Component {
     );
   };
 
+  showMap = () => {
+    this.setState((state) => ({
+      ...state,
+      isGridHide: true,
+    }), () => {
+      if (this.state.isTop) {
+        this.animeLineUp();
+      }
+    });
+  }
+
   render() {
     const {
       animeLineUpPosition,
       isLoading,
       isTop,
-      isAnimalzHide,
+      isGridHide,
       isAnimate,
     } = this.state;
     const { untilEvent } = this.props;
@@ -165,9 +179,9 @@ class Home extends React.Component {
 
         <MapStage
           ref={(map) => this.mapStage = map}
-          onFinishAnimation={() => { }}
+          showMap={this.showMap}
           isFirstTime={!isLoading}
-          isAnimalzHide={isAnimalzHide}
+          isGridHide={isGridHide}
           hideAnimalz={this.hideAnimalz}
         />
         <Animated.View
