@@ -18,7 +18,7 @@ const DOORS_HEIGHT = theme.size.screenHeight * 0.03;
 
 const WALL_COEF_LEFT = Platform.OS === 'ios' ? 0.35 : 0.32;
 const WALL_COEF_TOP = Platform.OS === 'ios' ? 0.07 : 0.05;
-const CONTROL_COEF_LEFT = Platform.OS === 'ios' ? 0.13 : 0.32;
+const CONTROL_COEF_LEFT = 0.13;
 class InfoMarker extends React.Component {
   constructor(props) {
     super(props);
