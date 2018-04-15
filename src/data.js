@@ -132,7 +132,7 @@ export const AREA_LOC_GPS = {
 export const INIT_ALERT = {
   title: '',
   subtitle: '',
-  theme: 'default',
+  scltheme: 'default',
   show: false,
   type: 'info',
   answers: [],
@@ -149,6 +149,81 @@ export const TIME_UNTIL_PARTY = moment('2018-04-21 21:00:00', 'YYYY-MM-DD').diff
   moment(),
   'seconds',
 );
+
+export const QUESTION_LIST = [
+  {
+    title: 'Bogore',
+    question: 'Quel est son style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  },
+  {
+    title: 'Camo & Krooked',
+    question: 'Quel est son style de musique ?',
+    buttonLabel1: 'Drum and bass',
+    buttonLabel2: 'Dubstep',
+  },
+  {
+    title: 'Downlink',
+    question: 'Quel est son style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  },
+  {
+    title: 'Ed Rush x Optical',
+    question: 'Quel est leur style de musique ?',
+    buttonLabel1: 'Drum and bass',
+    buttonLabel2: 'Dubstep',
+  },
+  {
+    title: 'Megalodon x Midnight Tyrannosaurus',
+    question: 'Quel est leur style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  },
+  {
+    title: 'A.M.C & Turno',
+    question: 'Quel est leur style de musique ?',
+    buttonLabel1: 'Drum and bass',
+    buttonLabel2: 'Dubstep',
+  },
+  {
+    title: 'Ivory x Ecraze x Graphyt x Samplifire',
+    question: 'Quel est leur style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  }, {
+    title: 'Agressor Bunx x Pythius',
+    question: 'Quel est leur style de musique ?',
+    buttonLabel1: 'Drum and bass',
+    buttonLabel2: 'Dubstep',
+  },
+  {
+    title: 'Soltan',
+    question: 'Quel est son style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  },
+  {
+    title: 'Answerd x Jiqzy x Nacha x Playfull',
+    question: 'Quel est son style de musique ?',
+    buttonLabel1: 'Dubstep',
+    buttonLabel2: 'Drum and bass',
+  },
+  {
+    title: 'Drum and bass',
+    question: 'Combien de BPM ?',
+    buttonLabel1: '175',
+    buttonLabel2: '140',
+  },
+  {
+    title: 'Dubstep',
+    question: 'Combien de BPM ?',
+    buttonLabel1: '140',
+    buttonLabel2: '175',
+  },
+
+];
 
 export const COLOR_ARRAY = [
   '#9C27B0',

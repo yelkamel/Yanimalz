@@ -113,7 +113,7 @@ class MapStage extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-    Linking.removeEventListener('url', this.handleOpenURL);
+    // / Linking.removeEventListener('url', this.handleOpenURL);
   }
 
 

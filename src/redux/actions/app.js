@@ -41,9 +41,9 @@ export const loadTimeBeforeNotif = (min) => ({
 
 
 export const setAlert = (alert) => ({
-  type: 'SET_ALERT',
-  payload: alert,
-});
+    type: 'SET_ALERT',
+    payload: alert,
+  });
 
 
 export const setAppState = (nextAppState) => ({

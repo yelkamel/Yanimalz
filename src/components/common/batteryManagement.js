@@ -37,7 +37,7 @@ class BatteryManagement extends React.PureComponent {
 
   getBatteryLevel = () => {
     BatteryManager.updateBatteryLevel((info) => {
-      this._subscription = DeviceEventEmitter.addListener('BatteryStatus', this.onBatteryStatus);
+      this._subscription = DeviceEventEmitter.addListener('BatteryStatus', () => { });
       console.log('=GET BATTERY LEVEL=', info.level);
 
 

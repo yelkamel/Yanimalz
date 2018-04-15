@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, AppState, Text } from 'react-native';
+import { View, Animated, Text } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
-import { updateTimeLine, setNotifForEvent, setNextEventTime } from 'actions/app';
+import Button from 'common/button';
+import {
+  updateTimeLine,
+  setNotifForEvent,
+  setNextEventTime,
+  setAlert,
+} from 'actions/app';
+import { getRandomQuestion } from 'utils';
 import { TIME_STATUS } from 'data';
 import styles from './styles';
 import theme from '../../theme';
@@ -13,8 +20,6 @@ import Detail from './detail';
 class TimeLine extends React.Component {
   state = {
     animateEvent: false,
-    appState: AppState.currentState,
-
   };
 
   componentDidMount() {
@@ -51,6 +56,7 @@ class TimeLine extends React.Component {
   numberOfNotif = 0;
   numberOfPastEvent = 0;
   scrollTimeLine = null;
+
   updateAtTheNextHours() {
     const currentTime = moment();
     const nextHoursTime = currentTime.clone().add(60, 'minutes');
@@ -66,6 +72,12 @@ class TimeLine extends React.Component {
       this.updateAtTheNextHours();
     });
   }
+
+
+  onPressQuestion = () => {
+    this.props.setAlert(getRandomQuestion());
+  }
+
   renderDetail = (rowData, sectionID, rowID) => {
     const intIndex = parseInt(rowID, 10);
     const { animateEvent } = this.state;
@@ -135,6 +147,16 @@ class TimeLine extends React.Component {
             contentContainerStyle: { paddingTop: 20 },
           }}
         />
+        <View style={{
+          position: 'absolute',
+          bottom: 10,
+          left: 10,
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        }}
+        >
+          <Button onPress={this.onPressQuestion} label="Quizz" />
+        </View>
       </View>
     );
   } //          renderCircle={() => null}
@@ -148,6 +170,7 @@ TimeLine.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   untilEvent: PropTypes.number.isRequired,
   appState: PropTypes.string.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -165,6 +188,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setNextEventTime: (seconds) => {
     dispatch(setNextEventTime(seconds));
+  },
+  setAlert: (alert) => {
+    dispatch(setAlert(alert));
   },
 });
 

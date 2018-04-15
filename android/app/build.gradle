@@ -108,12 +108,18 @@ android {
         }
     }
     signingConfigs {
+      /*
+      ANIMALZ_RELEASE_STORE_FILE=animalz.keystore
+  ANIMALZ_RELEASE_KEY_ALIAS=animalz
+  ANIMALZ_RELEASE_STORE_PASSWORD=azerty123
+  ANIMALZ_RELEASE_KEY_PASSWORD=azerty123
+      */
       release {
-          if (project.hasProperty('ANIMALZ_STORE_FILE')) {
-              storeFile file(ANIMALZ_STORE_FILE)
-              storePassword ANIMALZ_STORE_PASSWORD
-              keyAlias ANIMALZ_KEY_ALIAS
-              keyPassword ANIMALZ_KEY_PASSWORD
+          if (project.hasProperty('animalz.keystore')) {
+              storeFile file('animalz.keystore')
+              storePassword 'azerty123'
+              keyAlias 'animalz'
+              keyPassword 'azerty123'
           }
       }
     }

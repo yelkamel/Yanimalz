@@ -2,7 +2,45 @@ import moment from 'moment/moment';
 import { AsyncStorage } from 'react-native';
 
 import theme from './theme';
-import { TIME_STATUS } from './data';
+import { TIME_STATUS, QUESTION_LIST } from './data';
+
+export const getRandomQuestion = () => {
+  const questionObject = QUESTION_LIST[Math.floor(Math.random() * QUESTION_LIST.length)];
+  const answers = [
+    {
+      buttonLabel: questionObject.buttonLabel1,
+      nextAlert: {
+        title: 'Bonne Réponse',
+        subtitle: questionObject.question,
+        scltheme: 'success',
+        show: true,
+        type: 'question',
+        answers: [],
+      },
+    },
+    {
+      buttonLabel: questionObject.buttonLabel2,
+      nextAlert: {
+        title: 'Mauvaise Réponse',
+        subtitle: questionObject.question,
+        scltheme: 'danger',
+        show: true,
+        type: 'question',
+        answers: [],
+      },
+    },
+  ].sort(() => 0.5 - Math.random());
+
+
+  return ({
+    title: questionObject.title,
+    subtitle: questionObject.question,
+    scltheme: 'default',
+    show: true,
+    type: 'question',
+    answers,
+  });
+};
 
 export const setAsyncStorage = async (key, value, callback) => {
   try {

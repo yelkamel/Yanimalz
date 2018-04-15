@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import theme from 'theme';
 import I18n from 'i18n';
 import LargeSlider from 'common/largeSlider';
-import TouchableRipple from 'common/touchableRipple';
+import Button from 'common/button';
 import styles from './styles';
 
 
@@ -65,44 +65,12 @@ class ShareModal extends React.Component {
             maximumValue={30}
           />
         </View>
-        <View style={{
-          width: 120,
-          height: 40,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 30,
-          borderColor: theme.colors.accent,
-          borderWidth: 1,
-          backgroundColor: theme.colors.primaryLight,
-        }}
-        >
-          <TouchableRipple
-            onPress={() => {
-              this.props.action(Math.floor(minToWait));
-            }}
-          >
-            <View style={{
-              width: 120,
-              height: 40,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 30,
-              overflow: 'hidden',
-            }}
-            >
-
-
-              <Text style={{
-                color: theme.colors.primaryDark,
-              }}
-              >
-                {I18n.t('share')}
-              </Text>
-            </View>
-
-          </TouchableRipple>
-        </View>
-
+        <Button
+          onPress={() => {
+            this.props.action(Math.floor(minToWait));
+          }}
+          label={I18n.t('share')}
+        />
       </View>
 
     );
