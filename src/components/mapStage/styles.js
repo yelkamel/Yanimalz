@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions, Platform } from 'react-native';
 import theme from 'theme';
 
 const { height } = Dimensions.get('window');
-const IMAGE_COEF_WIDTH = Platform.OS === 'ios' ? 0.215 : 0.2;
+const IMAGE_COEF_WIDTH = Platform.OS === 'ios' ? 0.18 : 0.17;
 const IMAGE_COEF_HEIGHT = Platform.OS === 'ios' ? 0.13 : 0.13;
 
 export const ANIMALZ_HEIGHT = height * IMAGE_COEF_HEIGHT;
@@ -42,22 +42,44 @@ export const styles = StyleSheet.create({
     width: LOGO_WIDTH,
     borderRadius: 5,
   },
-  markerView: {
+  gridMarkerView: {
     height: ANIMALZ_HEIGHT,
     width: ANIMALZ_WIDTH,
-    backgroundColor: theme.colors.primaryLight,
+    backgroundColor: Platform.OS === 'ios' ? theme.colors.grid : 'transparent',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  makerText: {
+
+  gridMarkerText: {
     fontSize: theme.textSizes.xnormal,
     color: theme.colors.primaryDark,
     textAlign: 'center',
     fontFamily: theme.fontFamily.rubikRegular,
     fontWeight: 'bold',
+  },
 
+  legendView: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  gridLegendView: {
+    backgroundColor: Platform.OS === 'ios' ? theme.colors.grid : 'transparent',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  gridLegendText: {
+    fontSize: theme.textSizes.regular,
+    color: theme.colors.primaryDark,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    textAlign: 'center',
+    fontFamily: theme.fontFamily.rubikRegular,
   },
   animalzStyle: {
     height: ANIMALZ_HEIGHT,

@@ -27,6 +27,7 @@ import styles from './styles';
 const TOP_MARGIN = theme.size.screenHeight * 0.16;
 
 const TOP_POSITION = 0;
+const BOTTOM_POSITION = theme.size.screenHeight - theme.size.bannerHeight - TOP_MARGIN;
 
 
 class Home extends React.Component {
@@ -35,7 +36,7 @@ class Home extends React.Component {
     isLoading: true,
     isTop: true,
     isAnimate: false,
-    isGridHide: false,
+    isGridHide: true,
   };
 
   componentDidMount() {
@@ -45,8 +46,6 @@ class Home extends React.Component {
         this.props.loadTimeBeforeNotif(min);
       });
     });
-    this.bannerHeight = this.props.untilEvent > 0 ? theme.size.bannerHeight
-      : theme.size.bannerHeightLight;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,16 +62,7 @@ class Home extends React.Component {
 
 
   modal = null;
-  bannerHeight = theme.size.bannerHeight;
   shareModal = null
-
-  bottomPosition = () => {
-    const res = theme.size.screenHeight - this.bannerHeight - TOP_MARGIN;
-    if (this.props.untilEvent > 0) {
-      return res;
-    }
-    return res - 70;
-  }
 
   shareLocalisation = (minToWait) => {
     const url = `Animalz://coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
@@ -128,7 +118,7 @@ class Home extends React.Component {
       () => {
         if (this.state.isTop) {
           Animated.timing(this.state.animeLineUpPosition, {
-            toValue: this.bottomPosition(),
+            toValue: BOTTOM_POSITION,
             // easing: Easing.linear(),
           }).start(() => {
             this.setState((state) => ({
@@ -154,14 +144,9 @@ class Home extends React.Component {
   };
 
   showMap = () => {
-    this.setState((state) => ({
-      ...state,
-      isGridHide: true,
-    }), () => {
-      if (this.state.isTop) {
-        this.animeLineUp();
-      }
-    });
+    if (this.state.isTop) {
+      this.animeLineUp();
+    }
   }
 
   render() {
@@ -189,7 +174,7 @@ class Home extends React.Component {
             appStyles.absoluteBlack,
             {
               opacity: animeLineUpPosition.interpolate({
-                inputRange: [TOP_POSITION, this.bottomPosition()],
+                inputRange: [TOP_POSITION, BOTTOM_POSITION],
                 outputRange: [0.5, 0],
               }),
             },

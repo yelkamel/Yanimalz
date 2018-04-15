@@ -3,6 +3,8 @@ package com.animalz;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rctbattery.BatteryManagerPackage;
+import com.ninty.system.setting.SystemSettingPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import cl.json.RNSharePackage;
@@ -36,7 +38,9 @@ public class MainApplication extends Application implements ShareApplication, Re
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactVideoPackage(), new VectorIconsPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new BatteryManagerPackage(),
+            new SystemSettingPackage(), new ReactVideoPackage(), new VectorIconsPackage(),
           new RNSharePackage(), new ReactNativePushNotificationPackage(), new RNOpacityGradientPackage(),
           new MapsPackage(), new LinearGradientPackage(), new RNIconicPackage(), new RNI18nPackage());
     }

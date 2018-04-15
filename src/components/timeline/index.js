@@ -27,7 +27,6 @@ class TimeLine extends React.Component {
         Animated: true,
       });
     });
-    AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,23 +35,16 @@ class TimeLine extends React.Component {
         this.setState((state) => ({ ...state, animateEvent: true }));
       }
     }
+
+    this.handleAppStateChange(this.props.appState, nextProps.appState);
   }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
-  }
 
-
-  handleAppStateChange = (nextAppState) => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  handleAppStateChange = (currentAppState, nextAppState) => {
+    if (currentAppState.match(/inactive|background/) && nextAppState === 'active') {
       console.log('==IS FROM BACKGROUND==');
       this.updateAtTheNextHours();
     }
-    Animated.delay(500).start(() => {
-      this.setState({
-        appState: nextAppState,
-      });
-    });
   };
 
 
@@ -155,11 +147,13 @@ TimeLine.propTypes = {
   setNextEventTime: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   untilEvent: PropTypes.number.isRequired,
+  appState: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   timeLineData: state.app.timeline,
   untilEvent: state.app.untilEvent,
+  appState: state.app.appState,
 });
 
 const mapDispatchToProps = (dispatch) => ({

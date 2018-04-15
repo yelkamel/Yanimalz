@@ -17,6 +17,10 @@ I18n.translations = {
     share: 'Share',
     msgNotif: 'I\'m Here ! Download the Animalz app then click on the link below:',
     titleNotif: 'the mobile app',
+    batteryAlerteTitle: 'Battery Low',
+    batteryAlerteSubTitle: 'Reduce the light, disable the Wifi and Bluetooth ?',
+    okBattery: 'Go ahead, good idea!',
+    nokBattery: 'No need',
   },
   fr: {
     banner_title: 'Line Up!',
@@ -32,6 +36,12 @@ I18n.translations = {
     share: 'Partager',
     msgNotif: 'Je suis la ! Télécharge l\'appli Animalz puis clique sur le lien suivant:\n',
     titleNotif: 'l\'appli mobile',
+    batteryAlerteTitle: 'Batterie Faible',
+    batteryAlerteSubTitle: 'Réduire la luminosité, désactivé la Wifi et le Bluetooth ?',
+    nokBattery: 'Pas la peine',
+    okBattery: 'Vas-y, bonne idée !',
+
+
   },
 };
 

@@ -19,7 +19,7 @@ import fourhorsement from 'assets/dj/fourhorsement.jpg';
 export const INIT_TIME_LINE = [
   {
     time: '21:00',
-    fakeTime: 'X1:$0',
+    fakeTime: 'X̴̗̱͉̄̈́̓1̸̛̆:̨̦̟͘0̵͚̽̒',
     key: 'BGR',
     title: 'BORGORE',
     description: 'BORGORE',
@@ -29,7 +29,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '22:00',
-    fakeTime: '0§:0?',
+    fakeTime: '0̷̺̑͑͠§̶͍͖̣̈́:0̵̰́̚?̸͕̻̓',
     key: 'CAK',
     title: 'CAMO & KROOKED',
     description: 'CAMO & KROOKED',
@@ -39,7 +39,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '23:00',
-    fakeTime: '3!:#0',
+    fakeTime: '3̷̝͂!̴̽͝:0#̶̙̝̤͆̏̿',
     key: 'DLK',
     title: 'DOWNLINK',
     description: 'DOWNLINK',
@@ -49,7 +49,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '00:00',
-    fakeTime: '0X:9X',
+    fakeTime: '0̸̩͐̐X̶̹̻̙́̽̀:̵̡̃͜9̶͎͎̬̆̍X̸̺͎͠',
     key: 'EDO',
     title: 'ED RUSH x OPTICAL',
     description: 'ED RUSH x OPTICAL',
@@ -58,7 +58,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '01:00',
-    fakeTime: '99:99',
+    fakeTime: '9̴̻̫̠͆̎9̴̠͝:̸͍̳̘̍9̷͚̍̌9̸̼͙̘͋',
     key: 'MMT',
     title: 'MEGALODON x M.TYRANNOSAURUS',
     description: 'MEGALODON x MIDNIGHT TYRANNOSAURUS',
@@ -67,7 +67,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '02:00',
-    fakeTime: '3*:??',
+    fakeTime: '03̵͚̣̿*̶̢̛̄̚::̢̭̟̒́?̸̥̞̫̌̚',
     key: 'AAT',
     title: 'A.M.C & TURNO',
     description: 'A.M.C & TURNO',
@@ -76,7 +76,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '03:00',
-    fakeTime: '2$:€0',
+    fakeTime: '2̴̼͉̏$̷̬̤̬̾:̶̤̜€̶̘͚̱̓̈́0̸͚̮͖͗̓̓',
     key: 'FHT',
     title: 'Four Horsemen Tour World',
     description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
@@ -86,7 +86,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '04:00',
-    fakeTime: '0%:18',
+    fakeTime: '0̸̙̘̕͝4̸̢̨̞͛͠:̸̩͊͂̄?0̴̛̹͋̀',
     key: 'ABP',
     title: 'AGRESSOR BUNX x PYTHIUS',
     description: 'AGRESSOR BUNX x PYTHIUS',
@@ -96,7 +96,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '05:00',
-    fakeTime: 'XX:XX',
+    fakeTime: 'X̷̜̝̺͝X̷̱͆̈͆:̴̲͎̊͗X̴̢̥̑͗X̴̓',
     key: 'SLN',
     title: 'SOLTAN',
     description: 'SOLTAN',
@@ -106,7 +106,7 @@ export const INIT_TIME_LINE = [
   },
   {
     time: '06:00',
-    fakeTime: '??:??',
+    fakeTime: '?̸̫̈́͂?̷͎̫̮̚̚:̴͔͇̌̑?̷̩̜̈́̈́?̷͎̦̦̌',
     key: 'CCW',
     title: 'COOKERZ CREW',
     description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',
@@ -125,8 +125,8 @@ export const COEF_ZOOM = Platform.OS === 'ios' ? 0.5 : 0.55;
 export const AREA_LOC_GPS = {
   longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
   latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
-  longitude: 2.3650113,
-  latitude: 48.9034989,
+  longitude: 2.3649730785215297,
+  latitude: 48.903397521970504,
 };
 
 export const INIT_ALERT = {
@@ -135,6 +135,7 @@ export const INIT_ALERT = {
   theme: 'default',
   show: false,
   type: 'info',
+  answers: [],
 };
 
 export const SHARE_OPTION = {
@@ -148,5 +149,15 @@ export const TIME_UNTIL_PARTY = moment('2018-04-21 21:00:00', 'YYYY-MM-DD').diff
   moment(),
   'seconds',
 );
+
+export const COLOR_ARRAY = [
+  '#9C27B0',
+  '#E91E63',
+  '#3F51B5',
+  '#009688',
+  '#8BC34A',
+  '#795548',
+  '#9E9E9E',
+];
 export const TIME_STATUS = ['before', 'now', 'after'];
 export const GOOGLE_MAP_API_KEY = 'AIzaSyAR0yOHihuJLQhfAYhH8C4uuoC6VvAiYOU';

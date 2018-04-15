@@ -154,6 +154,7 @@ const defaultState = {
   timeBeforeNotif: 10,
   untilEvent: TIME_UNTIL_PARTY,
   alert: INIT_ALERT,
+  appState: 'active',
 };
 
 export default function app(state = defaultState, action) {
@@ -182,6 +183,11 @@ export default function app(state = defaultState, action) {
       return {
         ...state,
         alert: payload,
+      };
+    case 'SET_APPSTATE':
+      return {
+        ...state,
+        appState: payload,
       };
     default:
       return state;

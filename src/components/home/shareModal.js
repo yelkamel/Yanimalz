@@ -47,16 +47,24 @@ class ShareModal extends React.Component {
         <Text style={styles.shareModalText}>
           {I18n.t('howLong')}
         </Text>
-        <LargeSlider
-          horizontal
-          value={minToWait}
-          onValueChange={this.onValueChange}
-          style={styles.sliderNotif}
-          renderLabel={this.renderText}
-          trackStyle={{ backgroundColor: theme.colors.primaryLight }}
-          minimumValue={3}
-          maximumValue={30}
-        />
+        <View style={{
+          width: 80,
+          height: 160,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        >
+          <LargeSlider
+            horizontal
+            value={minToWait}
+            onValueChange={this.onValueChange}
+            style={styles.sliderNotif}
+            renderLabel={this.renderText}
+            trackStyle={{ backgroundColor: theme.colors.primaryLight }}
+            minimumValue={3}
+            maximumValue={30}
+          />
+        </View>
         <View style={{
           width: 120,
           height: 40,

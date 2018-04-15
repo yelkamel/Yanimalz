@@ -56,6 +56,7 @@
 		F08010C82073F4E70052D29D /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F08010C72073F4D80052D29D /* libRNShare.a */; };
 		F08010CA2073F5CF0052D29D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08010C92073F5CF0052D29D /* Social.framework */; };
 		F08010CC2073F5DB0052D29D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F08010CB2073F5DB0052D29D /* MessageUI.framework */; };
+		F0AD27CE2082402D002C584D /* libRCTBattery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0AD27A620824029002C584D /* libRCTBattery.a */; };
 		F0DF1C40207A8F0000CB9B8E /* libRNOpacityGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DF1C3F207A8E6300CB9B8E /* libRNOpacityGradient.a */; };
 		F0EB2EDE207A9B6200811CEA /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F0EB2EB4207A9B6200811CEA /* default.gpx */; };
 		F0EB2F06207A9BC800811CEA /* AIRGMSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EB2EE1207A9BC700811CEA /* AIRGMSMarker.m */; };
@@ -370,6 +371,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNShare;
 		};
+		F0AD27A520824029002C584D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0AD279D20824029002C584D /* RCTBattery.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6C2902191BA93BD700972EE3;
+			remoteInfo = RCTBattery;
+		};
 		F0DF1C3E207A8E6300CB9B8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 427377599B524C199183665C /* RNOpacityGradient.xcodeproj */;
@@ -452,6 +460,7 @@
 		F080109B2073F4D80052D29D /* RNShare.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		F08010C92073F5CF0052D29D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F08010CB2073F5DB0052D29D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F0AD279D20824029002C584D /* RCTBattery.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBattery.xcodeproj; path = "../node_modules/react-native-battery/ios/RCTBattery.xcodeproj"; sourceTree = "<group>"; };
 		F0D98D7A207E4193008F4FF9 /* Animalz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Animalz.entitlements; path = Animalz/Animalz.entitlements; sourceTree = "<group>"; };
 		F0EB2EB4207A9B6200811CEA /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = default.gpx; path = ../src/assets/default.gpx; sourceTree = "<group>"; };
 		F0EB2EE0207A9BC700811CEA /* AIRGMSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRGMSMarker.h; sourceTree = "<group>"; };
@@ -519,6 +528,7 @@
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
+				F0AD27CE2082402D002C584D /* libRCTBattery.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -718,6 +728,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F0AD279D20824029002C584D /* RCTBattery.xcodeproj */,
 				F080109B2073F4D80052D29D /* RNShare.xcodeproj */,
 				F026D218206A989300F4F513 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -815,6 +826,14 @@
 			isa = PBXGroup;
 			children = (
 				F08010C72073F4D80052D29D /* libRNShare.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F0AD279E20824029002C584D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F0AD27A620824029002C584D /* libRCTBattery.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -990,6 +1009,10 @@
 				{
 					ProductGroup = 5E91572E1DD0AC6500FF2AA8 /* Products */;
 					ProjectRef = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = F0AD279E20824029002C584D /* Products */;
+					ProjectRef = F0AD279D20824029002C584D /* RCTBattery.xcodeproj */;
 				},
 				{
 					ProductGroup = ADBDB9201DFEBF0600ED6528 /* Products */;
@@ -1335,6 +1358,13 @@
 			fileType = archive.ar;
 			path = libRNShare.a;
 			remoteRef = F08010C62073F4D80052D29D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F0AD27A620824029002C584D /* libRCTBattery.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTBattery.a;
+			remoteRef = F0AD27A520824029002C584D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F0DF1C3F207A8E6300CB9B8E /* libRNOpacityGradient.a */ = {

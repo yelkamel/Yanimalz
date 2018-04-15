@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { setAlert } from 'actions/app';
 import appStyles from 'appStyles';
 import PropTypes from 'prop-types';
 import { INIT_ALERT } from 'data';
@@ -9,6 +8,8 @@ import {
   SCLAlert,
   SCLAlertButton,
 } from 'react-native-scl-alert';
+import AppStateUpdate from 'common/appStateUpdate';
+import BatteryManagement from 'common/batteryManagement';
 import Home from './home';
 
 class HomeHOC extends Component {
@@ -26,40 +27,18 @@ class HomeHOC extends Component {
     this.setState({ alert: INIT_ALERT });
   }
 
-  render() {
+  renderSCLModal() {
     const {
       title,
       subtitle,
       theme,
       show,
       type,
+      answers,
     } = this.state.alert;
 
     if (type === 'question') {
       return (
-        <View style={appStyles.flexOne} >
-          <Home />
-          <SCLAlert
-            onRequestClose={this.closeModal}
-            theme={theme}
-            show={show}
-            title={title}
-            subtitle={subtitle}
-          >
-            <SCLAlertButton
-              theme="info"
-              onPress={() => this.setState({ alertMsg: 'TETETER' })}
-            >
-              Ok
-            </SCLAlertButton>
-          </SCLAlert>
-        </View>
-      );
-    }
-
-    return (
-      <View style={appStyles.flexOne} >
-        <Home />
         <SCLAlert
           onRequestClose={this.closeModal}
           theme={theme}
@@ -67,13 +46,32 @@ class HomeHOC extends Component {
           title={title}
           subtitle={subtitle}
         >
-          <SCLAlertButton
-            theme="info"
-            onPress={this.closeModal}
-          >
-            Ok
-          </SCLAlertButton>
-        </SCLAlert>
+          {answers.map((item) => (
+            <SCLAlertButton
+              theme="info"
+              onPress={() => this.setState((state) => ({
+                ...state,
+                alert: item.nextAlert,
+              }))}
+            >
+              {item.buttonLabel}
+            </SCLAlertButton>
+          ))}
+
+        </SCLAlert >
+      );
+    }
+
+    return null;
+  }
+
+  render() {
+    return (
+      <View style={appStyles.flexOne} >
+        <Home />
+        <AppStateUpdate />
+        <BatteryManagement />
+        {this.renderSCLModal()}
       </View>
     );
   }
@@ -81,18 +79,10 @@ class HomeHOC extends Component {
 
 HomeHOC.propTypes = {
   alert: PropTypes.any.isRequired,
-  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   alert: state.app.alert,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setAlert: (alert) => {
-    dispatch(setAlert(alert));
-  },
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHOC);
+export default connect(mapStateToProps)(HomeHOC);

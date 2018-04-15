@@ -16,6 +16,14 @@ export default {
     primaryDark: '#20050E',
     accent: '#27FFFF',
     grey: '#867274',
+
+    // MARKER INFO
+    grid: '#9575CD',
+    gate: '#500E44',
+    toilette: '#C05E15',
+    hideMap: '#AA2225',
+    hideMapBorder: '#991E23',
+
   },
   time: {
     splashScreenDelay: 2500,

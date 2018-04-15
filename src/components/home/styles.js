@@ -83,9 +83,11 @@ const styles = StyleSheet.create({
   },
   // Modal
   notifModalContainer: {
-    height: 100,
+    height: theme.size.screenHeight * 0.4,
     width: theme.size.screenWidth * 0.9,
     marginBottom: 20,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   notifModalText: {
     fontSize: theme.textSizes.small,
@@ -95,7 +97,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily.rubikRegular,
   },
   sharedModalContainer: {
-    height: theme.size.screenHeight / 2,
     width: theme.size.screenWidth * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -113,11 +114,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     width: theme.size.screenWidth,
-    height: theme.size.screenHeight / 4 + theme.size.hideElasticSize,
+    height: theme.size.screenHeight / 3,
     backgroundColor: theme.colors.primaryDark,
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
-    top: -theme.size.hideElasticSize,
   },
   shareModal: {
     justifyContent: 'flex-end',

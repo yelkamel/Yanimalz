@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, AppState } from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import { Marker } from 'react-native-maps';
+import I18n from 'i18n';
 import theme from 'theme';
 import CountDown from 'common/countDown';
 import moment from 'moment';
+import { connect } from 'react-redux';
+
 // import { styles } from './styles';
 
 class ShareMarker extends React.Component {
@@ -13,7 +16,6 @@ class ShareMarker extends React.Component {
     this.state = {
       longitude: props.longitude,
       latitude: props.latitude,
-      appState: AppState.currentState,
       until: props.until,
       done: false,
       tracksViewChanges: props.tracksViewChanges,
@@ -21,9 +23,6 @@ class ShareMarker extends React.Component {
 
     this.untilDate = moment().add(props.until, 'second');
     this.index = props.index;
-  }
-  componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange);
   }
 
 
@@ -42,15 +41,12 @@ class ShareMarker extends React.Component {
         until: this.untilDate.diff(moment(), 'seconds'),
       }));
     }
+
+    this.handleAppStateChange(this.props.appState, nextProps.appState);
   }
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange);
-  }
 
   onFinish = () => {
-    console.log('ON FINISH=====');
-    console.log(this.index);
     this.setState((state) => ({
       ...state,
       done: true,
@@ -59,8 +55,8 @@ class ShareMarker extends React.Component {
     });
   }
 
-  handleAppStateChange = (nextAppState) => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  handleAppStateChange = (currentAppState, nextAppState) => {
+    if (currentAppState.match(/inactive|background/) && nextAppState === 'active') {
       const currentTime = moment();
       if (currentTime.isBefore(this.untilDate)) {
         this.setState((state) => ({
@@ -74,7 +70,6 @@ class ShareMarker extends React.Component {
         }));
       }
     }
-    this.setState({ appState: nextAppState });
   };
 
 
@@ -83,7 +78,7 @@ class ShareMarker extends React.Component {
     const { color } = this.props;
 
     if (done) {
-      return null;
+      return <View />;
     }
     return (
       <Marker
@@ -95,21 +90,12 @@ class ShareMarker extends React.Component {
           longitude,
           latitude,
         }}
-        style={{ zIndex: 10 }}
+        style={{ zIndex: 15 }}
       >
-        <View style={{ height: 45, width: 45, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ height: 70, width: 70, justifyContent: 'center', alignItems: 'center' }}>
           <View style={{
-            width: 45,
-            height: 45,
-            position: 'absolute',
-            backgroundColor: color,
-            opacity: 0.2,
-            borderRadius: 200,
-          }}
-          />
-          <View style={{
-            width: 35,
-            height: 35,
+            width: 70,
+            height: 70,
             position: 'absolute',
             backgroundColor: color,
             opacity: 0.4,
@@ -117,14 +103,21 @@ class ShareMarker extends React.Component {
           }}
           />
           <View style={{
+            width: 45,
+            height: 45,
             position: 'absolute',
-            width: 20,
-            height: 20,
-            opacity: 1,
-            borderRadius: 10,
+            backgroundColor: color,
+            opacity: 0.3,
+            borderRadius: 200,
+          }}
+          />
+          <View style={{
+            position: 'absolute',
+            width: 40,
+            height: 40,
+            borderRadius: 200,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: color,
           }}
           >
             {until &&
@@ -132,10 +125,18 @@ class ShareMarker extends React.Component {
                 digitTxtColor={theme.colors.white}
                 digitBgColor="transparent"
                 until={until}
-                hasLabel={false}
                 timeToShow={['M']}
-                size={14}
+                timeTxtColor={theme.colors.white}
+                size={18}
+                textDescStyle={{
+                  color: theme.colors.white,
+                  marginVertical: 0,
+                  fontSize: theme.textSizes.xxsmall,
+                  fontFamily: theme.fontFamily.rubikRegular,
+                  backgroundColor: 'transparent',
+                }}
                 onFinish={this.onFinish}
+                minLabel={I18n.t('minutes')}
               />
             }
           </View>
@@ -161,6 +162,11 @@ ShareMarker.propTypes = {
   index: PropTypes.number.isRequired,
   onFinish: PropTypes.func.isRequired,
   tracksViewChanges: PropTypes.bool.isRequired,
+  appState: PropTypes.string.isRequired,
 };
 
-export default ShareMarker;
+const mapStateToProps = (state) => ({
+  appState: state.app.appState,
+});
+export default connect(mapStateToProps)(ShareMarker);
+

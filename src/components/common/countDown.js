@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   digitCont: {
-
     borderRadius: 5,
     marginHorizontal: 2,
     alignItems: 'center',
@@ -95,7 +94,7 @@ export default class CountDown extends React.PureComponent {
   };
 
   renderDigit = (label, d) => {
-    const { digitBgColor, digitTxtColor, timeTxtColor, size, hasLabel } = this.props;
+    const { digitBgColor, digitTxtColor, timeTxtColor, size, hasLabel, textDescStyle } = this.props;
     const digitToRender = hasLabel ? d : parseInt(d, 10);
     return (
       <View
@@ -109,9 +108,11 @@ export default class CountDown extends React.PureComponent {
         {hasLabel &&
           <Text
             style={[
-              styles.timeTxt,
               {
                 fontSize: size / 1.8,
+              },
+              textDescStyle,
+              {
                 color: timeTxtColor,
               },
             ]}
@@ -172,6 +173,7 @@ CountDown.propTypes = {
   minLabel: PropTypes.string,
   secLabel: PropTypes.string,
   hasLabel: PropTypes.bool,
+  textDescStyle: PropTypes.any,
 };
 
 CountDown.defaultProps = {
@@ -189,4 +191,5 @@ CountDown.defaultProps = {
   onPress: () => { },
   style: {},
   hasLabel: true,
+  textDescStyle: styles.timeTxt,
 };

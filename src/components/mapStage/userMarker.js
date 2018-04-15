@@ -48,8 +48,8 @@ class UserMarker extends React.Component {
         style={{ zIndex: 10 }}
       >
         <View style={{
-          width: 30,
-          height: 30,
+          width: 60,
+          height: 60,
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -57,8 +57,8 @@ class UserMarker extends React.Component {
           <View style={{
             position: 'absolute',
             backgroundColor: theme.colors.accent,
-            width: 25,
-            height: 25,
+            width: 55,
+            height: 55,
             opacity: 0.2,
             borderRadius: 30,
           }}
@@ -66,17 +66,19 @@ class UserMarker extends React.Component {
           <View style={{
             position: 'absolute',
             backgroundColor: theme.colors.accent,
-            width: 20,
-            height: 20,
-            opacity: 0.4,
+            width: 40,
+            height: 40,
+            opacity: 0.25,
             borderRadius: 30,
           }}
           />
           <View style={{
+            position: 'absolute',
             backgroundColor: theme.colors.accent,
-            width: 13,
-            height: 13,
-            borderRadius: 10,
+            width: 10,
+            height: 10,
+            opacity: 0.8,
+            borderRadius: 30,
           }}
           />
 

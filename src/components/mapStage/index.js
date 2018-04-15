@@ -2,18 +2,19 @@ import React from 'react';
 import { Animated, View, Linking } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
-import { AREA_LOC_GPS, COEF_ZOOM } from 'data';
-import theme from 'theme';
+import { AREA_LOC_GPS, COEF_ZOOM, COLOR_ARRAY } from 'data';
+
 import logo from 'assets/image/logo.png';
 import GridMarker from './gridMarker';
 import ShareMarker from './shareMarker';
 import UserMarker from './userMarker';
+import InfoMarker from './infoMarker';
 
 import MapStyle from '../../mapStyle.json';
+import MapLegend from './mapLegend';
 import { styles } from './styles';
 
-
-const INIT_POS = {
+const INIT_LOGO_POS = {
   longitude: 2.364360,
   latitude: 48.903588,
 };
@@ -22,6 +23,7 @@ const INIT_POS = {
 class MapStage extends React.Component {
   state = {
     isLoading: true,
+    showMarkerInfo: false,
     markerDone: false,
     userPosition: {
       latitude: null,
@@ -30,12 +32,12 @@ class MapStage extends React.Component {
       isLoading: true,
     },
     sharedPosition: [
-      /* {
-      longitude: 2.36534,
-      latitude: 48.90328,
-      color: theme.colors.primary,
-      until: 5,
-    } */
+      {
+        longitude: 2.3653302,
+        latitude: 48.9035353,
+        color: 'green',
+        until: 5,
+      },
     ],
   };
 
@@ -93,10 +95,11 @@ class MapStage extends React.Component {
                     ...state,
                     isLoading: false,
                   }));
-                  Animated.delay(5000).start(() => {
+                  Animated.delay(2000).start(() => {
                     this.setState((state) => ({
                       ...state,
                       markerDone: true,
+                      showMarkerInfo: true,
                     }));
                   });
                 });
@@ -120,7 +123,7 @@ class MapStage extends React.Component {
       markerDone: false,
     }), () => {
       callback();
-      Animated.delay(3000).start(() => {
+      Animated.delay(1000).start(() => {
         this.setState((state) => ({
           ...state,
           markerDone: true,
@@ -139,7 +142,7 @@ class MapStage extends React.Component {
         longitude: parseFloat(urlSlipted[urlSlipted.length - 2]),
         latitude: parseFloat(urlSlipted[urlSlipted.length - 1]),
         until: urlSlipted[urlSlipted.length - 3],
-        color: 'red',
+        color: COLOR_ARRAY[Math.floor(Math.random() * COLOR_ARRAY.length)],
       };
 
     this.animateToMarker(sharePosition);
@@ -247,7 +250,7 @@ class MapStage extends React.Component {
   }
 
   render() {
-    const { isFirstTime } = this.props;
+    const { isFirstTime, isGridHide } = this.props;
     // Test 2.3651089   48.9036151
     return (
       <View style={styles.container}>
@@ -273,11 +276,13 @@ class MapStage extends React.Component {
 
           {this.renderSharedPosition()}
           {this.renderUserPosition()}
-
+          <InfoMarker
+            show={this.state.showMarkerInfo}
+          />
           <Marker
             tracksViewChanges={!this.state.markerDone}
-            anchor={{ x: 0.5, y: 2.2 }}
-            coordinate={INIT_POS}
+            anchor={{ x: 0.7, y: 2.2 }}
+            coordinate={INIT_LOGO_POS}
             style={{ zIndex: 1 }}
           >
             <Animated.Image
@@ -286,13 +291,17 @@ class MapStage extends React.Component {
                 styles.logoStyle]}
             />
           </Marker>
-
         </MapView>
+
+        {MapLegend(!isGridHide)}
 
       </View >
     );
   }
 }
+/*
+
+*/
 
 MapStage.defaultProps = {};
 

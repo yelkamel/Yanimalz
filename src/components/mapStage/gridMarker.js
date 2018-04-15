@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Image, Platform, Text } from 'react-native';
+import { View, Platform, Text } from 'react-native';
 import OpacityGradientView from 'react-native-opacity-gradient';
 import PropTypes from 'prop-types';
-import theme from 'theme';
 import { Marker } from 'react-native-maps';
+import AndroidGradientOpacity from 'common/androidGradientOpacity';
 
 import { styles } from './styles';
 
@@ -63,8 +63,8 @@ const getAlpha = (index) => {
 };
 
 const markerView = (nb, isExt = false) => (
-  <View style={styles.markerView}>
-    <Text style={styles.makerText}>
+  <View style={styles.gridMarkerView}>
+    <Text style={styles.gridMarkerText}>
       {isExt ? getAlpha(nb) : nb + 1}
     </Text>
   </View>
@@ -93,7 +93,12 @@ class GridMarker extends React.Component {
     const { isHide } = this.state;
 
     if (isHide) {
-      return null;
+      return (
+        <View
+          key={item.id}
+          style={{ height: 5, width: 5, backgroundColor: 'transparent' }}
+        />
+      );
     }
     if (Platform.OS === 'ios') {
       return (
@@ -103,14 +108,14 @@ class GridMarker extends React.Component {
         >
           <OpacityGradientView
             colors={['transparent', 'white', 'white', 'transparent']}
-            locations={[0, 0.2, 0.80, 1.0]}
+            locations={[0, 0.3, 0.70, 1.0]}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}
           >
 
             <OpacityGradientView
               colors={['transparent', 'white', 'white', 'transparent']}
-              locations={[0, 0.2, 0.80, 1.0]}
+              locations={[0, 0.3, 0.70, 1.0]}
               start={{ x: 1, y: 0.0 }}
               end={{ x: 0.0, y: 0.0 }}
             >
@@ -120,14 +125,14 @@ class GridMarker extends React.Component {
           </OpacityGradientView >
           <OpacityGradientView
             colors={['transparent', 'white', 'white', 'transparent']}
-            locations={[0, 0.2, 0.80, 1.0]}
+            locations={[0, 0.3, 0.70, 1.0]}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}
           >
 
             <OpacityGradientView
               colors={['transparent', 'white', 'white', 'transparent']}
-              locations={[0, 0.2, 0.80, 1.0]}
+              locations={[0, 0.3, 0.70, 1.0]}
               start={{ x: 1, y: 0.0 }}
               end={{ x: 0.0, y: 0.0 }}
             >
@@ -139,14 +144,14 @@ class GridMarker extends React.Component {
           </OpacityGradientView>
           <OpacityGradientView
             colors={['transparent', 'white', 'white', 'transparent']}
-            locations={[0, 0.2, 0.80, 1.0]}
+            locations={[0, 0.3, 0.70, 1.0]}
             start={{ x: 0.0, y: 0.0 }}
             end={{ x: 0.0, y: 1.0 }}
           >
 
             <OpacityGradientView
               colors={['transparent', 'white', 'white', 'transparent']}
-              locations={[0, 0.2, 0.80, 1.0]}
+              locations={[0, 0.3, 0.70, 1.0]}
               start={{ x: 1, y: 0.0 }}
               end={{ x: 0.0, y: 0.0 }}
             >
@@ -161,11 +166,17 @@ class GridMarker extends React.Component {
     return (
       <View
         key={item.id}
-        style={[styles.gradient, { opacity: 0.5 }]}
+        style={[styles.gradient]}
       >
-        {markerView(index, true)}
-        {markerView(index)}
-        {markerView(index + 1)}
+        <AndroidGradientOpacity globaleOpacity={0.8}>
+          {markerView(index, true)}
+        </AndroidGradientOpacity>
+        <AndroidGradientOpacity globaleOpacity={0.8}>
+          {markerView(index)}
+        </AndroidGradientOpacity>
+        <AndroidGradientOpacity globaleOpacity={0.8}>
+          {markerView(index + 1)}
+        </AndroidGradientOpacity>
       </View >
     );
   }

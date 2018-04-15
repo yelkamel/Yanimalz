@@ -63,6 +63,7 @@ class NotifModal extends React.Component {
           onPress={this.onSelectNotifParams}
           height={theme.size.screenHeight * 0.08}
         />
+
       </View>
 
     );

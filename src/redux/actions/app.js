@@ -45,3 +45,9 @@ export const setAlert = (alert) => ({
   payload: alert,
 });
 
+
+export const setAppState = (nextAppState) => ({
+  type: 'SET_APPSTATE',
+  payload: nextAppState,
+});
+
