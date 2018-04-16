@@ -319,7 +319,7 @@ class InfoMarker extends React.Component {
   render() {
     return (
       <Marker.Animated
-        show={this.state.tracksViewChanges}
+        tracksViewChanges={this.state.tracksViewChanges}
         anchor={{ x: 0.04, y: 0.8 }}
         coordinate={GRID_MARKER_POSITION}
         style={{ zIndex: -1 }}

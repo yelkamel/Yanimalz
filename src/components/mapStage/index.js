@@ -38,6 +38,7 @@ class MapStage extends React.Component {
         color: 'green',
         until: 5,
       },
+
     ],
   };
 
@@ -113,7 +114,7 @@ class MapStage extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-    // / Linking.removeEventListener('url', this.handleOpenURL);
+    Linking.removeEventListener('url', this.handleOpenURL);
   }
 
 
@@ -273,7 +274,6 @@ class MapStage extends React.Component {
 
         >
           {this.renderGridMarker()}
-
           {this.renderSharedPosition()}
           {this.renderUserPosition()}
           <InfoMarker

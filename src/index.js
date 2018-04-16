@@ -1,8 +1,10 @@
 import React from 'react';
-// import RootStack from 'routes/Router';
 import { Provider } from 'react-redux';
-import HomeHOC from 'components/home';
 import configureStore from 'redux';
+import codePush from 'react-native-code-push';
+import HomeHOC from 'components/home';
+
+// import RootStack from 'routes/Router';
 
 
 const store = configureStore();
@@ -16,4 +18,4 @@ class Root extends React.Component {
   }
 }
 
-export default Root;
+export default codePush(Root);

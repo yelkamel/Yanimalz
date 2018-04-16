@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   // LOADING
   loadingView: {
-    backgroundColor: theme.colors.blackLogo,
+    backgroundColor: theme.colors.primaryDark,
     position: 'absolute',
     top: 0,
     left: 0,

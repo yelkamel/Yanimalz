@@ -115,12 +115,12 @@ android {
   ANIMALZ_RELEASE_KEY_PASSWORD=azerty123
       */
       release {
-          if (project.hasProperty('animalz.keystore')) {
+        //  if (project.hasProperty('animalz.keystore')) {
               storeFile file('animalz.keystore')
               storePassword 'azerty123'
               keyAlias 'animalz'
               keyPassword 'azerty123'
-          }
+         // }
       }
     }
     splits {

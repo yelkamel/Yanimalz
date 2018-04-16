@@ -74,7 +74,13 @@ class Home extends React.Component {
         message: SHARE_OPTION.message,
         url,
         type: 'Absolute',
-        excludedActivityTypes: ['email', 'googleplus', 'twitter'],
+        excludedActivityTypes: [
+          'com.apple.UIKit.activity.Messenger',
+          'com.linkedin.LinkedIn.ShareExtension',
+          'com.apple.UIKit.activity.PostToFacebook',
+          'UIActivityTypePostToTwitter',
+
+        ],
       }).catch(() => { });
     } else {
       /* alert.open({

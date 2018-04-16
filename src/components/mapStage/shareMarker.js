@@ -72,6 +72,20 @@ class ShareMarker extends React.Component {
     }
   };
 
+  onUpdateTime = () => {
+    this.setState((state) => ({
+      ...state,
+      tracksViewChanges: true,
+    }), () => {
+      setTimeout(() => {
+        this.setState((state) => ({
+          ...state,
+          tracksViewChanges: false,
+        }));
+      }, 500);
+    });
+  }
+
 
   render() {
     const { longitude, latitude, until, done, tracksViewChanges } = this.state;
@@ -135,7 +149,9 @@ class ShareMarker extends React.Component {
                   fontFamily: theme.fontFamily.rubikRegular,
                   backgroundColor: 'transparent',
                 }}
+                simpleDg
                 onFinish={this.onFinish}
+                onUpdate={this.onUpdateTime}
                 minLabel={I18n.t('minutes')}
               />
             }

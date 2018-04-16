@@ -26,11 +26,13 @@ class TimeLine extends React.Component {
     const nbOfEventPast = this.numberOfPastEvent;
     this.updateAtTheNextHours();
     Animated.delay(2000).start(() => {
-      this.scrollTimeLine.scrollTo({
-        x: 0,
-        y: nbOfEventPast * (theme.size.pastEventHeight + 20),
-        Animated: true,
-      });
+      if (nbOfEventPast < 10) {
+        this.scrollTimeLine.scrollTo({
+          x: 0,
+          y: nbOfEventPast * (theme.size.pastEventHeight + 20),
+          Animated: true,
+        });
+      }
     });
   }
 

@@ -12,6 +12,7 @@
 #import <React/RCTRootView.h>
 #import <React/RCTPushNotificationManager.h>
 #import "React/RCTLinkingManager.h"
+#import <CodePush/CodePush.h>
 
 
 @import GoogleMaps;
@@ -21,8 +22,16 @@
 {
 
   NSURL *jsCodeLocation;
-[GMSServices provideAPIKey:@"AIzaSyAR0yOHihuJLQhfAYhH8C4uuoC6VvAiYOU"];
+  
+#ifdef DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+
+#else
+  jsCodeLocation = [CodePush bundleURL];
+#endif
+  
+  [GMSServices provideAPIKey:@"AIzaSyAR0yOHihuJLQhfAYhH8C4uuoC6VvAiYOU"];
+
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Animalz"

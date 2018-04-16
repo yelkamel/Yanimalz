@@ -75,9 +75,8 @@ function loadTimeLine(state, payload) {
 
   const timelineTmp = state.timeline.reduce((results, event) => {
     const currentTime = moment();
-    // const currentTime = moment('23:30', 'HH:mm');
-
-    const startTime = moment(event.time, 'HH:mm');
+    const dateStr = '20180421';
+    const startTime = moment(`${event.time} ${dateStr}`, 'HH:mm YYYYMMDD');
     let hasNotif = false;
 
     if (notifList.includes(event.key)) {

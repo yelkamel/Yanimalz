@@ -55,13 +55,17 @@ export default class CountDown extends React.PureComponent {
     if (this.props.onFinish) {
       this.onFinish = _.once(this.props.onFinish);
     }
-    this.timer = setInterval(this.updateTimer, 1000);
+    this.timer = setInterval(this.updateTimer, 60 * 1000);
   }
 
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.until !== this.props.until && nextProps.until > 1) {
-      this.setState((state) => ({ ...state, until: nextProps.until }));
+      this.setState((state) => (
+        {
+          ...state,
+          until: nextProps.until,
+        }));
     }
   }
 
@@ -73,7 +77,6 @@ export default class CountDown extends React.PureComponent {
   getTimeLeft = () => {
     const { until } = this.state;
     return {
-      seconds: until % 60,
       minutes: parseInt(until / 60, 10) % 60,
       hours: parseInt(until / (60 * 60), 10) % 24,
       days: parseInt(until / (60 * 60 * 24), 10),
@@ -90,12 +93,15 @@ export default class CountDown extends React.PureComponent {
         this.onFinish();
       }
     }
-    if (!this.isFinish) { this.setState({ until: until - 1 }); }
+    if (!this.isFinish) {
+      this.props.onUpdate();
+      this.setState({ until: until - 60 });
+    }
   };
 
   renderDigit = (label, d) => {
-    const { digitBgColor, digitTxtColor, timeTxtColor, size, hasLabel, textDescStyle } = this.props;
-    const digitToRender = hasLabel ? d : parseInt(d, 10);
+    const { digitBgColor, digitTxtColor, timeTxtColor, size, simpleDg, hasLabel, textDescStyle } = this.props;
+    const digitToRender = simpleDg ? parseInt(d, 10) : d;
     return (
       <View
         style={[
@@ -131,8 +137,8 @@ export default class CountDown extends React.PureComponent {
 
   renderCountDown = () => {
     const { timeToShow } = this.props;
-    const { days, hours, minutes, seconds } = this.getTimeLeft();
-    const newTime = sprintf('%02d:%02d:%02d:%02d', days, hours, minutes, seconds).split(':');
+    const { days, hours, minutes } = this.getTimeLeft();
+    const newTime = sprintf('%02d:%02d:%02d', days, hours, minutes).split(':');
     const Component = this.props.onPress ? TouchableOpacity : View;
 
     return (
@@ -145,9 +151,6 @@ export default class CountDown extends React.PureComponent {
           : null}
         {_.includes(timeToShow, 'M')
           ? this.renderDoubleDigits(this.props.minLabel, newTime[2])
-          : null}
-        {_.includes(timeToShow, 'S')
-          ? this.renderDoubleDigits(this.props.secLabel, newTime[3])
           : null}
       </Component>
     );
@@ -174,6 +177,8 @@ CountDown.propTypes = {
   secLabel: PropTypes.string,
   hasLabel: PropTypes.bool,
   textDescStyle: PropTypes.any,
+  simpleDg: PropTypes.bool,
+  onUpdate: PropTypes.func,
 };
 
 CountDown.defaultProps = {
@@ -190,6 +195,8 @@ CountDown.defaultProps = {
   onFinish: () => { },
   onPress: () => { },
   style: {},
+  simpleDg: true,
   hasLabel: true,
   textDescStyle: styles.timeTxt,
+  onUpdate: () => { },
 };

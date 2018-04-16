@@ -184,7 +184,7 @@ class GridMarker extends React.Component {
   render() {
     return (
       <Marker
-        tracksViewChanges={!this.state.tracksViewChanges}
+        tracksViewChanges={this.state.tracksViewChanges}
         anchor={{ x: 0.34, y: 0.8 }}
         coordinate={GRID_MARKER_POSITION}
       >

@@ -21,6 +21,10 @@ I18n.translations = {
     batteryAlerteSubTitle: 'Reduce the light, disable the Wifi and Bluetooth ?',
     okBattery: 'Go ahead, good idea!',
     nokBattery: 'No need',
+    loading: 'Loading...',
+    needUpdateTitle: 'New Update !',
+    needUpdateDescription: 'Optimisation & Correction',
+    needUpdateButton: 'Ok',
   },
   fr: {
     banner_title: 'Line Up!',
@@ -40,8 +44,10 @@ I18n.translations = {
     batteryAlerteSubTitle: 'Réduire la luminosité, désactivé la Wifi et le Bluetooth ?',
     nokBattery: 'Pas la peine',
     okBattery: 'Vas-y, bonne idée !',
-
-
+    loading: 'Chargement...',
+    needUpdateTitle: 'Nouvelle Mise à jour !',
+    needUpdateDescription: 'Optimisation & Correction',
+    needUpdateButton: 'Ok',
   },
 };
 
