@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Marker } from 'react-native-maps';
 import theme from 'theme';

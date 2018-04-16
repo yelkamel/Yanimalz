@@ -57,7 +57,7 @@ class InfoMarker extends React.Component {
           left: theme.size.screenWidth * WALL_COEF_LEFT,
           top: theme.size.screenHeight * WALL_COEF_TOP,
           height: theme.size.screenHeight * 0.70,
-          width: 45,
+          width: 50,
           backgroundColor: theme.colors.hideMap,
           borderRightColor: theme.colors.hideMapBorder,
           borderRightWidth: 4,
@@ -263,7 +263,7 @@ class InfoMarker extends React.Component {
           left: 2,
           bottom: theme.size.screenHeight * 0.19,
           height: DOORS_HEIGHT,
-          width: 8,
+          width: 10,
           borderTopLeftRadius: 5,
           borderBottomLeftRadius: 5,
           backgroundColor: theme.colors.gate,
@@ -272,10 +272,10 @@ class InfoMarker extends React.Component {
 
         <View style={{
           position: 'absolute',
-          left: 0,
+          left: 2,
           bottom: theme.size.screenHeight * 0.33,
           height: DOORS_HEIGHT,
-          width: 8,
+          width: 10,
           borderTopLeftRadius: 5,
           borderBottomLeftRadius: 5,
           backgroundColor: theme.colors.gate,
@@ -285,10 +285,10 @@ class InfoMarker extends React.Component {
 
         <View style={{
           position: 'absolute',
-          left: 0,
+          left: 2,
           bottom: theme.size.screenHeight * 0.40,
           height: DOORS_HEIGHT,
-          width: 8,
+          width: 10,
           borderTopLeftRadius: 5,
           borderBottomLeftRadius: 5,
           backgroundColor: theme.colors.gate,
@@ -298,11 +298,11 @@ class InfoMarker extends React.Component {
         <View style={{
           position: 'absolute',
           left: 10,
-          bottom: theme.size.screenHeight * 0.07,
-          height: 8,
+          bottom: theme.size.screenHeight * 0.072,
+          height: 10,
           width: theme.size.screenHeight * 0.035,
-          borderBottomRightRadius: 10,
-          borderBottomLeftRadius: 10,
+          borderBottomRightRadius: 5,
+          borderBottomLeftRadius: 5,
           backgroundColor: theme.colors.gate,
         }}
         />

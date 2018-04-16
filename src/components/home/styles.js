@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderBottomWidth: 2,
     borderColor: theme.colors.primaryDark,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   // BANNER
   borderRadiusView: {

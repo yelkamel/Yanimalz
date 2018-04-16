@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import theme from 'theme';
 import styles from './styles';
@@ -21,7 +21,7 @@ class Loading extends React.Component {
 
   render() {
     return (
-      <Animated.View style={[styles.loadingView, { height: this.animHeight }]} />
+      <Animated.View style={[styles.loadingView, { height: this.animHeight }]}  />
     );
   }
 }

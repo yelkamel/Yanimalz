@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import theme from 'theme';
 import BouncingPreloader from 'react-native-bouncing-preloader';
 import I18n from 'i18n';
@@ -66,7 +66,10 @@ const Loading = () => (
     justifyContent: 'center',
     alignItems: 'center',
   }}
-  />
+  >
+    <ActivityIndicator size="large" color={theme.colors.accent} />
+
+  </View>
 );
 
 Loading.propTypes = {
