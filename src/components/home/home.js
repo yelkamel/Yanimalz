@@ -67,25 +67,20 @@ class Home extends React.Component {
   shareLocalisation = (minToWait) => {
     const url = `Animalz://coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
 
-      Share.open({
-        title: SHARE_OPTION.title,
-        subject: SHARE_OPTION.subject,
-        message: SHARE_OPTION.message,
-        url,
-        type: 'Absolute',
-        excludedActivityTypes: [
-          'com.apple.UIKit.activity.Messenger',
-          'com.linkedin.LinkedIn.ShareExtension',
-          'com.apple.UIKit.activity.PostToFacebook',
-          'UIActivityTypePostToTwitter',
-
-        ],
-      }).catch(() => { });
-    } else {
-      /* alert.open({
-         ...SHARE_OPTION,
-       }).catch(() => { }); */
-    }
+    Share.open({
+      title: SHARE_OPTION.title,
+      subject: SHARE_OPTION.subject,
+      message: SHARE_OPTION.message,
+      url,
+      type: 'Absolute',
+      excludedActivityTypes: [
+        'com.linkedin.LinkedIn.ShareExtension',
+        'com.apple.UIKit.activity.PostToFacebook',
+        'UIActivityTypePostToTwitter',
+        'com.apple.reminders.RemindersEditorExtension',
+        'com.apple.mobilenotes.SharingExtension',
+      ],
+    }).catch(() => { });
   }
 
   selectedMenuItem = (type = 'notif') => {

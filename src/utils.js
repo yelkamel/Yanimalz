@@ -11,7 +11,7 @@ export const getRandomQuestion = () => {
       buttonLabel: questionObject.buttonLabel1,
       nextAlert: {
         title: 'Bonne Réponse',
-        subtitle: questionObject.question,
+        subtitle: '',
         scltheme: 'success',
         show: true,
         type: 'question',
@@ -22,7 +22,7 @@ export const getRandomQuestion = () => {
       buttonLabel: questionObject.buttonLabel2,
       nextAlert: {
         title: 'Mauvaise Réponse',
-        subtitle: questionObject.question,
+        subtitle: '',
         scltheme: 'danger',
         show: true,
         type: 'question',

@@ -157,7 +157,7 @@ class TimeLine extends React.Component {
           alignItems: 'flex-start',
         }}
         >
-          <Button onPress={this.onPressQuestion} label="Quizz" />
+          <Button onPress={this.onPressQuestion} label="Quiz" />
         </View>
       </View>
     );

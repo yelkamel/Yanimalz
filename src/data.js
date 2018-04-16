@@ -222,7 +222,43 @@ export const QUESTION_LIST = [
     buttonLabel1: '140',
     buttonLabel2: '175',
   },
-
+  //
+  {
+    title: 'Ed Rush',
+    question: 'Avec quel artiste a-t-il fondé Killbox ?',
+    buttonLabel1: 'Audio',
+    buttonLabel2: 'Gridlok',
+  },
+  {
+    title: 'Pythius',
+    question: 'Quelle chanson a-t-il produit ?',
+    buttonLabel1: 'Nexus',
+    buttonLabel2: 'If I Could',
+  },
+  {
+    title: 'Camo and Krooked',
+    question: 'Qui a remixé l\'une de leurs chansons ?',
+    buttonLabel1: 'Dossa & Locuzzed',
+    buttonLabel2: 'Mefjus',
+  },
+  {
+    title: 'Pythius',
+    question: 'Quelle genre de drum and bass ?',
+    buttonLabel1: 'Neurofunk',
+    buttonLabel2: 'Dancefloor/Liquid',
+  },
+  {
+    title: 'Agressor Bunx',
+    question: 'S\'est-il déjà produit à Paris ?',
+    buttonLabel1: 'Oui',
+    buttonLabel2: 'Jamais',
+  },
+  {
+    title: 'Optical',
+    question: 'De quel label fait-il parti ?',
+    buttonLabel1: 'Virus Recordings',
+    buttonLabel2: 'Never Say Die',
+  },
 ];
 
 export const COLOR_ARRAY = [

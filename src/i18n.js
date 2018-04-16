@@ -12,7 +12,7 @@ I18n.translations = {
     before: 'before',
     seconds: 'sec',
     notif: 'Notif',
-    howLong: 'How long will you waiting for ?',
+    howLong: 'How long you will waiting for ?',
     beforeTime: 'Alert how many minutes before the event ?',
     share: 'Share',
     msgNotif: 'I\'m Here ! Download the Animalz app then click on the link below:',

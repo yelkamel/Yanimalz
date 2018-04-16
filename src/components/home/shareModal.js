@@ -7,6 +7,11 @@ import LargeSlider from 'common/largeSlider';
 import Button from 'common/button';
 import styles from './styles';
 
+const FBSDK = require('react-native-fbsdk');
+
+const {
+  AppEventsLogger,
+} = FBSDK;
 
 class ShareModal extends React.Component {
   constructor(props) {
@@ -24,6 +29,10 @@ class ShareModal extends React.Component {
 
   onValueChange = (val) => {
     this.setState((state) => ({ ...state, minToWait: val }));
+  }
+
+  onPressShare = (minToWait) => {
+    this.props.action(Math.floor(minToWait));
   }
 
   renderText = (onTop) => {
@@ -47,13 +56,7 @@ class ShareModal extends React.Component {
         <Text style={styles.shareModalText}>
           {I18n.t('howLong')}
         </Text>
-        <View style={{
-          width: 80,
-          height: 160,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        >
+        <View style={styles.largeSliderContainer}>
           <LargeSlider
             horizontal
             value={minToWait}
@@ -76,41 +79,6 @@ class ShareModal extends React.Component {
     );
   }
 }
-
-/*
-
-<View style={{ flex: 1 }}>
-      <Text style={styles.shareModalText}>
-        Ta couleur sur sa carte ?
-      </Text>
-
-      <ColorPicker
-        //  onColorSelected={(color) => alert(`Color selected: ${color}`)}
-        style={{ flex: 1 }}
-        color={color}
-        onColorChange={this.onColorChange}
-        hideSliders
-      />
-
-      <Button
-        onPress={() => {
-          this.props.action(minToWait, fromHsv(color));
-        }}
-        title="test"
-      />
-    </View>
-
-
-    <View style={styles.sliderColorContainer}>
-      <HueSlider
-        style={styles.sliderColorRow}
-        gradientSteps={20}
-        value={color.h}
-        onValueChange={this.onColorChange}
-      />
-    </View>
-    */
-
 
 ShareModal.defaultProps = {
   action: () => { },

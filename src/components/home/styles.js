@@ -104,12 +104,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  largeSliderContainer: {
+    width: 80,
+    height: theme.size.screenHeight * 0.27,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   shareModalText: {
     fontSize: theme.textSizes.xsmall,
     color: theme.colors.primaryLight,
     textAlign: 'center',
     margin: 10,
-
     fontFamily: theme.fontFamily.rubikRegular,
   },
   topModal: {

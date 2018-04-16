@@ -32,12 +32,7 @@ class MapStage extends React.Component {
       isLoading: true,
     },
     sharedPosition: [
-      {
-        longitude: 2.3653302,
-        latitude: 48.9035353,
-        color: 'green',
-        until: 5,
-      },
+
 
     ],
   };
