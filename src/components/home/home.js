@@ -67,7 +67,6 @@ class Home extends React.Component {
   shareLocalisation = (minToWait) => {
     const url = `Animalz://coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
 
-    if (this.mapStage && !this.mapStage.state.userPosition.isLoading) {
       Share.open({
         title: SHARE_OPTION.title,
         subject: SHARE_OPTION.subject,
