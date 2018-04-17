@@ -19,6 +19,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import cl.json.ShareApplication;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,12 +38,17 @@ public class MainApplication extends Application implements ShareApplication, Re
     }
 
     @Override
+    protected String getJSBundleFile() {
+      return CodePush.getJSBundleFile();
+    }
+
+    @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new BatteryManagerPackage(),
-            new SystemSettingPackage(), new ReactVideoPackage(), new VectorIconsPackage(),
-          new RNSharePackage(), new ReactNativePushNotificationPackage(), new RNOpacityGradientPackage(),
-          new MapsPackage(), new LinearGradientPackage(), new RNIconicPackage(), new RNI18nPackage());
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new BatteryManagerPackage(),
+          new SystemSettingPackage(), new ReactVideoPackage(), new VectorIconsPackage(), new RNSharePackage(),
+          new ReactNativePushNotificationPackage(), new RNOpacityGradientPackage(), new MapsPackage(),
+          new LinearGradientPackage(), new RNIconicPackage(), new RNI18nPackage(),
+          new CodePush("deployment-key-here", MainApplication.this, BuildConfig.DEBUG));
     }
 
     @Override

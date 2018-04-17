@@ -9,9 +9,6 @@ import moment from 'moment/moment';
 import PushNotification from 'react-native-push-notification';
 import store from 'react-native-simple-store';
 
-const BEFORE_MD_START = moment('12:00:00', 'HH:mm');
-const BEFORE_MD_END = moment('23:59:59 ', 'HH:mm');
-
 function clearAndSetNotif(timeLine, timeBeforeNotif) {
   PushNotification.cancelAllLocalNotifications();
 
@@ -21,7 +18,6 @@ function clearAndSetNotif(timeLine, timeBeforeNotif) {
       const triggerAt = new Date(eventDateEpoch - (timeBeforeNotif * 60 * 1000));
 
       console.log('===NOTIF===AT==');
-      console.log(timeBeforeNotif);
       console.log(triggerAt);
       PushNotification.localNotificationSchedule({
         title: item.title,
@@ -74,21 +70,12 @@ function loadTimeLine(state, payload) {
   console.log('====================================');
 
   const timelineTmp = state.timeline.reduce((results, event) => {
-    const currentTime = moment();
-    const dateStr = '20180421';
-    const startTime = moment(`${event.time} ${dateStr}`, 'HH:mm YYYYMMDD');
+    const startTime = moment(event.time, 'HH:mm YYYYMMDD');
     let hasNotif = false;
 
     if (notifList.includes(event.key)) {
       hasNotif = true;
     }
-    if (!startTime.isBetween(BEFORE_MD_START, BEFORE_MD_END)) {
-      startTime.add(1, 'day');
-    }
-    if (!currentTime.isBetween(BEFORE_MD_START, BEFORE_MD_END)) {
-      startTime.subtract(1, 'day');
-    }
-
     results.push({
       ...event,
       hasNotif,

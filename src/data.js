@@ -16,9 +16,12 @@ import soltan from 'assets/dj/soltan.jpg';
 import cookerzcrew from 'assets/dj/cookerzcrew.jpg';
 import fourhorsement from 'assets/dj/fourhorsement.jpg';
 
+const saturdayDateStr = '20180421';
+const sundayDateStr = '20180422';
+
 export const INIT_TIME_LINE = [
   {
-    time: '21:00',
+    time: `21:00 ${saturdayDateStr}`,
     fakeTime: 'X̴̗̱͉̄̈́̓1̸̛̆:̨̦̟͘0̵͚̽̒',
     key: 'BGR',
     title: 'BORGORE',
@@ -28,7 +31,7 @@ export const INIT_TIME_LINE = [
     icon: dubstep,
   },
   {
-    time: '22:00',
+    time: `22:00 ${saturdayDateStr}`,
     fakeTime: '0̷̺̑͑͠§̶͍͖̣̈́:0̵̰́̚?̸͕̻̓',
     key: 'CAK',
     title: 'CAMO & KROOKED',
@@ -38,7 +41,7 @@ export const INIT_TIME_LINE = [
     icon: drum,
   },
   {
-    time: '23:00',
+    time: `23:00 ${saturdayDateStr}`,
     fakeTime: '3̷̝͂!̴̽͝:0#̶̙̝̤͆̏̿',
     key: 'DLK',
     title: 'DOWNLINK',
@@ -48,7 +51,7 @@ export const INIT_TIME_LINE = [
     icon: dubstep,
   },
   {
-    time: '00:00',
+    time: `00:00 ${sundayDateStr}`,
     fakeTime: '0̸̩͐̐X̶̹̻̙́̽̀:̵̡̃͜9̶͎͎̬̆̍X̸̺͎͠',
     key: 'EDO',
     title: 'ED RUSH x OPTICAL',
@@ -57,7 +60,7 @@ export const INIT_TIME_LINE = [
     icon: drum,
   },
   {
-    time: '01:00',
+    time: `01:00 ${sundayDateStr}`,
     fakeTime: '9̴̻̫̠͆̎9̴̠͝:̸͍̳̘̍9̷͚̍̌9̸̼͙̘͋',
     key: 'MMT',
     title: 'MEGALODON x M.TYRANNOSAURUS',
@@ -66,7 +69,7 @@ export const INIT_TIME_LINE = [
     icon: dubstep,
   },
   {
-    time: '02:00',
+    time: `02:00 ${sundayDateStr}`,
     fakeTime: '03̵͚̣̿*̶̢̛̄̚::̢̭̟̒́?̸̥̞̫̌̚',
     key: 'AAT',
     title: 'A.M.C & TURNO',
@@ -75,7 +78,7 @@ export const INIT_TIME_LINE = [
     icon: drum,
   },
   {
-    time: '03:00',
+    time: `03:00 ${sundayDateStr}`,
     fakeTime: '2̴̼͉̏$̷̬̤̬̾:̶̤̜€̶̘͚̱̓̈́0̸͚̮͖͗̓̓',
     key: 'FHT',
     title: 'Four Horsemen Tour World',
@@ -85,7 +88,7 @@ export const INIT_TIME_LINE = [
 
   },
   {
-    time: '04:00',
+    time: `04:00 ${sundayDateStr}`,
     fakeTime: '0̸̙̘̕͝4̸̢̨̞͛͠:̸̩͊͂̄?0̴̛̹͋̀',
     key: 'ABP',
     title: 'AGRESSOR BUNX x PYTHIUS',
@@ -95,7 +98,7 @@ export const INIT_TIME_LINE = [
 
   },
   {
-    time: '05:00',
+    time: `05:00 ${sundayDateStr}`,
     fakeTime: 'X̷̜̝̺͝X̷̱͆̈͆:̴̲͎̊͗X̴̢̥̑͗X̴̓',
     key: 'SLN',
     title: 'SOLTAN',
@@ -105,7 +108,7 @@ export const INIT_TIME_LINE = [
 
   },
   {
-    time: '06:00',
+    time: `06:00 ${sundayDateStr}`,
     fakeTime: '?̸̫̈́͂?̷͎̫̮̚̚:̴͔͇̌̑?̷̩̜̈́̈́?̷͎̦̦̌',
     key: 'CCW',
     title: 'COOKERZ CREW',
@@ -115,7 +118,7 @@ export const INIT_TIME_LINE = [
 
   },
   {
-    time: '07:00',
+    time: `07:00 ${sundayDateStr}`,
     key: 'END',
   },
 ];

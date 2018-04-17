@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -106,6 +107,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        manifestPlaceholders = [hostName:"coord"]
+
     }
     signingConfigs {
       /*
@@ -174,11 +177,10 @@ dependencies {
     compile project(':react-native-opacity-gradient')
     compile project(':react-native-maps')
     compile project(':react-native-iconic')
-    compile project(':react-native-video')
-    compile project(':react-native-share')
     compile project(':react-native-push-notification')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-i18n')
+    compile project(':react-native-code-push')
 
     compile ('com.google.android.gms:play-services-gcm:10.0.1') { force = true; }
     compile fileTree(dir: "libs", include: ["*.jar"])

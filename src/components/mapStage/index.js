@@ -55,7 +55,7 @@ class MapStage extends React.Component {
           }));
         },
         (error) => console.log('Get Current Position Error', error),
-        { enableHighAccuracy: true },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 },
       );
     }, 5000);
 
@@ -84,20 +84,17 @@ class MapStage extends React.Component {
 
               Animated.delay(1200).start(() => {
                 this.map.animateToViewingAngle(0, 800);
-                Animated.timing(this.itemOpacity, {
-                  toValue: 0.6,
-                }).start(() => {
+
+                this.setState((state) => ({
+                  ...state,
+                  isLoading: false,
+                }));
+                Animated.delay(2000).start(() => {
                   this.setState((state) => ({
                     ...state,
-                    isLoading: false,
+                    markerDone: true,
+                    showMarkerInfo: true,
                   }));
-                  Animated.delay(2000).start(() => {
-                    this.setState((state) => ({
-                      ...state,
-                      markerDone: true,
-                      showMarkerInfo: true,
-                    }));
-                  });
                 });
               });
             });
@@ -131,23 +128,24 @@ class MapStage extends React.Component {
   handleOpenURL = (event) => {
     this.props.showMap();
     this.markerChange();
-
     const urlSlipted = event.url.split('/');
     const sharePosition =
       {
         longitude: parseFloat(urlSlipted[urlSlipted.length - 2]),
         latitude: parseFloat(urlSlipted[urlSlipted.length - 1]),
+        longitudeDelta: AREA_LOC_GPS.longitudeDelta,
+        latitudeDelta: AREA_LOC_GPS.latitudeDelta,
         until: urlSlipted[urlSlipted.length - 3],
         color: COLOR_ARRAY[Math.floor(Math.random() * COLOR_ARRAY.length)],
       };
 
-    this.animateToMarker(sharePosition);
-
-    this.hasRenderSharedPosition = false;
-    this.setState((state) => ({
-      ...state,
-      sharedPosition: state.sharedPosition.concat(sharePosition),
-    }));
+    this.setState((state) => ({ ...state, showMarkerInfo: false }), () => {
+      this.animateToMarker(sharePosition);
+      this.setState((state) => ({
+        ...state,
+        sharedPosition: state.sharedPosition.concat(sharePosition),
+      }));
+    });
   }
 
   animateToArea = () => {
@@ -159,7 +157,6 @@ class MapStage extends React.Component {
       this.map.animateToCoordinate(this.state.userPosition, 2000);
     }
   }
-
 
   animateToMarker = (coord) => {
     const { hideAnimalz, isGridHide } = this.props;
@@ -173,12 +170,13 @@ class MapStage extends React.Component {
       this.map.animateToRegion(coord, 2000);
       Animated.delay(3000).start(() => {
         this.map.animateToRegion(AREA_LOC_GPS, 2000);
-        Animated.delay(500).start(() => {
+        Animated.delay(2500).start(() => {
           this.map.animateToBearing(280.5, 1000);
-          Animated.delay(2000).start(() => {
+          Animated.delay(1500).start(() => {
             if (!isGridHide) {
               hideAnimalz();
             }
+            this.setState((state) => ({ ...state, showMarkerInfo: true }));
           });
         });
       });
@@ -198,9 +196,7 @@ class MapStage extends React.Component {
     }
   }
 
-  hasRenderSharedPosition = true;
   intervalId = null
-  modalNotif = null;
   map = null;
   itemOpacity = new Animated.Value(0);
 

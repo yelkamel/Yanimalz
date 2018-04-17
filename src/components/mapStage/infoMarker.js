@@ -29,11 +29,12 @@ class InfoMarker extends React.Component {
   }
   opacityValue = new Animated.Value(Platform.OS === 'ios' ? 0 : 1)
   componentWillReceiveProps(nextProps) {
-    if (nextProps.show !== this.props.show && !this.props.show) {
+    if (nextProps.show !== this.props.show) {
       console.log('==SHOW INFO==');
       this.setState((state) => ({
         ...state,
-        show: true,
+        tracksViewChanges: true,
+        show: nextProps.show,
       }), () => {
         Animated.timing(this.opacityValue, {
           toValue: 1,

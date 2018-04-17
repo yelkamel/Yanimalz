@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import appStyles from 'appStyles';
 import PropTypes from 'prop-types';
@@ -19,8 +19,12 @@ import { getRandomQuestion } from 'utils';
 import Home from './home';
 
 
-const CODE_PUSH_DEV = 'ez6fvhPellV4cTTqSwk57dvS9MAq54bfd2b7-109e-4645-8229-bad3eb48e6ff';
-const CODE_PUSH_PRD = 'HRzUcsx4V7a3VtFnFqLMLdpBmsRQ54bfd2b7-109e-4645-8229-bad3eb48e6ff';
+const CODE_PUSH_DEV = Platform.OS === 'ios' ?
+  'ez6fvhPellV4cTTqSwk57dvS9MAq54bfd2b7-109e-4645-8229-bad3eb48e6ff' :
+  'fvoUeryEAlaeYzyyfKkT7xAirQJw54bfd2b7-109e-4645-8229-bad3eb48e6ff';
+const CODE_PUSH_PRD = Platform.OS === 'ios' ?
+  'HRzUcsx4V7a3VtFnFqLMLdpBmsRQ54bfd2b7-109e-4645-8229-bad3eb48e6ff' :
+  '1W1rMdizRX6ObQD9kM7P3PmtCsBW54bfd2b7-109e-4645-8229-bad3eb48e6ff';
 
 
 class HomeHOC extends Component {
