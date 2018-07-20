@@ -3,7 +3,7 @@ import { Animated, View, Linking } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import PropTypes from 'prop-types';
 import { AREA_LOC_GPS, COEF_ZOOM, COLOR_ARRAY } from 'data';
-
+import ImageMaps from 'common/imageMaps';
 import logo from 'assets/image/logo.png';
 import GridMarker from './gridMarker';
 import ShareMarker from './shareMarker';
@@ -32,31 +32,15 @@ class MapStage extends React.Component {
       isLoading: true,
     },
     sharedPosition: [
-
-
     ],
   };
 
 
   componentDidMount() {
+    this.getUserLocation();
+
     this.intervalId = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          this.setState((state) => ({
-            ...state,
-            userPosition: {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-              longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
-              latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
-              error: null,
-              isLoading: false,
-            },
-          }));
-        },
-        (error) => console.log('Get Current Position Error', error),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 },
-      );
+      this.getUserLocation();
     }, 5000);
 
     Linking.addListener('url',
@@ -109,6 +93,28 @@ class MapStage extends React.Component {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
 
+  getUserLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log('======position========');
+        console.log(position);
+        console.log('====================================');
+        this.setState((state) => ({
+          ...state,
+          userPosition: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            longitudeDelta: 0.0026429008518391583 * COEF_ZOOM,
+            latitudeDelta: 0.0012644995249289082 * COEF_ZOOM,
+            error: null,
+            isLoading: false,
+          },
+        }));
+      },
+      (error) => console.log('Get Current Position Error', error),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+  }
 
   markerChange = (callback = () => { }) => {
     this.setState((state) => ({
@@ -242,17 +248,21 @@ class MapStage extends React.Component {
   }
 
   render() {
-    const { isFirstTime, isGridHide } = this.props;
+    const { isFirstTime, isGridHide, viewRef } = this.props;
     // Test 2.3651089   48.9036151
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        collapsable={false}
+        ref={viewRef}
+      >
         <MapView
           ref={(mapView) => (this.map = mapView)}
           style={styles.map}
           provider={PROVIDER_GOOGLE}
           customMapStyle={MapStyle}
           cacheEnabled={!isFirstTime}
-          showsUserLocation={false}
+          showsUserLocation
           showsMyLocationButton={false}
           scrollEnabled={false}
           rotateEnabled={false}
@@ -266,7 +276,6 @@ class MapStage extends React.Component {
         >
           {this.renderGridMarker()}
           {this.renderSharedPosition()}
-          {this.renderUserPosition()}
           <InfoMarker
             show={this.state.showMarkerInfo}
           />
@@ -276,11 +285,11 @@ class MapStage extends React.Component {
             coordinate={INIT_LOGO_POS}
             style={{ zIndex: 1 }}
           >
-            <Animated.Image
+            <ImageMaps
               source={logo}
-              style={[
-                styles.logoStyle]}
+              style={styles.logoStyle}
             />
+
           </Marker>
         </MapView>
 
@@ -294,13 +303,16 @@ class MapStage extends React.Component {
 
 */
 
-MapStage.defaultProps = {};
+MapStage.defaultProps = {
+  viewRef: () => { },
+};
 
 MapStage.propTypes = {
   showMap: PropTypes.func.isRequired,
   isFirstTime: PropTypes.bool.isRequired,
   isGridHide: PropTypes.bool.isRequired,
   hideAnimalz: PropTypes.func.isRequired,
+  viewRef: PropTypes.func,
 };
 
 

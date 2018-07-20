@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Platform, Image, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import { Marker } from 'react-native-maps';
+import ImageMaps from 'common/imageMaps';
+
 import theme from 'theme';
 import appStyles from 'appStyles';
 import wc from 'assets/image/wc.png';
@@ -38,7 +40,7 @@ class InfoMarker extends React.Component {
       }), () => {
         Animated.timing(this.opacityValue, {
           toValue: 1,
-          duration: 1000,
+          duration: 2000,
         }).start(
           () => {
             this.setState((state) => ({
@@ -88,7 +90,7 @@ class InfoMarker extends React.Component {
           opacity: 0.8,
         }}
         >
-          <Image
+          <ImageMaps
             source={wc}
             style={{ height: 25, width: 25 }}
           />
@@ -106,7 +108,7 @@ class InfoMarker extends React.Component {
           opacity: 0.8,
         }}
         >
-          <Image
+          <ImageMaps
             source={wc}
             style={{ height: 25, width: 25 }}
           />
@@ -136,7 +138,7 @@ class InfoMarker extends React.Component {
           opacity: 0.8,
         }}
         >
-          <Image
+          <ImageMaps
             source={controls}
             style={{ height: 20, width: 20 }}
           />
@@ -167,7 +169,7 @@ class InfoMarker extends React.Component {
           alignItems: 'center',
         }}
         >
-          <Image
+          <ImageMaps
             source={drink}
             style={{ height: 25, width: 15 }}
           />
@@ -185,7 +187,7 @@ class InfoMarker extends React.Component {
           alignItems: 'center',
         }}
         >
-          <Image
+          <ImageMaps
             source={drink}
             style={{ height: 25, width: 15 }}
           />
@@ -204,7 +206,7 @@ class InfoMarker extends React.Component {
           opacity: 1,
         }}
         >
-          <Image
+          <ImageMaps
             source={drink}
             style={{ height: 25, width: 15 }}
           />

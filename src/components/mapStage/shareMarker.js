@@ -106,10 +106,10 @@ class ShareMarker extends React.Component {
         }}
         style={{ zIndex: 15 }}
       >
-        <View style={{ height: 70, width: 70, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ height: 80, width: 80, justifyContent: 'center', alignItems: 'center' }}>
           <View style={{
-            width: 70,
-            height: 70,
+            width: 80,
+            height: 80,
             position: 'absolute',
             backgroundColor: color,
             opacity: 0.4,
@@ -117,8 +117,8 @@ class ShareMarker extends React.Component {
           }}
           />
           <View style={{
-            width: 45,
-            height: 45,
+            width: 50,
+            height: 50,
             position: 'absolute',
             backgroundColor: color,
             opacity: 0.3,
@@ -127,8 +127,8 @@ class ShareMarker extends React.Component {
           />
           <View style={{
             position: 'absolute',
-            width: 40,
-            height: 40,
+            width: 45,
+            height: 45,
             borderRadius: 200,
             justifyContent: 'center',
             alignItems: 'center',

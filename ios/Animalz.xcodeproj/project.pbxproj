@@ -63,6 +63,7 @@
 		F09FB0852084F1EB001C84C0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09FB0812084F1EA001C84C0 /* FBSDKShareKit.framework */; };
 		F09FB0902084FAE1001C84C0 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F09FB08F2084FAE1001C84C0 /* FBSDKMessengerShareKit.framework */; };
 		F0AD27CE2082402D002C584D /* libRCTBattery.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0AD27A620824029002C584D /* libRCTBattery.a */; };
+		F0D59AF02088DF75001C5ECD /* libRNViewShot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D59AEF2088DF6D001C5ECD /* libRNViewShot.a */; };
 		F0DF1C40207A8F0000CB9B8E /* libRNOpacityGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DF1C3F207A8E6300CB9B8E /* libRNOpacityGradient.a */; };
 		F0EB2EDE207A9B6200811CEA /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F0EB2EB4207A9B6200811CEA /* default.gpx */; };
 		F0EB2F06207A9BC800811CEA /* AIRGMSMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = F0EB2EE1207A9BC700811CEA /* AIRGMSMarker.m */; };
@@ -391,6 +392,13 @@
 			remoteGlobalIDString = 6C2902191BA93BD700972EE3;
 			remoteInfo = RCTBattery;
 		};
+		F0D59AEE2088DF6D001C5ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0D59AEA2088DF6D001C5ECD /* RNViewShot.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNViewShot;
+		};
 		F0DF1C3E207A8E6300CB9B8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 427377599B524C199183665C /* RNOpacityGradient.xcodeproj */;
@@ -476,6 +484,7 @@
 		F09FB0812084F1EA001C84C0 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		F09FB08F2084FAE1001C84C0 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../../Documents/FacebookSDK/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		F0AD279D20824029002C584D /* RCTBattery.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBattery.xcodeproj; path = "../node_modules/react-native-battery/ios/RCTBattery.xcodeproj"; sourceTree = "<group>"; };
+		F0D59AEA2088DF6D001C5ECD /* RNViewShot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNViewShot.xcodeproj; path = "../node_modules/react-native-view-shot/ios/RNViewShot.xcodeproj"; sourceTree = "<group>"; };
 		F0D98D7A207E4193008F4FF9 /* Animalz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Animalz.entitlements; path = Animalz/Animalz.entitlements; sourceTree = "<group>"; };
 		F0EB2EB4207A9B6200811CEA /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = default.gpx; path = ../src/assets/default.gpx; sourceTree = "<group>"; };
 		F0EB2EE0207A9BC700811CEA /* AIRGMSMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRGMSMarker.h; sourceTree = "<group>"; };
@@ -538,6 +547,7 @@
 			files = (
 				F09FB0822084F1EB001C84C0 /* Bolts.framework in Frameworks */,
 				F08010CC2073F5DB0052D29D /* MessageUI.framework in Frameworks */,
+				F0D59AF02088DF75001C5ECD /* libRNViewShot.a in Frameworks */,
 				F08010CA2073F5CF0052D29D /* Social.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				F09FB0902084FAE1001C84C0 /* FBSDKMessengerShareKit.framework in Frameworks */,
@@ -749,6 +759,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				F0D59AEA2088DF6D001C5ECD /* RNViewShot.xcodeproj */,
 				F0AD279D20824029002C584D /* RCTBattery.xcodeproj */,
 				F080109B2073F4D80052D29D /* RNShare.xcodeproj */,
 				F026D218206A989300F4F513 /* RCTPushNotification.xcodeproj */,
@@ -864,6 +875,14 @@
 			isa = PBXGroup;
 			children = (
 				F0AD27A620824029002C584D /* libRCTBattery.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F0D59AEB2088DF6D001C5ECD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F0D59AEF2088DF6D001C5ECD /* libRNViewShot.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1013,6 +1032,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = VA94AM962E;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1104,6 +1124,10 @@
 				{
 					ProductGroup = F080109C2073F4D80052D29D /* Products */;
 					ProjectRef = F080109B2073F4D80052D29D /* RNShare.xcodeproj */;
+				},
+				{
+					ProductGroup = F0D59AEB2088DF6D001C5ECD /* Products */;
+					ProjectRef = F0D59AEA2088DF6D001C5ECD /* RNViewShot.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1407,6 +1431,13 @@
 			fileType = archive.ar;
 			path = libRCTBattery.a;
 			remoteRef = F0AD27A520824029002C584D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F0D59AEF2088DF6D001C5ECD /* libRNViewShot.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNViewShot.a;
+			remoteRef = F0D59AEE2088DF6D001C5ECD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F0DF1C3F207A8E6300CB9B8E /* libRNOpacityGradient.a */ = {
@@ -1734,6 +1765,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Animalz/Animalz.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: yelkamel@gmail.com (43JQY632DY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = VA94AM962E;
@@ -1767,6 +1801,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = LaYouCeferie.Animalz;
 				PRODUCT_NAME = Animalz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1777,6 +1812,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Animalz/Animalz.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VA94AM962E;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1802,6 +1840,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = LaYouCeferie.Animalz;
 				PRODUCT_NAME = Animalz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1823,7 +1862,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Youcef El Kamel (9TE6N5RW9Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yelkamel@gmail.com (43JQY632DY)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1864,6 +1904,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { DeviceEventEmitter, Alert } from 'react-native';
+import { DeviceEventEmitter, Alert, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import theme from 'theme';
 import i18n from 'i18n';
@@ -42,9 +42,11 @@ class BatteryManagement extends React.PureComponent {
 
 
       if (!this.hasShowAlert && info.level < 30 && info.level) {
-        this.setState({
-          batteryLevel: info.level,
-          show: true,
+        Animated.delay(10000).start(() => {
+          this.setState({
+            batteryLevel: info.level,
+            show: true,
+          });
         });
       }
     });

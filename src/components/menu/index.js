@@ -26,6 +26,7 @@ export default class Menu extends Component {
     return (<View style={styles.menuContainer}>
 
       <ActionButton
+        onPress={this.props.onPressMenu}
         position="center"
         buttonColor={theme.colors.primaryLight}
         btnOutRange={theme.colors.primary}
@@ -133,8 +134,11 @@ export default class Menu extends Component {
   }
 }
 
-Menu.defaultProps = {};
+Menu.defaultProps = {
+  onPressMenu: () => {},
+};
 
 Menu.propTypes = {
+  onPressMenu: PropTypes.func,
   onSelectItem: PropTypes.func.isRequired,
 };

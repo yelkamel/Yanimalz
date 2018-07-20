@@ -16,89 +16,23 @@ import soltan from 'assets/dj/soltan.jpg';
 import cookerzcrew from 'assets/dj/cookerzcrew.jpg';
 import fourhorsement from 'assets/dj/fourhorsement.jpg';
 
-const saturdayDateStr = '20180421';
-const sundayDateStr = '20180422';
+const saturdayDateStr = '20180621';
+const sundayDateStr = '20180622';
+
 
 export const INIT_TIME_LINE = [
   {
     time: `21:00 ${saturdayDateStr}`,
-    fakeTime: 'X̴̗̱͉̄̈́̓1̸̛̆:̨̦̟͘0̵͚̽̒',
-    key: 'BGR',
-    title: 'BORGORE',
-    description: 'BORGORE',
-    picture: borgore,
-    lineColor: 'white',
+    fakeTime: '?̸̫̈́͂?̷͎̫̮̚̚:̴͔͇̌̑?̷̩̜̈́̈́?̷͎̦̦̌',
+    key: 'CCW',
+    title: 'COOKERZ CREW',
+    description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',
+    picture: cookerzcrew,
     icon: dubstep,
+
   },
   {
     time: `22:00 ${saturdayDateStr}`,
-    fakeTime: '0̷̺̑͑͠§̶͍͖̣̈́:0̵̰́̚?̸͕̻̓',
-    key: 'CAK',
-    title: 'CAMO & KROOKED',
-    description: 'CAMO & KROOKED',
-    picture: camokrooked,
-    lineColor: theme.colors.accent,
-    icon: drum,
-  },
-  {
-    time: `23:00 ${saturdayDateStr}`,
-    fakeTime: '3̷̝͂!̴̽͝:0#̶̙̝̤͆̏̿',
-    key: 'DLK',
-    title: 'DOWNLINK',
-    description: 'DOWNLINK',
-    picture: downlink,
-    circleColor: theme.colors.primaryLight,
-    icon: dubstep,
-  },
-  {
-    time: `00:00 ${sundayDateStr}`,
-    fakeTime: '0̸̩͐̐X̶̹̻̙́̽̀:̵̡̃͜9̶͎͎̬̆̍X̸̺͎͠',
-    key: 'EDO',
-    title: 'ED RUSH x OPTICAL',
-    description: 'ED RUSH x OPTICAL',
-    picture: edrushoptical,
-    icon: drum,
-  },
-  {
-    time: `01:00 ${sundayDateStr}`,
-    fakeTime: '9̴̻̫̠͆̎9̴̠͝:̸͍̳̘̍9̷͚̍̌9̸̼͙̘͋',
-    key: 'MMT',
-    title: 'MEGALODON x M.TYRANNOSAURUS',
-    description: 'MEGALODON x MIDNIGHT TYRANNOSAURUS',
-    picture: megamidnight,
-    icon: dubstep,
-  },
-  {
-    time: `02:00 ${sundayDateStr}`,
-    fakeTime: '03̵͚̣̿*̶̢̛̄̚::̢̭̟̒́?̸̥̞̫̌̚',
-    key: 'AAT',
-    title: 'A.M.C & TURNO',
-    description: 'A.M.C & TURNO',
-    picture: AMCTurno,
-    icon: drum,
-  },
-  {
-    time: `03:00 ${sundayDateStr}`,
-    fakeTime: '2̴̼͉̏$̷̬̤̬̾:̶̤̜€̶̘͚̱̓̈́0̸͚̮͖͗̓̓',
-    key: 'FHT',
-    title: 'Four Horsemen Tour World',
-    description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
-    picture: fourhorsement,
-    icon: dubstep,
-
-  },
-  {
-    time: `04:00 ${sundayDateStr}`,
-    fakeTime: '0̸̙̘̕͝4̸̢̨̞͛͠:̸̩͊͂̄?0̴̛̹͋̀',
-    key: 'ABP',
-    title: 'AGRESSOR BUNX x PYTHIUS',
-    description: 'AGRESSOR BUNX x PYTHIUS',
-    picture: agressorbunxpythius,
-    icon: drum,
-
-  },
-  {
-    time: `05:00 ${sundayDateStr}`,
     fakeTime: 'X̷̜̝̺͝X̷̱͆̈͆:̴̲͎̊͗X̴̢̥̑͗X̴̓',
     key: 'SLN',
     title: 'SOLTAN',
@@ -108,13 +42,83 @@ export const INIT_TIME_LINE = [
 
   },
   {
-    time: `06:00 ${sundayDateStr}`,
-    fakeTime: '?̸̫̈́͂?̷͎̫̮̚̚:̴͔͇̌̑?̷̩̜̈́̈́?̷͎̦̦̌',
-    key: 'CCW',
-    title: 'COOKERZ CREW',
-    description: 'ANSWERD x JIQZY x NACHA x PLAYFULL',
-    picture: cookerzcrew,
+    time: `23:00 ${saturdayDateStr}`,
+    fakeTime: '03̵͚̣̿*̶̢̛̄̚::̢̭̟̒́?̸̥̞̫̌̚',
+    key: 'AAT',
+    title: 'A.M.C & TURNO',
+    description: 'A.M.C & TURNO',
+    picture: AMCTurno,
+    icon: drum,
+  },
+  {
+    time: `00:00 ${sundayDateStr}`,
+    fakeTime: '0̷̺̑͑͠§̶͍͖̣̈́:0̵̰́̚?̸͕̻̓',
+    key: 'CAK',
+    title: 'CAMO & KROOKED',
+    description: 'CAMO & KROOKED',
+    picture: camokrooked,
+    lineColor: theme.colors.accent,
+    icon: drum,
+  },
+  {
+    time: `01:00 ${sundayDateStr}`,
+    fakeTime: '3̷̝͂!̴̽͝:0#̶̙̝̤͆̏̿',
+    key: 'DLK',
+    title: 'DOWNLINK',
+    description: 'DOWNLINK',
+    picture: downlink,
+    circleColor: theme.colors.primaryLight,
     icon: dubstep,
+  },
+  {
+    time: `02:00 ${sundayDateStr}`,
+    fakeTime: 'X̴̗̱͉̄̈́̓1̸̛̆:̨̦̟͘0̵͚̽̒',
+    key: 'BGR',
+    title: 'BORGORE',
+    description: 'BORGORE',
+    picture: borgore,
+    lineColor: 'white',
+    icon: dubstep,
+  },
+  {
+    time: `03:00 ${sundayDateStr}`,
+    fakeTime: '9̴̻̫̠͆̎9̴̠͝:̸͍̳̘̍9̷͚̍̌9̸̼͙̘͋',
+    key: 'MMT',
+    title: 'MEGALODON x M.TYRANNOSAURUS',
+    description: 'MEGALODON x MIDNIGHT TYRANNOSAURUS',
+    picture: megamidnight,
+    icon: dubstep,
+  },
+
+  {
+    time: `04:00 ${sundayDateStr}`,
+    fakeTime: '0̸̩͐̐X̶̹̻̙́̽̀:̵̡̃͜9̶͎͎̬̆̍X̸̺͎͠',
+    key: 'EDO',
+    title: 'ED RUSH x OPTICAL',
+    description: 'ED RUSH x OPTICAL',
+    picture: edrushoptical,
+    icon: drum,
+  },
+
+
+  {
+    time: `05:00 ${sundayDateStr}`,
+    fakeTime: '2̴̼͉̏$̷̬̤̬̾:̶̤̜€̶̘͚̱̓̈́0̸͚̮͖͗̓̓',
+    key: 'FHT',
+    title: 'Four Horsemen Tour World',
+    description: 'IVORY x ECRAZE x GRAPHYT x SAMPLIFIRE',
+    picture: fourhorsement,
+    icon: dubstep,
+
+  },
+  {
+    time: `06:00 ${sundayDateStr}`,
+    fakeTime: '0̸̙̘̕͝4̸̢̨̞͛͠:̸̩͊͂̄?0̴̛̹͋̀',
+    key: 'ABP',
+    title: 'AGRESSOR BUNX x PYTHIUS',
+    description: 'AGRESSOR BUNX x PYTHIUS',
+    picture: agressorbunxpythius,
+    icon: drum,
 
   },
   {

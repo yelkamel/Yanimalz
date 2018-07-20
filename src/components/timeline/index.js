@@ -107,25 +107,29 @@ class TimeLine extends React.Component {
 
   renderCircle = () => null
 
-  renderTime = (rowData, sectionID, rowID) => (
-    <View style={{
-      alignItems: 'flex-end',
-    }}
-    >
+  renderTime = (rowData, sectionID, rowID) => {
+    const timeArray = rowData.time.split(/\s+/);
+
+    return (
       <View style={{
-        minWidth: 45,
+        alignItems: 'flex-end',
       }}
       >
-        <Text style={{
-          textAlign: 'right',
-          color: theme.colors.primaryLight,
+        <View style={{
+          minWidth: 45,
         }}
         >
-          {this.props.untilEvent > 1 ? rowData.fakeTime : rowData.time}
-        </Text>
+          <Text style={{
+            textAlign: 'right',
+            color: theme.colors.primaryLight,
+          }}
+          >
+            {this.props.untilEvent > 1 ? rowData.fakeTime : timeArray[0]}
+          </Text>
+        </View>
       </View>
-    </View>
-  )
+    );
+  }
 
   render() {
     const { timeLineData } = this.props;

@@ -13,6 +13,7 @@ import theme from 'theme';
 import Share from 'react-native-share';
 import { SHARE_OPTION } from 'data';
 
+import RNViewShot from 'react-native-view-shot';
 
 import Menu from '../menu';
 import Loading from './loading';
@@ -63,26 +64,29 @@ class Home extends React.Component {
 
   modal = null;
   shareModal = null
+  mapView = null;
 
   shareLocalisation = (minToWait) => {
     const urliOS = `Animalz://coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
     const urlAndroid = `https://Animalz/coord/${minToWait}/${this.mapStage.state.userPosition.longitude}/${this.mapStage.state.userPosition.latitude}`;
-
-    Share.open({
-      title: SHARE_OPTION.title,
-      subject: SHARE_OPTION.subject,
-      message: `${SHARE_OPTION.message}\n\nAndroid:\n${urlAndroid}\n\niPhone:\n${urliOS}`,
-      url: ' ',
-      excludedActivityTypes: [
-        'com.linkedin.LinkedIn.ShareExtension',
-        'com.apple.UIKit.activity.PostToFacebook',
-        'UIActivityTypePostToTwitter',
-        'com.apple.reminders.RemindersEditorExtension',
-        'com.apple.mobilenotes.SharingExtension',
-        'com.facebook.orca',
-      ],
-    }).catch(() => { });
-    this.shareModal.close();
+    RNViewShot.captureRef(this.mapView, { result: 'data-uri' })
+      .then((uri) => {
+        Share.open({
+          title: SHARE_OPTION.title,
+          subject: SHARE_OPTION.subject,
+          message: `${SHARE_OPTION.message}\n\nAndroid:\n${urlAndroid}\n\niPhone:\n${urliOS}`,
+          url: uri,
+          excludedActivityTypes: [
+            'com.linkedin.LinkedIn.ShareExtension',
+            'com.apple.UIKit.activity.PostToFacebook',
+            'UIActivityTypePostToTwitter',
+            'com.apple.reminders.RemindersEditorExtension',
+            'com.apple.mobilenotes.SharingExtension',
+            'com.facebook.orca',
+          ],
+        }).catch(() => { });
+        this.shareModal.close();
+      });
   }
 
   selectedMenuItem = (type = 'notif') => {
@@ -162,10 +166,13 @@ class Home extends React.Component {
     const { untilEvent } = this.props;
 
     return (
-      <View style={appStyles.flexOne}>
+      <View
+        style={appStyles.flexOne}
+      >
 
         <MapStage
           ref={(map) => this.mapStage = map}
+          viewRef={(map) => this.mapView = map}
           showMap={this.showMap}
           isFirstTime={!isLoading}
           isGridHide={isGridHide}
